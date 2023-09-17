@@ -1,21 +1,20 @@
-import { parseRows } from "./parse/parse";
-import dataScience2021 from "../results/major/Game_Art_and_Animation_BFA/tokens-2021.json"
-import dataScience2022 from "../results/major/Game_Art_and_Animation_BFA/tokens-2022.json"
-import { parseEntry } from "./runtime/pipeline";
-import { TokenizedCatalogEntry } from "./runtime/types"
-import { CatalogEntryType } from "./classify/types"
+import major2021 from "../results/major/Game_Art_and_Animation_BFA/tokens-2021.json"
+import major2022 from "../results/major/Game_Art_and_Animation_BFA/tokens-2022.json"
+import { parseEntry } from "../src/runtime/pipeline";
+import { TokenizedCatalogEntry } from "../src/runtime/types"
+import { CatalogEntryType } from "../src/classify/types"
 import { writeFile } from "fs/promises";
 
 const tokens2021: TokenizedCatalogEntry = {
   url: new URL("https://example.com"),
   type: CatalogEntryType.Major,
-  tokenized: dataScience2021 as any
+  tokenized: major2021 as any
 }
 
 const tokens2022: TokenizedCatalogEntry = {
   url: new URL("https://example.com"),
   type: CatalogEntryType.Major,
-  tokenized: dataScience2022 as any
+  tokenized: major2022 as any
 }
 
 parseEntry(tokens2021).then(entry=>{
