@@ -1,6 +1,6 @@
-import bscs from "@graduate/scrapers-v2/test/bscs-tokens-v3.json"
+import bscs from "../../examples/bscs-tokens-v3.json"
 import { parseRows } from "../parse/parse"
-import { HDocument, HRow, HRowType } from "@graduate/scrapers-v2/src/tokenize/types";
+import { HDocument, HRow, HRowType } from "../../src/tokenize/types";
 import { CatalogEntryType } from "../classify/types";
 
 

@@ -61,5 +61,6 @@ graduatenu.code-workspace
 # Scraper cache
 catalogCache/
 src/parse/grammar.js
+src/parse/postprocess.js
 results
 major_output
