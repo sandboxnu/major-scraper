@@ -12,7 +12,6 @@
     "parser:test": "nearley-test src/parse/grammar.js"
   },
   "dependencies": {
-    "@graduate/common": "*",
     "cheerio": "1.0.0-rc.3",
     "nearley": "^2.20.1",
     "ts-node": "^10.8.0",

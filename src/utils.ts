@@ -1,5 +1,5 @@
 import * as cheerio from "cheerio";
-import { Err, Ok, Result } from "@graduate/common";
+import { Err, Ok, Result } from "./graduate-types/common";
 import { existsSync } from "fs";
 import { mkdir, readFile, writeFile } from "fs/promises";
 import undici from "undici";

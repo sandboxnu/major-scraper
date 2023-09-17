@@ -1,6 +1,6 @@
 import { loadHtmlWithUrl } from "../utils";
 import { CatalogURLResult, College } from "./types";
-import { ResultType } from "@graduate/common";
+import { ResultType } from "../graduate-types/common";
 import { join } from "path";
 import { BASE_URL, CURRENT_CATALOG_YEAR, EARLIEST_CATALOG_YEAR } from "../constants";
 

@@ -2,7 +2,8 @@ import { fetchAndTokenizeHTML } from "../tokenize/tokenize";
 import { addTypeToUrl } from "../classify/classify";
 import { scrapeMajorLinks } from "../urls/urls";
 import { CatalogEntryType, TypedCatalogEntry } from "../classify/types";
-import { Err, Major2, Ok, ResultType, Section } from "@graduate/common";
+import { Err, Ok, ResultType } from "../graduate-types/common";
+import { Major2, Section } from "../graduate-types/major2";
 import {
   ParsedCatalogEntry,
   Pipeline,

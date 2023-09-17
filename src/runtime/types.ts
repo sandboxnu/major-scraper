@@ -1,4 +1,5 @@
-import { Major2, Result } from "@graduate/common";
+import { Result } from "../graduate-types/common";
+import { Major2 } from "../graduate-types/major2";
 import { TypedCatalogEntry } from "../classify/types";
 import { HDocument } from "../tokenize/types";
 

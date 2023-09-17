@@ -1,5 +1,6 @@
 import { Pipeline, StageLabel } from "./types";
-import { Major2, ResultType } from "@graduate/common";
+import { ResultType } from "../graduate-types/common";
+import { Major2 } from "../graduate-types/major2";
 import { FilterError } from "./pipeline";
 import { CatalogEntryType } from "../classify/types";
 

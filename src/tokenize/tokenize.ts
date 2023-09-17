@@ -1,4 +1,4 @@
-import { assertUnreachable } from "@graduate/common";
+import { assertUnreachable } from "../graduate-types/common";
 import {
   ensureLength,
   ensureLengthAtLeast,
