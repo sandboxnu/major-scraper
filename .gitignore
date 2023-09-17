@@ -49,10 +49,6 @@ graduatenu.code-workspace
 .vscode/
 .idea/
 
-# Local DB data 
-infrastructure/develop/graduatenu-db-data
-infrastructure/test/graduatenu-db-data
-
 # Yarn2 gitignore for non-zero installs
 .pnp.*
 .yarn/*
@@ -63,11 +59,7 @@ infrastructure/test/graduatenu-db-data
 !.yarn/versions
 
 # Scraper cache
-**/catalogCache/
-packages/scrapers-v2/src/parse/grammar.js
-packages/scrapers-v2/results
-
-# Coverage
-coverage/
-
+catalogCache/
+src/parse/grammar.js
+results
 major_output
