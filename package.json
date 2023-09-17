@@ -17,7 +17,7 @@
     "undici": "^5.8.2"
   },
   "devDependencies": {
-    "@types/cheerio": "0.22.32",
+    "@types/cheerio": "0.22.14",
     "@types/jest": "^27",
     "@types/nearley": "^2",
     "@types/node": "^16",
