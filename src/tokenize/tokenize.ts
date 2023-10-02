@@ -31,6 +31,7 @@ import {
   RangeLowerBoundedRow,
   RangeUnboundedRow,
   TextRow,
+  TokenizedCatalogEntry,
   WithExceptions,
 } from "./types";
 import { join } from "path";
@@ -39,13 +40,21 @@ import { categorizeTextRow } from "./textCategorize";
 import { existsSync } from "fs";
 import { mkdir, writeFile } from "fs/promises";
 import * as cheerio from "cheerio";
+import { TypedCatalogEntry } from "../classify";
+
+export const tokenizeEntry = async (
+  entry: TypedCatalogEntry
+): Promise<TokenizedCatalogEntry> => {
+  const tokenized = await fetchAndTokenizeHTML(entry.url);
+  return { ...entry, tokenized };
+};
 
 /**
  * Fetch html for page and convert into intermediate representation (IR)
  *
  * @param url The url of the page to tokenize
  */
-export const fetchAndTokenizeHTML = async (url: URL): Promise<HDocument> => {
+const fetchAndTokenizeHTML = async (url: URL): Promise<HDocument> => {
   const html = await wrappedGetRequest(url.href);
   const token = await tokenizeHTML(cheerio.load(html));
   const majorName = token.majorName;
@@ -70,7 +79,10 @@ export const fetchAndTokenizeHTML = async (url: URL): Promise<HDocument> => {
   }
   if (STORE_TOKENS_AND_HTML) {
     await writeFile(`${filePath}/html-${year}.html`, html);
-    await writeFile(`${filePath}/tokens-${year}.json`, JSON.stringify(token, null, 2));
+    await writeFile(
+      `${filePath}/tokens-${year}.json`,
+      JSON.stringify(token, null, 2)
+    );
   }
   return token;
 };

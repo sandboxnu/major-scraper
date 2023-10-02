@@ -1,5 +1,4 @@
-import { HRowType } from "../tokenize/types";
-import { TokenizedCatalogEntry } from "./types";
+import { HRowType, TokenizedCatalogEntry } from "../tokenize";
 
 export const saveComment = (
   major: TokenizedCatalogEntry,

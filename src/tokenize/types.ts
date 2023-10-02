@@ -1,3 +1,5 @@
+import { TypedCatalogEntry } from "../classify";
+
 /**
  * An HTML document (catalog page) has a few identifiable features, along with a
  * bunch of sections.
@@ -14,20 +16,20 @@ export type HSection = PrimaryHSection | ConcentrationHSection;
 
 export enum HSectionType {
   PRIMARY = "PRIMARY",
-  CONCENTRATION = "CONCENTRATION"
+  CONCENTRATION = "CONCENTRATION",
 }
 
 export type PrimaryHSection = {
   description: string;
   entries: HRow[];
-  type: HSectionType.PRIMARY
-}
+  type: HSectionType.PRIMARY;
+};
 
 export type ConcentrationHSection = {
   description: string;
   entries: HRow[];
-  type: HSectionType.CONCENTRATION
-}
+  type: HSectionType.CONCENTRATION;
+};
 
 /**
  * An HTML row (abbreviated HRow) consists of four main different types of row:
@@ -84,7 +86,7 @@ export enum HRowType {
 
   RANGE_UNBOUNDED = "RANGE_UNBOUNDED",
 
-  X_OF_MANY = "X_OF_MANY"
+  X_OF_MANY = "X_OF_MANY",
 }
 
 export interface TextRow<T> {
@@ -142,4 +144,8 @@ export type WithExceptions<S> = S & {
     subject: string;
     classId: number;
   }>;
+};
+
+export type TokenizedCatalogEntry = TypedCatalogEntry & {
+  tokenized: HDocument;
 };

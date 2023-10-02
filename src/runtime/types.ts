@@ -1,7 +1,4 @@
 import { Result } from "../graduate-types/common";
-import { Major2 } from "../graduate-types/major2";
-import { TypedCatalogEntry } from "../classify/types";
-import { HDocument } from "../tokenize/types";
 
 /** Represents the label for a stage in the scraper pipeline */
 export enum StageLabel {
@@ -23,8 +20,3 @@ export type Pipeline<T> = {
   trace: StageLabel[];
   result: Result<T, unknown[]>;
 };
-
-export type TokenizedCatalogEntry = TypedCatalogEntry & {
-  tokenized: HDocument;
-};
-export type ParsedCatalogEntry = TypedCatalogEntry & { parsed: Major2 };
