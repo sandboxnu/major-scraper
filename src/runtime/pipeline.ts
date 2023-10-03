@@ -29,7 +29,7 @@ export const runPipeline = async (yearStart: number) => {
 
   // can use for debugging logging throughout the stages
   installGlobalStatsLogger();
-  const pipelines = entries.map((entry) => {
+  const pipelines = entries.map(entry => {
     return createPipeline(entry)
       .then(addPhase(StageLabel.Classify, addTypeToUrl))
       .then(
@@ -37,7 +37,7 @@ export const runPipeline = async (yearStart: number) => {
           CatalogEntryType.Minor,
           CatalogEntryType.Major,
           CatalogEntryType.Concentration,
-        ])
+        ]),
       )
       .then(addPhase(StageLabel.Tokenize, tokenizeEntry))
       .then(addPhase(StageLabel.SaveComment, saveComment, comments))
@@ -98,7 +98,7 @@ const addPhase = <Input, Args extends any[], Output>(
 
 const filterEntryType = (
   entry: TypedCatalogEntry,
-  types: CatalogEntryType[]
+  types: CatalogEntryType[],
 ) => {
   if (types.includes(entry.type)) {
     return entry;
@@ -117,7 +117,7 @@ export class FilterError {
 }
 
 const saveResults = async (
-  entry: ParsedCatalogEntry
+  entry: ParsedCatalogEntry,
 ): Promise<ParsedCatalogEntry> => {
   const name = majorNameToFileName(entry.parsed.name);
   const year = entry.parsed.yearVersion;
@@ -128,7 +128,7 @@ const saveResults = async (
       // console.log("wrote file: " + path)
       return entry;
     })
-    .catch((e) => {
+    .catch(e => {
       console.log(e);
       return entry;
     });

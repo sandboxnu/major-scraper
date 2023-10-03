@@ -12,32 +12,39 @@ import {
 type GetRow<RowType> = HRow & { type: RowType };
 // sometimes produces a list, if a row token maps to multiple requirements
 type Processor<RowType> = (
-  tokens: [GetRow<RowType>]
+  tokens: [GetRow<RowType>],
 ) => Requirement2 | Requirement2[];
 
 // utility for parsing a list of simple courses to IRequiredCourse
 const convertCourses = (
-  cs: Array<{ subject: string; classId: number }>
+  cs: Array<{ subject: string; classId: number }>,
 ): IRequiredCourse[] => {
-  return cs.map((c) => ({ ...c, type: "COURSE" }));
+  return cs.map(c => ({ ...c, type: "COURSE" }));
 };
 
-export const processSection = ([header, requirements]: [TextRow<HRowType.HEADER>, Requirement2[]]): Section => {
-  let reqs = requirements.flat()
+export const processSection = ([header, requirements]: [
+  TextRow<HRowType.HEADER>,
+  Requirement2[],
+]): Section => {
+  let reqs = requirements.flat();
   return {
     type: "SECTION",
     title: header.description,
     requirements: reqs,
-    minRequirementCount: reqs.length
-  }
-}
+    minRequirementCount: reqs.length,
+  };
+};
 
-export const processSectionWithInfo = ([header, info, requirements]: [TextRow<HRowType.HEADER>,CountAndHoursRow<HRowType.SECTION_INFO>,  Requirement2[]]): Section => {
+export const processSectionWithInfo = ([header, info, requirements]: [
+  TextRow<HRowType.HEADER>,
+  CountAndHoursRow<HRowType.SECTION_INFO>,
+  Requirement2[],
+]): Section => {
   return {
     ...processSection([header, requirements]),
-    minRequirementCount: info.parsedCount
-  }
-}
+    minRequirementCount: info.parsedCount,
+  };
+};
 
 export const processCourse: Processor<
   HRowType.PLAIN_COURSE | HRowType.OR_COURSE
@@ -46,9 +53,9 @@ export const processCourse: Processor<
   return { type: "COURSE", classId, subject };
 };
 
-export const processRangeLB: Processor<HRowType.RANGE_LOWER_BOUNDED> = (
-  tokens
-) => {
+export const processRangeLB: Processor<
+  HRowType.RANGE_LOWER_BOUNDED
+> = tokens => {
   const { classIdStart, subject } = tokens[0];
   return {
     type: "RANGE",
@@ -61,7 +68,7 @@ export const processRangeLB: Processor<HRowType.RANGE_LOWER_BOUNDED> = (
 
 export const processRangeLBE: Processor<
   HRowType.RANGE_LOWER_BOUNDED_WITH_EXCEPTIONS
-> = (tokens) => {
+> = tokens => {
   const { subject, classIdStart, exceptions: es } = tokens[0];
   const exceptions = convertCourses(es);
   return {
@@ -73,7 +80,7 @@ export const processRangeLBE: Processor<
   };
 };
 
-export const processRangeB: Processor<HRowType.RANGE_BOUNDED> = (tokens) => {
+export const processRangeB: Processor<HRowType.RANGE_BOUNDED> = tokens => {
   const { subject, classIdStart, classIdEnd } = tokens[0];
   return {
     type: "RANGE",
@@ -86,7 +93,7 @@ export const processRangeB: Processor<HRowType.RANGE_BOUNDED> = (tokens) => {
 
 export const processRangeBE: Processor<
   HRowType.RANGE_BOUNDED_WITH_EXCEPTIONS
-> = (tokens) => {
+> = tokens => {
   const { subject, classIdStart, classIdEnd, exceptions: es } = tokens[0];
   const exceptions = convertCourses(es);
   return {
@@ -98,9 +105,9 @@ export const processRangeBE: Processor<
   };
 };
 
-export const processRangeU: Processor<HRowType.RANGE_UNBOUNDED> = (tokens) => {
+export const processRangeU: Processor<HRowType.RANGE_UNBOUNDED> = tokens => {
   const { subjects } = tokens[0];
-  return subjects.map((subject) => ({
+  return subjects.map(subject => ({
     type: "RANGE",
     subject,
     idRangeStart: 0,
@@ -110,7 +117,7 @@ export const processRangeU: Processor<HRowType.RANGE_UNBOUNDED> = (tokens) => {
 };
 
 export const processOr = (
-  tokens: [Requirement2, Requirement2[]]
+  tokens: [Requirement2, Requirement2[]],
 ): IOrCourse2 => {
   const [req, ors] = tokens;
   return { type: "OR", courses: [req, ...ors] };
@@ -118,7 +125,7 @@ export const processOr = (
 
 export const processOrOfAnd: Processor<
   HRowType.OR_OF_AND_COURSE | HRowType.AND_COURSE
-> = (tokens) => {
+> = tokens => {
   const { courses: cs } = tokens[0];
   const courses = convertCourses(cs);
   return {
@@ -132,13 +139,18 @@ export const processAnd = (tokens: [IAndCourse2[]]): IAndCourse2[] => {
   // for (const { courses: cs } of tokens[0]) {
   //   courses.push(...cs);
   // }
-  return tokens[0]
+  return tokens[0];
 };
 
-export const processXOM = ([xom, reqs]: [TextRow<HRowType.X_OF_MANY>, Requirement2[]]): IXofManyCourse[] => {
-  return [{
-    type: "XOM",
-    numCreditsMin: xom.hour,
-    courses: reqs.flat()
-  }]
-}
+export const processXOM = ([xom, reqs]: [
+  TextRow<HRowType.X_OF_MANY>,
+  Requirement2[],
+]): IXofManyCourse[] => {
+  return [
+    {
+      type: "XOM",
+      numCreditsMin: xom.hour,
+      courses: reqs.flat(),
+    },
+  ];
+};

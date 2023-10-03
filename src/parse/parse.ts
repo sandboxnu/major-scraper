@@ -31,13 +31,13 @@ export const parseRows = (rows: HRow[]) => {
 };
 
 export const parseEntry = async (
-  entry: TokenizedCatalogEntry
+  entry: TokenizedCatalogEntry,
 ): Promise<ParsedCatalogEntry> => {
-  const nonConcentrations = entry.tokenized.sections.filter((metaSection) => {
+  const nonConcentrations = entry.tokenized.sections.filter(metaSection => {
     return metaSection.type === HSectionType.PRIMARY;
   });
 
-  const entries: HRow[][] = nonConcentrations.map((metaSection) => {
+  const entries: HRow[][] = nonConcentrations.map(metaSection => {
     if (
       metaSection.entries.length >= 1 &&
       metaSection.entries[0].type != HRowType.HEADER
@@ -57,20 +57,19 @@ export const parseEntry = async (
   }, []);
 
   allEntries = allEntries.filter(
-    (row) => row.type !== HRowType.COMMENT && row.type !== HRowType.SUBHEADER
+    row => row.type !== HRowType.COMMENT && row.type !== HRowType.SUBHEADER,
   );
 
   const mainReqsParsed = parseRows(allEntries);
 
   const concentrations = entry.tokenized.sections
-    .filter((metaSection) => {
+    .filter(metaSection => {
       return metaSection.type === HSectionType.CONCENTRATION;
     })
     .map((concentration): Section => {
       // Add in header based on section name if one isn't already present.
       concentration.entries = concentration.entries.filter(
-        (row) =>
-          row.type !== HRowType.COMMENT && row.type !== HRowType.SUBHEADER
+        row => row.type !== HRowType.COMMENT && row.type !== HRowType.SUBHEADER,
       );
       if (
         concentration.entries.length >= 1 &&
@@ -90,11 +89,11 @@ export const parseEntry = async (
       } else {
         if (parsed.length > 1) {
           throw new Error(
-            `Concentration "${concentration.description}" has multiple sections which is not supported right now!`
+            `Concentration "${concentration.description}" has multiple sections which is not supported right now!`,
           );
         }
         throw new Error(
-          `Concentration "${concentration.description}" cannot be parsed!`
+          `Concentration "${concentration.description}" cannot be parsed!`,
         );
       }
     })

@@ -18,8 +18,8 @@ export interface Major2 {
 
 export type Metadata = {
   verified: boolean;
-	lastEdited: Date; 
-}
+  lastEdited: Date;
+};
 
 /**
  * A Section, containing its related requirements.

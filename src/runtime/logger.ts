@@ -13,7 +13,7 @@ import { CatalogEntryType } from "../classify/types";
  * @param pipelines The in-progress pipelines
  */
 export const logProgress = async <T>(
-  pipelines: Array<Promise<Pipeline<T>>>
+  pipelines: Array<Promise<Pipeline<T>>>,
 ) => {
   // set handlers to log the result of each pipeline
   for (const promise of pipelines) {
@@ -48,7 +48,7 @@ export const logResults = (
     parsed: Major2;
     type: CatalogEntryType;
     url: URL;
-  }>[]
+  }>[],
 ) => {
   const stats = new StatsLogger();
 
@@ -67,7 +67,7 @@ export const logResults = (
 const logOkResult = (
   stats: StatsLogger,
   result: { ok: { parsed: Major2; type: CatalogEntryType } },
-  id: URL
+  id: URL,
 ) => {
   // record OK values
   const { parsed, type } = result.ok;
@@ -83,7 +83,7 @@ const logErrResult = (
   stats: StatsLogger,
   id: URL,
   trace: StageLabel[],
-  errors: unknown[]
+  errors: unknown[],
 ) => {
   // special case the filter error
   if (errors[0] instanceof FilterError) {
@@ -137,7 +137,7 @@ class StatsLogger {
   recordField(field: string, value: any) {
     if (field === "errors") {
       throw new Error(
-        "cannot use 'errors' as a field key, use a different name"
+        "cannot use 'errors' as a field key, use a different name",
       );
     }
     this.record(field, value);
@@ -200,7 +200,7 @@ class StatsLogger {
     for (const { err, count, annot, entryIds } of errors) {
       console.log(annot, count);
       console.error(err);
-      console.log(entryIds.map((url) => url.toString()));
+      console.log(entryIds.map(url => url.toString()));
     }
 
     // log normal metrics (including error aggregates)

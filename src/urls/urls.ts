@@ -2,7 +2,11 @@ import { loadHtmlWithUrl } from "../utils";
 import { CatalogURLResult, College } from "./types";
 import { ResultType } from "../graduate-types/common";
 import { join } from "path";
-import { BASE_URL, CURRENT_CATALOG_YEAR, EARLIEST_CATALOG_YEAR } from "../constants";
+import {
+  BASE_URL,
+  CURRENT_CATALOG_YEAR,
+  EARLIEST_CATALOG_YEAR,
+} from "../constants";
 
 /**
  * Scrapes all catalog entries underneath the colleges for the specified catalog
@@ -13,14 +17,14 @@ import { BASE_URL, CURRENT_CATALOG_YEAR, EARLIEST_CATALOG_YEAR } from "../consta
  * @returns       A hierarchy of catalog entry links
  */
 export const scrapeMajorLinks = async (
-  start: number
+  start: number,
 ): Promise<CatalogURLResult> => {
   if (start < EARLIEST_CATALOG_YEAR) {
     // this is because there is no HTML version of those catalogs
     throw new Error("Scraping for years before 2016-2017 is not supported.");
   } else if (start > CURRENT_CATALOG_YEAR) {
     throw new Error(
-      "Either you're scraping for a year in the future (which won't work unless time travel has been invented since this message was written), or you need to update CURRENT_CATALOG_YEAR in constants.ts."
+      "Either you're scraping for a year in the future (which won't work unless time travel has been invented since this message was written), or you need to update CURRENT_CATALOG_YEAR in constants.ts.",
     );
   }
 
@@ -29,7 +33,7 @@ export const scrapeMajorLinks = async (
   } else {
     return scrapeMajorLinksForUrl(
       BASE_URL,
-      `archive/${start}-${start + 1}/undergraduate`
+      `archive/${start}-${start + 1}/undergraduate`,
     );
   }
 };
@@ -48,10 +52,10 @@ export const scrapeMajorLinks = async (
  */
 export const scrapeMajorLinksForUrl = async (
   baseUrl: string,
-  path: string
+  path: string,
 ): Promise<CatalogURLResult> => {
   const initQueue = Object.values(College).map(
-    (college) => new URL(join(baseUrl, path, college, "/"))
+    college => new URL(join(baseUrl, path, college, "/")),
   );
   return await scrapeLinks(baseUrl, initQueue);
 };
@@ -66,14 +70,14 @@ export const scrapeMajorLinksForUrl = async (
  */
 const scrapeLinks = async (
   baseUrl: string,
-  initQueue: URL[]
+  initQueue: URL[],
 ): Promise<CatalogURLResult> => {
   const entries: URL[] = [];
   const unfinished = [];
 
   // there are multiple links in the sidebar to the same entry
   // keep a set to avoid visiting the same entry twice
-  const seen = new Set(initQueue.map((url) => url.href));
+  const seen = new Set(initQueue.map(url => url.href));
   let queue = initQueue;
   while (queue.length > 0) {
     const { ok, errors } = await getUrlHtmls(queue);
@@ -86,7 +90,7 @@ const scrapeLinks = async (
         const url = new URL(join(baseUrl, path));
         if (
           !seen.has(url.href) &&
-          Object.values(College).some((linkPart) => url.href.includes(linkPart))
+          Object.values(College).some(linkPart => url.href.includes(linkPart))
         ) {
           const bucket = isParent(element) ? nextQueue : entries;
           bucket.push(url);

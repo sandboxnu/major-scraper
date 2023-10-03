@@ -38,7 +38,7 @@ const MAJORS = [
 
   // ending is in uppercase
   new URL(
-    "https://catalog.northeastern.edu/undergraduate/science/behavioral-neuroscience/behavioral-neuroscience-philosophy-bs/"
+    "https://catalog.northeastern.edu/undergraduate/science/behavioral-neuroscience/behavioral-neuroscience-philosophy-bs/",
   ),
 
   // non standard ending (ends in "pharmd")
@@ -53,7 +53,7 @@ const CONCENTRATIONS = [
 
   // no comma in title
   new URL(
-    "https://catalog.northeastern.edu/undergraduate/business/concentrations/accounting"
+    "https://catalog.northeastern.edu/undergraduate/business/concentrations/accounting",
   ),
   // 'https://catalog.northeastern.edu/undergraduate/business/concentrations/brand-management',
   // 'https://catalog.northeastern.edu/undergraduate/business/concentrations/business-analytics',
@@ -83,13 +83,13 @@ const MINORS = [
 
   // has tabs, but with second tab text "program requirements" (not "minor requirements")
   new URL(
-    "https://catalog.northeastern.edu/undergraduate/arts-media-design/communication-studies/sports-media-communication-minor"
+    "https://catalog.northeastern.edu/undergraduate/arts-media-design/communication-studies/sports-media-communication-minor",
   ),
   new URL(
-    "https://catalog.northeastern.edu/undergraduate/arts-media-design/theatre/performing-arts-minor"
+    "https://catalog.northeastern.edu/undergraduate/arts-media-design/theatre/performing-arts-minor",
   ),
   new URL(
-    "https://catalog.northeastern.edu/undergraduate/business/interdisciplinary-minors/corporate-innovation-venture-minor"
+    "https://catalog.northeastern.edu/undergraduate/business/interdisciplinary-minors/corporate-innovation-venture-minor",
   ),
   // "https://catalog.northeastern.edu/undergraduate/business/interdisciplinary-minors/consulting-minor",
   // "https://catalog.northeastern.edu/undergraduate/business/interdisciplinary-minors/entrepreneurial-startups-minor",

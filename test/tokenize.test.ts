@@ -32,7 +32,7 @@ describe("scraper v2 snapshot tests", () => {
   // Range bounded
   test("Test range bounded (history)", async () => {
     expect(
-      await fetchAndTokenizeHTML(MEDIA_SCREEN_STUDIES_HISTORY)
+      await fetchAndTokenizeHTML(MEDIA_SCREEN_STUDIES_HISTORY),
     ).toMatchSnapshot();
   });
   // Range bounded with exceptions
@@ -57,7 +57,7 @@ describe("scraper v2 snapshot tests", () => {
   });
   describe("weird program requirement hours text placement", () => {
     const get = (url: URL) =>
-      fetchAndTokenizeHTML(url).then((h) => h.programRequiredHours);
+      fetchAndTokenizeHTML(url).then(h => h.programRequiredHours);
     test("Minimum of x hours", async () => {
       expect(await get(PUBLIC_HEALTH_BA)).toBeGreaterThan(0);
     });
