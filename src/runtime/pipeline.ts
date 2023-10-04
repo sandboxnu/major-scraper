@@ -15,6 +15,7 @@ import { saveComment } from "./saveComment";
 import { majorNameToFileName } from "../utils";
 import { scrapeMajorLinks } from "../urls";
 import { ParsedCatalogEntry, parseEntry } from "../parse";
+import { join } from "path";
 
 /**
  * Runs a full scrape of the catalog, logging the results to the console.
@@ -51,7 +52,7 @@ export const runPipeline = async (yearStart: number) => {
   Array.from(comments.entries())
     .sort((a, b) => -a[1].length + b[1].length)
     .forEach(([key, value]) => (obj[key] = value));
-  writeFile("./results/comments.json", JSON.stringify(obj, null, 2));
+  writeFile("./degrees/comments.json", JSON.stringify(obj, null, 2));
   logResults(results);
   clearGlobalStatsLogger();
 };
@@ -121,8 +122,18 @@ const saveResults = async (
 ): Promise<ParsedCatalogEntry> => {
   const name = majorNameToFileName(entry.parsed.name);
   const year = entry.parsed.yearVersion;
-  const degree = name.includes("Minor") ? "minor" : "major";
-  const filePath = `./results/${degree}/${name}/${name}-${year}.json`;
+  const degree = name.includes("Minor") ? "minors" : "majors";
+  const college = entry.url.toString().split("/")[6].replaceAll("-", "_");
+
+  const filePath = join(
+    "degrees",
+    degree,
+    year.toString(),
+    college,
+    majorNameToFileName(name),
+    "parsed.json",
+  );
+
   return writeFile(filePath, JSON.stringify(entry.parsed, null, 2))
     .then(() => {
       // console.log("wrote file: " + path)

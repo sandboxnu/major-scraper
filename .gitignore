@@ -63,4 +63,5 @@ catalogCache/
 src/parse/grammar.js
 src/parse/postprocess.js
 results
+degrees
 major_output

@@ -57,32 +57,44 @@ export const tokenizeEntry = async (
 const fetchAndTokenizeHTML = async (url: URL): Promise<HDocument> => {
   const html = await wrappedGetRequest(url.href);
   const token = await tokenizeHTML(cheerio.load(html));
+
   const majorName = token.majorName;
   const year = token.yearVersion;
-  const degree = majorName.includes("Minor") ? "minor" : "major";
+  const degree = majorName.includes("Minor") ? "minors" : "majors";
+  // in the url, the college will always be at the 6th place in the url
+  const college = url.toString().split("/")[6].replaceAll("-", "_");
 
-  const filePath = join("results", degree, majorNameToFileName(majorName));
-  if (!existsSync("./results")) {
-    await mkdir("./results");
+  const filePath = join(
+    "degrees",
+    degree,
+    year.toString(),
+    college,
+    majorNameToFileName(majorName),
+  );
+
+  if (!existsSync("./degrees")) {
+    await mkdir("./degrees");
   }
 
-  if (!existsSync("./results/major")) {
-    await mkdir("./results/major");
+  if (!existsSync(join("degrees", degree))) {
+    await mkdir(join("degrees", degree));
   }
 
-  if (!existsSync("./results/minor")) {
-    await mkdir("./results/minor");
+  if (!existsSync(join("degrees", degree, year.toString()))) {
+    await mkdir(join("degrees", degree, year.toString()));
+  }
+
+  if (!existsSync(join("degrees", degree, year.toString(), college))) {
+    await mkdir(join("degrees", degree, year.toString(), college));
   }
 
   if (!existsSync(filePath)) {
     await mkdir(filePath);
   }
+
   if (STORE_TOKENS_AND_HTML) {
-    await writeFile(`${filePath}/html-${year}.html`, html);
-    await writeFile(
-      `${filePath}/tokens-${year}.json`,
-      JSON.stringify(token, null, 2),
-    );
+    await writeFile(`${filePath}/cached.html`, html);
+    await writeFile(`${filePath}/tokens.json`, JSON.stringify(token, null, 2));
   }
   return token;
 };

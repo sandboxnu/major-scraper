@@ -1,5 +1,5 @@
-import major2021 from "../results/major/Game_Art_and_Animation_BFA/tokens-2021.json";
-import major2022 from "../results/major/Game_Art_and_Animation_BFA/tokens-2022.json";
+import major2021 from "../degrees/majors/2021/arts_media_design/Game_Art_and_Animation_BFA/tokens.json";
+import major2022 from "../degrees/majors/2022/arts_media_design/Game_Art_and_Animation_BFA/tokens.json";
 import { parseEntry } from "../src/parse";
 import { TokenizedCatalogEntry } from "../src/tokenize";
 import { CatalogEntryType } from "../src/classify/types";

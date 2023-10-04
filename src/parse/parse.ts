@@ -101,6 +101,10 @@ export const parseEntry = async (
 
   const major: Major2 = {
     name: entry.tokenized.majorName,
+    metadata: {
+      verified: false,
+      lastEdited: new Date(Date.now()).toLocaleDateString("en-US"),
+    },
     totalCreditsRequired: entry.tokenized.programRequiredHours,
     yearVersion: entry.tokenized.yearVersion,
     requirementSections: mainReqsParsed,
