@@ -15,7 +15,7 @@ dependencies:
     specifier: ^10.8.0
     version: 10.9.1(@types/node@16.18.59)(typescript@4.9.5)
   undici:
-    specifier: ^5.8.2
+    specifier: ^5.26.3
     version: 5.26.3
 
 devDependencies:
