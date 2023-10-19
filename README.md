@@ -5,14 +5,14 @@ This repo houses [GraduateNU](https://github.com/sandboxnu/graduatenu)'s major r
 # Setup
 
 Clone the repo and run:  
-`yarn install`
+`pnpm install`
 
 # Running
 
 After install in dependencies you can run the scraper with:  
-`yarn scrape`.
+`pnpm scrape`.
 
 The scraper scrapes the current catalog by default, but you can specify one or more years for it to scrape as command line arguments. For example to scrape the catalog for 2021, 2022, and the current year, you'd write the following:  
-`yarn scrape 2021 2022 current`
+`pnpm scrape 2021 2022 current`
 
 This will populate the `results` folder with parsed JSON files and the catalogCache folder with cached HTML.
