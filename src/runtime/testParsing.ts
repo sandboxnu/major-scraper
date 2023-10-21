@@ -1,8 +1,7 @@
-import bscs from "../../examples/bscs-tokens-v3.json"
-import { parseRows } from "../parse/parse"
+import bscs from "../../examples/bscs-tokens-v3.json";
+import { parseRows } from "../parse/parse";
 import { HDocument, HRow, HRowType } from "../../src/tokenize/types";
 import { CatalogEntryType } from "../classify/types";
-
 
 interface prevStep {
   tokenized: HDocument;
@@ -10,7 +9,7 @@ interface prevStep {
   type: CatalogEntryType;
 }
 
-const importedTokens = bscs as prevStep
+const importedTokens = bscs as prevStep;
 
 // const tokens = bscsTokens.filter((row)=>row.type !== HRowType.COMMENT)
 
@@ -19,25 +18,30 @@ const importedTokens = bscs as prevStep
 
 // const tokenized = bscs
 
-let nonConcentrations = importedTokens.tokenized.sections.filter(metaSection => {
-  // return true;
-  return !metaSection.description.toLowerCase().startsWith("concentration")
-})
+let nonConcentrations = importedTokens.tokenized.sections.filter(
+  metaSection => {
+    // return true;
+    return !metaSection.description.toLowerCase().startsWith("concentration");
+  },
+);
 
-let entries: HRow[][] = nonConcentrations.map((metaSection)=>metaSection.entries)
+let entries: HRow[][] = nonConcentrations.map(
+  metaSection => metaSection.entries,
+);
 
-let allEntries = entries.reduce((prev: HRow[], current: HRow[])=>{
-  return prev.concat(current)
-}, [])
+let allEntries = entries.reduce((prev: HRow[], current: HRow[]) => {
+  return prev.concat(current);
+}, []);
 
-allEntries = allEntries.filter((row)=>row.type !== HRowType.COMMENT && row.type !== HRowType.SUBHEADER)
+allEntries = allEntries.filter(
+  row => row.type !== HRowType.COMMENT && row.type !== HRowType.SUBHEADER,
+);
 
-const allEntriesParsed = parseRows(allEntries)
-console.log(JSON.stringify(allEntriesParsed, null, 4))
+const allEntriesParsed = parseRows(allEntries);
+console.log(JSON.stringify(allEntriesParsed, null, 4));
 
 const concentrations = importedTokens.tokenized.sections.filter(metaSection => {
-  return metaSection.description.toLowerCase().startsWith("Concentration")
-})
+  return metaSection.description.toLowerCase().startsWith("Concentration");
+});
 
-
-export {}
+export {};

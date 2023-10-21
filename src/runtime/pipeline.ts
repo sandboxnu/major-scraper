@@ -1,15 +1,8 @@
-import { fetchAndTokenizeHTML } from "../tokenize/tokenize";
+import { tokenizeEntry } from "../tokenize/tokenize";
 import { addTypeToUrl } from "../classify/classify";
-import { scrapeMajorLinks } from "../urls/urls";
 import { CatalogEntryType, TypedCatalogEntry } from "../classify/types";
 import { Err, Ok, ResultType } from "../graduate-types/common";
-import { Major2, Section } from "../graduate-types/major2";
-import {
-  ParsedCatalogEntry,
-  Pipeline,
-  StageLabel,
-  TokenizedCatalogEntry,
-} from "./types";
+import { Pipeline, StageLabel } from "./types";
 import { createAgent } from "./axios";
 import {
   installGlobalStatsLogger,
@@ -17,34 +10,27 @@ import {
   logResults,
   clearGlobalStatsLogger,
 } from "./logger";
-import { HRow, HRowType, HSectionType, TextRow } from "../tokenize/types";
-import { parseRows } from "../parse/parse";
 import { writeFile } from "fs/promises";
 import { saveComment } from "./saveComment";
 import { majorNameToFileName } from "../utils";
+import { scrapeMajorLinks } from "../urls";
+import { ParsedCatalogEntry, parseEntry } from "../parse";
+import { join } from "path";
 
 /**
  * Runs a full scrape of the catalog, logging the results to the console.
- * Currently, does nothing with the output. To run from cli, run `yarn scrape`
- * in `scrapers-v2` dir. Also see `main.ts`.
  */
 export const runPipeline = async (yearStart: number) => {
   const unregisterAgent = createAgent();
   const { entries, unfinished } = await scrapeMajorLinks(yearStart);
   const comments = new Map();
-  // const { entries, unfinished } = {
-  //   entries: [new URL("https://catalog.northeastern.edu/archive/2021-2022/undergraduate/science/linguistics/linguistics-english-ba/")],
-  //   unfinished: []
-  // };
   if (unfinished.length > 0) {
     console.log("didn't finish searching some entries", ...unfinished);
   }
 
-  // const entries = [new URL("https://catalog.northeastern.edu/undergraduate/computer-information-science/computer-science/bscs/")]
-
   // can use for debugging logging throughout the stages
   installGlobalStatsLogger();
-  const pipelines = entries.map((entry) => {
+  const pipelines = entries.map(entry => {
     return createPipeline(entry)
       .then(addPhase(StageLabel.Classify, addTypeToUrl))
       .then(
@@ -52,7 +38,7 @@ export const runPipeline = async (yearStart: number) => {
           CatalogEntryType.Minor,
           CatalogEntryType.Major,
           CatalogEntryType.Concentration,
-        ])
+        ]),
       )
       .then(addPhase(StageLabel.Tokenize, tokenizeEntry))
       .then(addPhase(StageLabel.SaveComment, saveComment, comments))
@@ -66,7 +52,7 @@ export const runPipeline = async (yearStart: number) => {
   Array.from(comments.entries())
     .sort((a, b) => -a[1].length + b[1].length)
     .forEach(([key, value]) => (obj[key] = value));
-  writeFile("./results/comments.json", JSON.stringify(obj, null, 2));
+  writeFile("./degrees/comments.json", JSON.stringify(obj, null, 2));
   logResults(results);
   clearGlobalStatsLogger();
 };
@@ -113,7 +99,7 @@ const addPhase = <Input, Args extends any[], Output>(
 
 const filterEntryType = (
   entry: TypedCatalogEntry,
-  types: CatalogEntryType[]
+  types: CatalogEntryType[],
 ) => {
   if (types.includes(entry.type)) {
     return entry;
@@ -131,113 +117,29 @@ export class FilterError {
   }
 }
 
-const tokenizeEntry = async (
-  entry: TypedCatalogEntry
-): Promise<TokenizedCatalogEntry> => {
-  const tokenized = await fetchAndTokenizeHTML(entry.url);
-  return { ...entry, tokenized };
-};
-
-export const parseEntry = async (
-  entry: TokenizedCatalogEntry
-): Promise<ParsedCatalogEntry> => {
-  const nonConcentrations = entry.tokenized.sections.filter((metaSection) => {
-    return metaSection.type === HSectionType.PRIMARY;
-  });
-
-  const entries: HRow[][] = nonConcentrations.map((metaSection) => {
-    if (
-      metaSection.entries.length >= 1 &&
-      metaSection.entries[0].type != HRowType.HEADER
-    ) {
-      const newHeader: TextRow<HRowType.HEADER> = {
-        type: HRowType.HEADER,
-        description: metaSection.description,
-        hour: 0,
-      };
-      metaSection.entries = [newHeader, ...metaSection.entries];
-    }
-    return metaSection.entries;
-  });
-
-  let allEntries = entries.reduce((prev: HRow[], current: HRow[]) => {
-    return prev.concat(current);
-  }, []);
-
-  allEntries = allEntries.filter(
-    (row) => row.type !== HRowType.COMMENT && row.type !== HRowType.SUBHEADER
-  );
-
-  const mainReqsParsed = parseRows(allEntries);
-
-  const concentrations = entry.tokenized.sections
-    .filter((metaSection) => {
-      return metaSection.type === HSectionType.CONCENTRATION;
-    })
-    .map((concentration): Section => {
-      // Add in header based on section name if one isn't already present.
-      concentration.entries = concentration.entries.filter(
-        (row) =>
-          row.type !== HRowType.COMMENT && row.type !== HRowType.SUBHEADER
-      );
-      if (
-        concentration.entries.length >= 1 &&
-        concentration.entries[0].type != HRowType.HEADER
-      ) {
-        const newHeader: TextRow<HRowType.HEADER> = {
-          type: HRowType.HEADER,
-          description: concentration.description,
-          hour: 0,
-        };
-        concentration.entries = [newHeader, ...concentration.entries];
-      }
-      const parsed = parseRows(concentration.entries);
-      // Change this when we allow concentrations to have multiple sections:
-      if (parsed.length >= 1 && parsed[0].type == "SECTION") {
-        return parsed;
-      } else {
-        if (parsed.length > 1) {
-          throw new Error(
-            `Concentration "${concentration.description}" has multiple sections which is not supported right now!`
-          )
-        }
-        throw new Error(
-          `Concentration "${concentration.description}" cannot be parsed!`
-        );
-      }
-    }).flat();
-
-  const major: Major2 = {
-    name: entry.tokenized.majorName,
-    totalCreditsRequired: entry.tokenized.programRequiredHours,
-    yearVersion: entry.tokenized.yearVersion,
-    requirementSections: mainReqsParsed,
-    concentrations: {
-      minOptions: concentrations.length >= 1 ? 1 : 0, // Is there any case where this isn't 0 or 1?
-      concentrationOptions: concentrations,
-    },
-  };
-
-  return {
-    url: entry.url,
-    type: entry.type,
-    parsed: major,
-  };
-};
-
 const saveResults = async (
-  entry: ParsedCatalogEntry
+  entry: ParsedCatalogEntry,
 ): Promise<ParsedCatalogEntry> => {
   const name = majorNameToFileName(entry.parsed.name);
   const year = entry.parsed.yearVersion;
-  const degree = name.includes("Minor") ? "minor" : "major";
-  const filePath = `./results/${degree}/${name}/${name}-${year}.json`;
+  const degree = name.includes("Minor") ? "minors" : "majors";
+  const college = entry.url.toString().split("/")[6].replaceAll("-", "_");
+
+  const filePath = join(
+    "degrees",
+    degree,
+    year.toString(),
+    college,
+    majorNameToFileName(name),
+    "parsed.json",
+  );
+
   return writeFile(filePath, JSON.stringify(entry.parsed, null, 2))
     .then(() => {
       // console.log("wrote file: " + path)
       return entry;
     })
-    .catch((e) => {
+    .catch(e => {
       console.log(e);
       return entry;
     });

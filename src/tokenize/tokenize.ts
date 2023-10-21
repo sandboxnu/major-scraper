@@ -31,6 +31,7 @@ import {
   RangeLowerBoundedRow,
   RangeUnboundedRow,
   TextRow,
+  TokenizedCatalogEntry,
   WithExceptions,
 } from "./types";
 import { join } from "path";
@@ -39,38 +40,61 @@ import { categorizeTextRow } from "./textCategorize";
 import { existsSync } from "fs";
 import { mkdir, writeFile } from "fs/promises";
 import * as cheerio from "cheerio";
+import { TypedCatalogEntry } from "../classify";
+
+export const tokenizeEntry = async (
+  entry: TypedCatalogEntry,
+): Promise<TokenizedCatalogEntry> => {
+  const tokenized = await fetchAndTokenizeHTML(entry.url);
+  return { ...entry, tokenized };
+};
 
 /**
  * Fetch html for page and convert into intermediate representation (IR)
  *
  * @param url The url of the page to tokenize
  */
-export const fetchAndTokenizeHTML = async (url: URL): Promise<HDocument> => {
+const fetchAndTokenizeHTML = async (url: URL): Promise<HDocument> => {
   const html = await wrappedGetRequest(url.href);
   const token = await tokenizeHTML(cheerio.load(html));
+
   const majorName = token.majorName;
   const year = token.yearVersion;
-  const degree = majorName.includes("Minor") ? "minor" : "major";
+  const degree = majorName.includes("Minor") ? "minors" : "majors";
+  // in the url, the college will always be at the 6th place in the url
+  const college = url.toString().split("/")[6].replaceAll("-", "_");
 
-  const filePath = join("results", degree, majorNameToFileName(majorName));
-  if (!existsSync("./results")) {
-    await mkdir("./results");
+  const filePath = join(
+    "degrees",
+    degree,
+    year.toString(),
+    college,
+    majorNameToFileName(majorName),
+  );
+
+  if (!existsSync("./degrees")) {
+    await mkdir("./degrees");
   }
 
-  if (!existsSync("./results/major")) {
-    await mkdir("./results/major");
+  if (!existsSync(join("degrees", degree))) {
+    await mkdir(join("degrees", degree));
   }
 
-  if (!existsSync("./results/minor")) {
-    await mkdir("./results/minor");
+  if (!existsSync(join("degrees", degree, year.toString()))) {
+    await mkdir(join("degrees", degree, year.toString()));
+  }
+
+  if (!existsSync(join("degrees", degree, year.toString(), college))) {
+    await mkdir(join("degrees", degree, year.toString(), college));
   }
 
   if (!existsSync(filePath)) {
     await mkdir(filePath);
   }
+
   if (STORE_TOKENS_AND_HTML) {
-    await writeFile(`${filePath}/html-${year}.html`, html);
-    await writeFile(`${filePath}/tokens-${year}.json`, JSON.stringify(token, null, 2));
+    await writeFile(`${filePath}/cached.html`, html);
+    await writeFile(`${filePath}/tokens.json`, JSON.stringify(token, null, 2));
   }
   return token;
 };
@@ -90,7 +114,7 @@ export const tokenizeHTML = async ($: CheerioStatic): Promise<HDocument> => {
 
   const programRequiredHours = getProgramRequiredHours(
     $,
-    requirementsContainer
+    requirementsContainer,
   );
 
   // TODO: replace with actual categorization
@@ -149,7 +173,7 @@ const getRequirementsContainer = ($: CheerioStatic) => {
  */
 const getProgramRequiredHours = (
   $: CheerioStatic,
-  requirementsContainer: Cheerio
+  requirementsContainer: Cheerio,
 ) => {
   const programRequiredHeading = requirementsContainer
     .find("h2")
@@ -185,7 +209,7 @@ const getProgramRequiredHours = (
  */
 const tokenizeSections = async (
   $: CheerioStatic,
-  requirementsContainer: Cheerio
+  requirementsContainer: Cheerio,
 ): Promise<HSection[]> => {
   // use a stack to keep track of the course list title and description
   const descriptions: string[] = [];
@@ -223,9 +247,9 @@ const tokenizeSections = async (
       const pages = await Promise.all(links.map(loadHTML));
       const containerId = "#concentrationrequirementstextcontainer";
       const concentrations = await Promise.all(
-        pages.map((concentrationPage) =>
-          tokenizeSections(concentrationPage, concentrationPage(containerId))
-        )
+        pages.map(concentrationPage =>
+          tokenizeSections(concentrationPage, concentrationPage(containerId)),
+        ),
       );
       courseList.push(...concentrations.flat());
     }
@@ -246,8 +270,8 @@ const constructNestedLinks = ($: CheerioStatic, element: CheerioElement) => {
   return $(element)
     .find("li > a")
     .toArray()
-    .map((link) => $(link).attr("href"))
-    .map((path) => join(BASE_URL, path));
+    .map(link => $(link).attr("href"))
+    .map(path => join(BASE_URL, path));
 };
 
 /**
@@ -344,7 +368,7 @@ const getRowType = ($: CheerioStatic, tr: CheerioElement, tds: Cheerio[]) => {
 const constructRow = (
   $: CheerioStatic,
   tds: Cheerio[],
-  type: HRowType
+  type: HRowType,
 ): HRow => {
   switch (type) {
     case HRowType.HEADER:
@@ -380,7 +404,7 @@ const constructRow = (
 const constructTextRow = <T>(
   $: CheerioStatic,
   tds: Cheerio[],
-  type: T
+  type: T,
 ): TextRow<T> => {
   if (tds.length !== 2) {
     throw new Error(tds.toString());
@@ -393,7 +417,7 @@ const constructTextRow = <T>(
 
 const constructPlainCourseRow = (
   $: CheerioStatic,
-  tds: Cheerio[]
+  tds: Cheerio[],
 ): CourseRow<HRowType.PLAIN_COURSE> => {
   const [code, desc, hourCol] = ensureLength(3, tds);
   const { subject, classId } = parseCourseTitle(parseText(code));
@@ -404,12 +428,12 @@ const constructPlainCourseRow = (
 
 const constructOrCourseRow = (
   $: CheerioStatic,
-  tds: Cheerio[]
+  tds: Cheerio[],
 ): CourseRow<HRowType.OR_COURSE> => {
   const [code, desc] = ensureLength(2, tds);
   // remove "or "
   const { subject, classId } = parseCourseTitle(
-    parseText(code).substring(3).trim()
+    parseText(code).substring(3).trim(),
   );
   const description = parseText(desc);
   // there may be multiple courses in the OR, so we can't backtrack
@@ -419,7 +443,7 @@ const constructOrCourseRow = (
 const constructMultiCourseRow = (
   $: CheerioStatic,
   tds: Cheerio[],
-  type: HRowType.AND_COURSE | HRowType.OR_OF_AND_COURSE
+  type: HRowType.AND_COURSE | HRowType.OR_OF_AND_COURSE,
 ):
   | MultiCourseRow<HRowType.AND_COURSE>
   | MultiCourseRow<HRowType.OR_OF_AND_COURSE> => {
@@ -436,7 +460,7 @@ const constructMultiCourseRow = (
     .children(".blockindent")
     .toArray()
     // ignore the first four characters, "and "
-    .map((c) => parseText($(c)).substring(4).trim());
+    .map(c => parseText($(c)).substring(4).trim());
   const descriptions = [firstDescription, ...restDescriptions];
   if (titles.length !== descriptions.length) {
     const msg = `found titles: ${titles.length} !== found descs: ${descriptions.length}`;
@@ -458,7 +482,7 @@ const constructMultiCourseRow = (
 
 const constructRangeLowerBoundedMaybeExceptions = (
   $: CheerioStatic,
-  tds: Cheerio[]
+  tds: Cheerio[],
 ):
   | WithExceptions<
       RangeLowerBoundedRow<HRowType.RANGE_LOWER_BOUNDED_WITH_EXCEPTIONS>
@@ -475,7 +499,7 @@ const constructRangeLowerBoundedMaybeExceptions = (
   const matches = Array.from(text.matchAll(RANGE_LOWER_BOUNDED_PARSE));
   const [[, subject, , , , id], ...exceptions] = ensureLengthAtLeast(
     1,
-    matches
+    matches,
   );
   if (exceptions.length > 0) {
     return {
@@ -499,7 +523,7 @@ const constructRangeLowerBoundedMaybeExceptions = (
 
 const constructRangeBoundedMaybeExceptions = (
   $: CheerioStatic,
-  tds: Cheerio[]
+  tds: Cheerio[],
 ):
   | RangeBoundedRow<HRowType.RANGE_BOUNDED>
   | WithExceptions<RangeBoundedRow<HRowType.RANGE_BOUNDED_WITH_EXCEPTIONS>> => {
@@ -537,7 +561,7 @@ const constructRangeBoundedMaybeExceptions = (
 
 const constructRangeUnbounded = (
   $: CheerioStatic,
-  tds: Cheerio[]
+  tds: Cheerio[],
 ): RangeUnboundedRow<HRowType.RANGE_UNBOUNDED> => {
   const [desc, hourCol] = ensureLength(2, tds);
   const hour = parseHour(hourCol);
@@ -555,18 +579,18 @@ const constructRangeUnbounded = (
 };
 
 const sectionInfoOnes = ["Choose one:", "Complete one of the following:"].map(
-  (text) => text.toLowerCase()
+  text => text.toLowerCase(),
 );
 
 const sectionInfoTwos = [
   "Complete two courses (and any required labs) from the following science categories:",
-].map((text) => text.toLowerCase());
+].map(text => text.toLowerCase());
 
 const sectionInfoAll = [...sectionInfoOnes, ...sectionInfoTwos];
 
 const constructSectionInfo = (
   $: CheerioStatic,
-  tds: Cheerio[]
+  tds: Cheerio[],
 ): CountAndHoursRow<HRowType.SECTION_INFO> => {
   const [c1, c2] = ensureLength(2, tds, tds.toString());
   const hour = parseHour(c2);
@@ -591,7 +615,7 @@ const constructSectionInfo = (
   }
 
   throw new Error(
-    "Parsed text not in recognised list! (shouldn't be possible :) )."
+    "Parsed text not in recognised list! (shouldn't be possible :) ).",
   );
 };
 
@@ -610,7 +634,7 @@ const XOM_NUMBERS = new Map([
 
 const constructXOfMany = (
   $: CheerioStatic,
-  tds: Cheerio[]
+  tds: Cheerio[],
 ): TextRow<HRowType.X_OF_MANY> => {
   const [c1, c2] = ensureLength(2, tds, tds.toString());
   let hour = parseHour(c2);

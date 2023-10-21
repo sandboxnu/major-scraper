@@ -27,5 +27,3 @@ However, only the last ~7 or so catalogs are actually stored in HTML form. we do
 Because of this, in the future, it may be worth it to download old versions of the catalog for safekeeping.
 
 Also because of this, we cannot scrape older versions of the catalog (older than 7 years), because the scraper cannot function on non-HTML versions of the catalog.
-
-The ticket for adding old catalog support can be found here: https://trello.com/c/7aFTWtMU/452-scrapers-add-old-catalog-support

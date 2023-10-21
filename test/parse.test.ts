@@ -1,6 +1,10 @@
 import { HRow, HRowType } from "../src/tokenize/types";
 import { parseRows } from "../src/parse/parse";
-import { IOrCourse2, IRequiredCourse, Requirement2 } from "../src/graduate-types/major2";
+import {
+  IOrCourse2,
+  IRequiredCourse,
+  Requirement2,
+} from "../src/graduate-types/major2";
 
 const course: HRow = {
   type: HRowType.PLAIN_COURSE,

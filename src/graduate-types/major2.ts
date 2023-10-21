@@ -9,11 +9,17 @@
  */
 export interface Major2 {
   name: string;
+  metadata?: Metadata;
   requirementSections: Section[];
   totalCreditsRequired: number;
   yearVersion: number;
   concentrations: Concentrations2;
 }
+
+export type Metadata = {
+  verified: boolean;
+  lastEdited: string;
+};
 
 /**
  * A Section, containing its related requirements.

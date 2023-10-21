@@ -45,7 +45,7 @@ export const parseCommentRow = (row: TextRowTypes) => {
       // was zero
       stats?.recordField(
         "comments status",
-        "hour = 0; non-matching numeric text"
+        "hour = 0; non-matching numeric text",
       );
       stats?.recordField("hour = zero + non-matching", desc);
     }

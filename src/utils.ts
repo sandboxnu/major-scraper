@@ -5,7 +5,7 @@ import { mkdir, readFile, writeFile } from "fs/promises";
 import undici from "undici";
 
 export const loadHtmlWithUrl = async (
-  url: URL
+  url: URL,
 ): Promise<{ url: URL; result: Result<CheerioStatic, unknown> }> => {
   let result: Result<CheerioStatic, unknown>;
   try {
@@ -88,22 +88,20 @@ export const parseText = (td: Cheerio) => {
 
 /**
  * Exits the whole program with an error message.
- * 
- * Should be used only when the trace isn't going to matter and you want a 
+ *
+ * Should be used only when the trace isn't going to matter and you want a
  * slightly cleaner error message (good for command line arg errors for example).
- * 
- * To use this you may have to "return" the value to convince TypeScript that the 
+ *
+ * To use this you may have to "return" the value to convince TypeScript that the
  * program won't keep running, but since the type is "never", you won't have to
  * modify the function signature.
  * @param message the error message to exit with.
  */
 export const fatalError = (message: string): never => {
-  console.error(message)
-  process.exit(1)
-}
+  console.error(message);
+  process.exit(1);
+};
 
 export const majorNameToFileName = (majorName: string): string => {
-  return majorName
-    .replaceAll(",", "")
-    .replaceAll(" ", "_")
-}
+  return majorName.replaceAll(",", "").replaceAll(" ", "_");
+};

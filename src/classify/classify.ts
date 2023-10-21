@@ -41,7 +41,7 @@ const getTypeFromTabs = ($: CheerioStatic) => {
     return getTypeFromTabText(tabsContainer.find("ul > li").toArray().map($));
   }
   throw new Error(
-    `Expected 0 or 1 tab container, but found ${tabsContainer.length}.`
+    `Expected 0 or 1 tab container, but found ${tabsContainer.length}.`,
   );
 };
 

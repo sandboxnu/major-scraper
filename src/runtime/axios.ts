@@ -11,7 +11,7 @@ export const createAgent = () => {
     new Pool(BASE_URL, {
       pipelining: 10,
       connections: 25,
-    })
+    }),
   );
   return () => getGlobalDispatcher().destroy();
 };
