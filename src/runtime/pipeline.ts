@@ -17,6 +17,31 @@ import { scrapeMajorLinks } from "../urls";
 import { ParsedCatalogEntry, parseEntry } from "../parse";
 import { join } from "path";
 
+export const runPipeline2 = async (yearStart: number) => {
+  const unregisterAgent = createAgent();
+  const { entries, unfinished } = await scrapeMajorLinks(yearStart);
+  await unregisterAgent();
+
+  if (unfinished.length > 0) {
+    console.log("didn't finish searching some entries", ...unfinished);
+  }
+
+  console.log(entries.map(url => url.href));
+
+  // installGlobalStatsLogger();
+  // const pipelines = entries.map(entry => {
+  //   return createPipeline(entry)
+  //     .then(addPhase(StageLabel.Classify, addTypeToUrl))
+  //     .then(addPhase(StageLabel.Tokenize, tokenizeEntry))
+  //     .then(addPhase(StageLabel.Parse, parseEntry));
+  // });
+
+  // const results = await logProgress(pipelines);
+
+  // logResults(results);
+  // clearGlobalStatsLogger();
+};
+
 /**
  * Runs a full scrape of the catalog, logging the results to the console.
  */

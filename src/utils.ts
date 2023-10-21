@@ -4,6 +4,19 @@ import { existsSync } from "fs";
 import { mkdir, readFile, writeFile } from "fs/promises";
 import undici from "undici";
 
+export const loadHTML2 = async (
+  url: URL,
+): Promise<{ url: URL; result: Result<CheerioStatic, unknown> }> => {
+  let result: Result<CheerioStatic, unknown>;
+  try {
+    const html = cheerio.load(await wrappedGetRequest(url.href));
+    result = Ok(html);
+  } catch (error) {
+    result = Err(error);
+  }
+  return { url, result };
+};
+
 export const loadHtmlWithUrl = async (
   url: URL,
 ): Promise<{ url: URL; result: Result<CheerioStatic, unknown> }> => {
@@ -56,7 +69,7 @@ const cachedGetRequest = async (url: string) => {
 export const wrappedGetRequest = async (url: string) => {
   const response = await undici.request(url, { maxRedirections: 1 });
   if (response.statusCode !== 200) {
-    throw new Error(`non-ok status code: ${response.statusCode}, url: ${url}`);
+    throw new Error(`Non-ok status code: ${response.statusCode}, url: ${url}`);
   }
   return await response.body.text();
 };

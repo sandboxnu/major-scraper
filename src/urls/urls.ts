@@ -1,4 +1,4 @@
-import { loadHtmlWithUrl } from "../utils";
+import { loadHTML2, loadHtmlWithUrl } from "../utils";
 import { CatalogURLResult, College } from "./types";
 import { ResultType } from "../graduate-types/common";
 import { join } from "path";
@@ -20,7 +20,6 @@ export const scrapeMajorLinks = async (
   start: number,
 ): Promise<CatalogURLResult> => {
   if (start < EARLIEST_CATALOG_YEAR) {
-    // this is because there is no HTML version of those catalogs
     throw new Error("Scraping for years before 2016-2017 is not supported.");
   } else if (start > CURRENT_CATALOG_YEAR) {
     throw new Error(
@@ -28,36 +27,16 @@ export const scrapeMajorLinks = async (
     );
   }
 
-  if (start === CURRENT_CATALOG_YEAR) {
-    return scrapeMajorLinksForUrl(BASE_URL, "undergraduate");
-  } else {
-    return scrapeMajorLinksForUrl(
-      BASE_URL,
-      `archive/${start}-${start + 1}/undergraduate`,
-    );
-  }
-};
+  const path =
+    start == CURRENT_CATALOG_YEAR
+      ? "undergraduate"
+      : `archive/${start}-${start + 1}/undergraduate`;
 
-/**
- * Given a baseUrl and a path, attempts to scrape the major catalog based on the
- * sidebar hierarchy.
- *
- * Assumes that the provided baseURL + path have direct sub-entries for each of
- * the colleges.
- *
- * @param baseUrl The base url of the major catalog. should look something like
- *   "https://catalog.northeastern.edu"
- * @param path    The path of the major catalog. something like
- *   "/undergraduate/" or "/archive/2018-2019/undergraduate".
- */
-export const scrapeMajorLinksForUrl = async (
-  baseUrl: string,
-  path: string,
-): Promise<CatalogURLResult> => {
   const initQueue = Object.values(College).map(
-    college => new URL(join(baseUrl, path, college, "/")),
+    college => new URL(join(BASE_URL, path, college, "/")),
   );
-  return await scrapeLinks(baseUrl, initQueue);
+
+  return await scrapeLinks(BASE_URL, initQueue);
 };
 
 /**
@@ -82,12 +61,15 @@ const scrapeLinks = async (
   while (queue.length > 0) {
     const { ok, errors } = await getUrlHtmls(queue);
     unfinished.push(...errors);
+
     const nextQueue: URL[] = [];
     for (const { $, url } of ok) {
       const children = getChildrenForPathId($, url).toArray().map($);
+
       for (const element of children) {
         const path = getLinkForEl(element);
         const url = new URL(join(baseUrl, path));
+
         if (
           !seen.has(url.href) &&
           Object.values(College).some(linkPart => url.href.includes(linkPart))
@@ -133,7 +115,7 @@ const getChildrenForPathId = ($: CheerioStatic, url: URL) => {
 };
 
 const getUrlHtmls = async (queue: URL[]) => {
-  const fetchResults = await Promise.all(queue.map(loadHtmlWithUrl));
+  const fetchResults = await Promise.all(queue.map(loadHTML2));
 
   const ok = [];
   const errors = [];

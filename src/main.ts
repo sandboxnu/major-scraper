@@ -1,5 +1,5 @@
 import { CURRENT_CATALOG_YEAR, EARLIEST_CATALOG_YEAR } from "./constants";
-import { runPipeline } from "./runtime/pipeline";
+import { runPipeline, runPipeline2 } from "./runtime/pipeline";
 import { fatalError } from "./utils";
 
 let args = process.argv.slice(2);
@@ -32,7 +32,7 @@ const years: number[] = args.map((arg: string) => {
 async function runPipelines(years: number[]) {
   for (const year of years) {
     console.log(`Started scraping catalog year: ${year}...`);
-    await runPipeline(year);
+    await runPipeline2(year);
     console.log(`Finished scraping catalog year: ${year}!`);
   }
 }
