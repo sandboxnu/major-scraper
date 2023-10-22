@@ -4,7 +4,11 @@ import { existsSync } from "fs";
 import { mkdir, readFile, writeFile } from "fs/promises";
 import undici from "undici";
 
-export const loadHTML2 = async (
+export const loadHTML2 = async (url: string): Promise<CheerioStatic> => {
+  return cheerio.load(await wrappedGetRequest(url));
+};
+
+export const loadHtmlWithUrl2 = async (
   url: URL,
 ): Promise<{ url: URL; result: Result<CheerioStatic, unknown> }> => {
   let result: Result<CheerioStatic, unknown>;

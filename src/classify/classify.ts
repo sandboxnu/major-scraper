@@ -1,11 +1,76 @@
-import { ensureLengthAtLeast, loadHTML, parseText } from "../utils";
-import { CatalogEntryType, TypedCatalogEntry } from "./types";
+import assert from "assert";
+import { College } from "../urls";
+import {
+  ensureLengthAtLeast,
+  loadHTML,
+  loadHTML2,
+  majorNameToFileName,
+  parseText,
+} from "../utils";
+import {
+  CatalogEntryType,
+  FilterError,
+  TypedCatalogEntry,
+  TypedCatalogEntry2,
+} from "./types";
+import { mkdir, writeFile } from "fs/promises";
+import { join } from "path";
+
+export const classify = async (
+  url: URL,
+  filterTypes: CatalogEntryType[],
+): Promise<TypedCatalogEntry2> => {
+  const html = await loadHTML2(url.href);
+
+  const { degreeType, yearVersion, college, majorName } = getMetadata(
+    html,
+    url,
+  );
+
+  if (!filterTypes.includes(degreeType)) {
+    throw new FilterError(degreeType, filterTypes);
+  }
+
+  const savePath = join(
+    "degrees",
+    degreeType,
+    yearVersion.toString(),
+    college,
+    majorNameToFileName(majorName),
+  );
+  await mkdir(savePath, { recursive: true });
+  await writeFile(`${savePath}/html.html`, html.html());
+
+  return { url, degreeType, yearVersion, college, majorName, savePath };
+};
 
 export const addTypeToUrl = async (url: URL): Promise<TypedCatalogEntry> => {
   const type = getUrlType(await loadHTML(url.href));
   return { url, type };
 };
 
+const saveHTML = async () => {};
+
+const getCollegeFromURL = (url: URL): College => {
+  const college = url.toString().split("/")[4] as College;
+  assert(Object.values(College).includes(college));
+  return college;
+};
+
+const getMetadata = ($: CheerioStatic, url: URL) => {
+  const degreeType = getUrlType($);
+  const catalogYear: string = parseText($("#edition")).split(" ")[0];
+  const yearVersion: number = parseInt(catalogYear.split("-")[0]);
+  const college = getCollegeFromURL(url);
+  const majorName: string = parseText($("#site-title").find("h1"));
+
+  return {
+    degreeType,
+    yearVersion,
+    college,
+    majorName,
+  };
+};
 // try to get the type from each strategy, in order (name, tabs, container)
 const getUrlType = ($: CheerioStatic) => {
   const typeFromName = getTypeFromNameEnding($);

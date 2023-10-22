@@ -1,4 +1,4 @@
-import { loadHTML2, loadHtmlWithUrl } from "../utils";
+import { loadHtmlWithUrl2 } from "../utils";
 import { CatalogURLResult, College } from "./types";
 import { ResultType } from "../graduate-types/common";
 import { join } from "path";
@@ -10,10 +10,9 @@ import {
 
 /**
  * Scrapes all catalog entries underneath the colleges for the specified catalog
- * year (given in the form of two numbers to avoid ambiguity: ex, 2021-2022).
+ * year.
  *
  * @param   start Starting year (must be end year - 1)
- * @param   end   Ending year
  * @returns       A hierarchy of catalog entry links
  */
 export const scrapeMajorLinks = async (
@@ -115,7 +114,7 @@ const getChildrenForPathId = ($: CheerioStatic, url: URL) => {
 };
 
 const getUrlHtmls = async (queue: URL[]) => {
-  const fetchResults = await Promise.all(queue.map(loadHTML2));
+  const fetchResults = await Promise.all(queue.map(loadHtmlWithUrl2));
 
   const ok = [];
   const errors = [];

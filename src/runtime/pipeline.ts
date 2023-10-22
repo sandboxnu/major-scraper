@@ -1,5 +1,5 @@
 import { tokenizeEntry } from "../tokenize/tokenize";
-import { addTypeToUrl } from "../classify/classify";
+import { addTypeToUrl, classify } from "../classify/classify";
 import { CatalogEntryType, TypedCatalogEntry } from "../classify/types";
 import { Err, Ok, ResultType } from "../graduate-types/common";
 import { Pipeline, StageLabel } from "./types";
@@ -20,24 +20,27 @@ import { join } from "path";
 export const runPipeline2 = async (yearStart: number) => {
   const unregisterAgent = createAgent();
   const { entries, unfinished } = await scrapeMajorLinks(yearStart);
-  await unregisterAgent();
 
   if (unfinished.length > 0) {
     console.log("didn't finish searching some entries", ...unfinished);
   }
 
-  console.log(entries.map(url => url.href));
+  installGlobalStatsLogger();
+  const pipelines = entries.map(entry => {
+    return createPipeline(entry).then(
+      addPhase(StageLabel.Classify, classify, [
+        CatalogEntryType.Minor,
+        CatalogEntryType.Major,
+        CatalogEntryType.Concentration,
+      ]),
+    );
+    // .then(addPhase(StageLabel.Tokenize, tokenizeEntry))
+    // .then(addPhase(StageLabel.Parse, parseEntry));
+  });
 
-  // installGlobalStatsLogger();
-  // const pipelines = entries.map(entry => {
-  //   return createPipeline(entry)
-  //     .then(addPhase(StageLabel.Classify, addTypeToUrl))
-  //     .then(addPhase(StageLabel.Tokenize, tokenizeEntry))
-  //     .then(addPhase(StageLabel.Parse, parseEntry));
-  // });
+  const results = await logProgress(pipelines);
 
-  // const results = await logProgress(pipelines);
-
+  await unregisterAgent();
   // logResults(results);
   // clearGlobalStatsLogger();
 };
