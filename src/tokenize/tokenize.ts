@@ -32,6 +32,7 @@ import {
   RangeUnboundedRow,
   TextRow,
   TokenizedCatalogEntry,
+  TokenizedCatalogEntry2,
   WithExceptions,
 } from "./types";
 import { join } from "path";
@@ -40,7 +41,52 @@ import { categorizeTextRow } from "./textCategorize";
 import { existsSync } from "fs";
 import { mkdir, writeFile } from "fs/promises";
 import * as cheerio from "cheerio";
-import { TypedCatalogEntry } from "../classify";
+import { TypedCatalogEntry, TypedCatalogEntry2 } from "../classify";
+
+// should tokenize have the option to read the html locally or from the previous step
+export const tokenize = async (
+  entry: TypedCatalogEntry2,
+): Promise<TokenizedCatalogEntry2> => {
+  const requirementsContainer = getRequirementsContainer(entry.html);
+  const sections = await tokenizeSections(entry.html, requirementsContainer);
+
+  const programRequiredHours = getProgramRequiredHours(
+    entry.html,
+    requirementsContainer,
+  );
+
+  // TODO: replace with actual categorization
+  for (const s of sections) {
+    for (const r of s.entries) {
+      if (
+        r.type === HRowType.HEADER ||
+        r.type === HRowType.SUBHEADER ||
+        r.type === HRowType.COMMENT
+      ) {
+        categorizeTextRow(r);
+      }
+    }
+  }
+
+  const tokenized = {
+    url: entry.url,
+    majorName: entry.majorName,
+    yearVersion: entry.yearVersion,
+    programRequiredHours,
+    sections,
+  };
+  // save tokens
+  await writeFile(
+    `${entry.savePath}/tokens.json`,
+    JSON.stringify(tokenized, null, 2),
+  );
+
+  return {
+    ...entry,
+    programRequiredHours,
+    sections,
+  };
+};
 
 export const tokenizeEntry = async (
   entry: TypedCatalogEntry,

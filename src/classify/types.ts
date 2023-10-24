@@ -16,6 +16,7 @@ export type TypedCatalogEntry2 = {
   college: College;
   majorName: string;
   savePath: string;
+  html: CheerioStatic;
 };
 
 export class FilterError {

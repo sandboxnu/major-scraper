@@ -41,7 +41,7 @@ export const classify = async (
   await mkdir(savePath, { recursive: true });
   await writeFile(`${savePath}/html.html`, html.html());
 
-  return { url, degreeType, yearVersion, college, majorName, savePath };
+  return { url, degreeType, yearVersion, college, majorName, savePath, html };
 };
 
 export const addTypeToUrl = async (url: URL): Promise<TypedCatalogEntry> => {

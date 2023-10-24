@@ -1,7 +1,7 @@
-import { tokenizeEntry } from "../tokenize/tokenize";
-import { addTypeToUrl, classify } from "../classify/classify";
-import { CatalogEntryType, TypedCatalogEntry } from "../classify/types";
-import { Err, Ok, ResultType } from "../graduate-types/common";
+import { tokenizeEntry, tokenize } from "../tokenize";
+import { addTypeToUrl, classify } from "../classify";
+import { CatalogEntryType, TypedCatalogEntry } from "../classify";
+import { Err, Ok, ResultType } from "../graduate-types";
 import { Pipeline, StageLabel } from "./types";
 import { createAgent } from "./axios";
 import {
@@ -27,14 +27,15 @@ export const runPipeline2 = async (yearStart: number) => {
 
   installGlobalStatsLogger();
   const pipelines = entries.map(entry => {
-    return createPipeline(entry).then(
-      addPhase(StageLabel.Classify, classify, [
-        CatalogEntryType.Minor,
-        CatalogEntryType.Major,
-        CatalogEntryType.Concentration,
-      ]),
-    );
-    // .then(addPhase(StageLabel.Tokenize, tokenizeEntry))
+    return createPipeline(entry)
+      .then(
+        addPhase(StageLabel.Classify, classify, [
+          CatalogEntryType.Minor,
+          CatalogEntryType.Major,
+          CatalogEntryType.Concentration,
+        ]),
+      )
+      .then(addPhase(StageLabel.Tokenize, tokenize));
     // .then(addPhase(StageLabel.Parse, parseEntry));
   });
 
