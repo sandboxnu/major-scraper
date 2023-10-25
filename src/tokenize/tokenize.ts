@@ -75,7 +75,7 @@ export const tokenize = async (
     programRequiredHours,
     sections,
   };
-  // save tokens
+
   await writeFile(
     `${entry.savePath}/tokens.json`,
     JSON.stringify(tokenized, null, 2),

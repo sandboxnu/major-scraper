@@ -14,7 +14,7 @@ import { writeFile } from "fs/promises";
 import { saveComment } from "./saveComment";
 import { majorNameToFileName } from "../utils";
 import { scrapeMajorLinks } from "../urls";
-import { ParsedCatalogEntry, parseEntry } from "../parse";
+import { ParsedCatalogEntry, parse, parseEntry } from "../parse";
 import { join } from "path";
 
 export const runPipeline2 = async (yearStart: number) => {
@@ -35,8 +35,8 @@ export const runPipeline2 = async (yearStart: number) => {
           CatalogEntryType.Concentration,
         ]),
       )
-      .then(addPhase(StageLabel.Tokenize, tokenize));
-    // .then(addPhase(StageLabel.Parse, parseEntry));
+      .then(addPhase(StageLabel.Tokenize, tokenize))
+      .then(addPhase(StageLabel.Parse, parse));
   });
 
   const results = await logProgress(pipelines);
