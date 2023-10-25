@@ -9,6 +9,7 @@ import {
   logProgress,
   logResults,
   clearGlobalStatsLogger,
+  getGlobalStatsLogger,
 } from "./logger";
 import { writeFile } from "fs/promises";
 import { saveComment } from "./saveComment";
@@ -42,8 +43,22 @@ export const runPipeline2 = async (yearStart: number) => {
   const results = await logProgress(pipelines);
 
   await unregisterAgent();
-  // logResults(results);
-  // clearGlobalStatsLogger();
+  await logResults(results);
+  await saveComments();
+  clearGlobalStatsLogger();
+};
+
+const saveComments = async () => {
+  const comments = getGlobalStatsLogger()?.comments;
+  if (comments === undefined) {
+    return;
+  }
+
+  const obj: { [key: string]: string[] } = {};
+  Array.from(comments.entries())
+    .sort((a, b) => -a[1].length + b[1].length)
+    .forEach(([key, value]) => (obj[key] = value));
+  await writeFile("./degrees/comments.json", JSON.stringify(obj, null, 2));
 };
 
 /**

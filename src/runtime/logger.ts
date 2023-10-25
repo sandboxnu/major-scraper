@@ -127,6 +127,8 @@ class StatsLogger {
     Array<{ err: Error; count: number; annot: string; entryIds: URL[] }>
   > = new Map();
 
+  comments: Map<string, string[]> = new Map();
+
   /**
    * Records a field and its value, with the goal of printing the counts for
    * each different value the field has at the end.

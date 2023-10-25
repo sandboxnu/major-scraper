@@ -63,7 +63,7 @@ export const tokenize = async (
         r.type === HRowType.SUBHEADER ||
         r.type === HRowType.COMMENT
       ) {
-        categorizeTextRow(r);
+        categorizeTextRow(r, entry.majorName);
       }
     }
   }
@@ -171,7 +171,7 @@ export const tokenizeHTML = async ($: CheerioStatic): Promise<HDocument> => {
         r.type === HRowType.SUBHEADER ||
         r.type === HRowType.COMMENT
       ) {
-        categorizeTextRow(r);
+        categorizeTextRow(r, majorName);
       }
     }
   }
