@@ -3,9 +3,7 @@ import {
   ensureLength,
   ensureLengthAtLeast,
   loadHTML,
-  majorNameToFileName,
   parseText,
-  wrappedGetRequest,
 } from "../utils";
 import {
   COURSE_REGEX,
@@ -21,7 +19,6 @@ import {
 import {
   CountAndHoursRow,
   CourseRow,
-  HDocument,
   HRow,
   HRowType,
   HSection,
@@ -32,21 +29,18 @@ import {
   RangeUnboundedRow,
   TextRow,
   TokenizedCatalogEntry,
-  TokenizedCatalogEntry2,
   WithExceptions,
 } from "./types";
 import { join } from "path";
-import { BASE_URL, STORE_TOKENS_AND_HTML } from "../constants";
+import { BASE_URL } from "../constants";
 import { categorizeTextRow } from "./textCategorize";
-import { existsSync } from "fs";
-import { mkdir, writeFile } from "fs/promises";
-import * as cheerio from "cheerio";
-import { TypedCatalogEntry, TypedCatalogEntry2 } from "../classify";
+import { writeFile } from "fs/promises";
+import { TypedCatalogEntry } from "../classify";
 
 // should tokenize have the option to read the html locally or from the previous step
 export const tokenize = async (
-  entry: TypedCatalogEntry2,
-): Promise<TokenizedCatalogEntry2> => {
+  entry: TypedCatalogEntry,
+): Promise<TokenizedCatalogEntry> => {
   const requirementsContainer = getRequirementsContainer(entry.html);
   const sections = await tokenizeSections(entry.html, requirementsContainer);
 
@@ -84,102 +78,6 @@ export const tokenize = async (
   return {
     ...entry,
     programRequiredHours,
-    sections,
-  };
-};
-
-export const tokenizeEntry = async (
-  entry: TypedCatalogEntry,
-): Promise<TokenizedCatalogEntry> => {
-  const tokenized = await fetchAndTokenizeHTML(entry.url);
-  return { ...entry, tokenized };
-};
-
-/**
- * Fetch html for page and convert into intermediate representation (IR)
- *
- * @param url The url of the page to tokenize
- */
-const fetchAndTokenizeHTML = async (url: URL): Promise<HDocument> => {
-  const html = await wrappedGetRequest(url.href);
-  const token = await tokenizeHTML(cheerio.load(html));
-
-  const majorName = token.majorName;
-  const year = token.yearVersion;
-  const degree = majorName.includes("Minor") ? "minors" : "majors";
-  // in the url, the college will always be at the 6th place in the url
-  const college = url.toString().split("/")[6].replaceAll("-", "_");
-
-  const filePath = join(
-    "degrees",
-    degree,
-    year.toString(),
-    college,
-    majorNameToFileName(majorName),
-  );
-
-  if (!existsSync("./degrees")) {
-    await mkdir("./degrees");
-  }
-
-  if (!existsSync(join("degrees", degree))) {
-    await mkdir(join("degrees", degree));
-  }
-
-  if (!existsSync(join("degrees", degree, year.toString()))) {
-    await mkdir(join("degrees", degree, year.toString()));
-  }
-
-  if (!existsSync(join("degrees", degree, year.toString(), college))) {
-    await mkdir(join("degrees", degree, year.toString(), college));
-  }
-
-  if (!existsSync(filePath)) {
-    await mkdir(filePath);
-  }
-
-  if (STORE_TOKENS_AND_HTML) {
-    await writeFile(`${filePath}/cached.html`, html);
-    await writeFile(`${filePath}/tokens.json`, JSON.stringify(token, null, 2));
-  }
-  return token;
-};
-
-/**
- * Tokenize scraped html into intermediate representation (IR)
- *
- * @param $ The cheerio static for the page to tokenize
- */
-export const tokenizeHTML = async ($: CheerioStatic): Promise<HDocument> => {
-  const majorName: string = parseText($("#site-title").find("h1"));
-  const catalogYear: string = parseText($("#edition")).split(" ")[0];
-  const yearVersion: number = parseInt(catalogYear.split("-")[0]);
-
-  const requirementsContainer = getRequirementsContainer($);
-  const sections = await tokenizeSections($, requirementsContainer);
-
-  const programRequiredHours = getProgramRequiredHours(
-    $,
-    requirementsContainer,
-  );
-
-  // TODO: replace with actual categorization
-  for (const s of sections) {
-    for (const r of s.entries) {
-      if (
-        r.type === HRowType.HEADER ||
-        r.type === HRowType.SUBHEADER ||
-        r.type === HRowType.COMMENT
-      ) {
-        categorizeTextRow(r, majorName);
-      }
-    }
-  }
-
-  return {
-    programRequiredHours,
-    yearVersion,
-    majorName,
     sections,
   };
 };

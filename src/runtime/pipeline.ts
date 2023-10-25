@@ -1,6 +1,6 @@
-import { tokenizeEntry, tokenize } from "../tokenize";
-import { addTypeToUrl, classify } from "../classify";
-import { CatalogEntryType, TypedCatalogEntry } from "../classify";
+import { tokenize } from "../tokenize";
+import { classify } from "../classify";
+import { CatalogEntryType } from "../classify";
 import { Err, Ok, ResultType } from "../graduate-types";
 import { Pipeline, StageLabel } from "./types";
 import { createAgent } from "./axios";
@@ -12,13 +12,10 @@ import {
   getGlobalStatsLogger,
 } from "./logger";
 import { writeFile } from "fs/promises";
-import { saveComment } from "./saveComment";
-import { majorNameToFileName } from "../utils";
 import { scrapeMajorLinks } from "../urls";
-import { ParsedCatalogEntry, parse, parseEntry } from "../parse";
-import { join } from "path";
+import { parse } from "../parse";
 
-export const runPipeline2 = async (yearStart: number) => {
+export const runPipeline = async (yearStart: number) => {
   const unregisterAgent = createAgent();
   const { entries, unfinished } = await scrapeMajorLinks(yearStart);
 
@@ -43,7 +40,7 @@ export const runPipeline2 = async (yearStart: number) => {
   const results = await logProgress(pipelines);
 
   await unregisterAgent();
-  await logResults(results);
+  logResults(results);
   await saveComments();
   clearGlobalStatsLogger();
 };
@@ -59,46 +56,6 @@ const saveComments = async () => {
     .sort((a, b) => -a[1].length + b[1].length)
     .forEach(([key, value]) => (obj[key] = value));
   await writeFile("./degrees/comments.json", JSON.stringify(obj, null, 2));
-};
-
-/**
- * Runs a full scrape of the catalog, logging the results to the console.
- */
-export const runPipeline = async (yearStart: number) => {
-  const unregisterAgent = createAgent();
-  const { entries, unfinished } = await scrapeMajorLinks(yearStart);
-  const comments = new Map();
-  if (unfinished.length > 0) {
-    console.log("didn't finish searching some entries", ...unfinished);
-  }
-
-  // can use for debugging logging throughout the stages
-  installGlobalStatsLogger();
-  const pipelines = entries.map(entry => {
-    return createPipeline(entry)
-      .then(addPhase(StageLabel.Classify, addTypeToUrl))
-      .then(
-        addPhase(StageLabel.Filter, filterEntryType, [
-          CatalogEntryType.Minor,
-          CatalogEntryType.Major,
-          CatalogEntryType.Concentration,
-        ]),
-      )
-      .then(addPhase(StageLabel.Tokenize, tokenizeEntry))
-      .then(addPhase(StageLabel.SaveComment, saveComment, comments))
-      .then(addPhase(StageLabel.Parse, parseEntry))
-      .then(addPhase(StageLabel.Save, saveResults));
-  });
-  const results = await logProgress(pipelines);
-  await unregisterAgent();
-
-  const obj: { [key: string]: number } = {};
-  Array.from(comments.entries())
-    .sort((a, b) => -a[1].length + b[1].length)
-    .forEach(([key, value]) => (obj[key] = value));
-  writeFile("./degrees/comments.json", JSON.stringify(obj, null, 2));
-  logResults(results);
-  clearGlobalStatsLogger();
 };
 
 // convenience constructor for making a pipeline
@@ -139,52 +96,4 @@ const addPhase = <Input, Args extends any[], Output>(
       return { id, trace: newTrace, result: Err([e]) };
     }
   };
-};
-
-const filterEntryType = (
-  entry: TypedCatalogEntry,
-  types: CatalogEntryType[],
-) => {
-  if (types.includes(entry.type)) {
-    return entry;
-  }
-  throw new FilterError(entry.type, types);
-};
-
-export class FilterError {
-  actual;
-  allowed;
-
-  constructor(actual: CatalogEntryType, allowed: CatalogEntryType[]) {
-    this.actual = actual;
-    this.allowed = allowed;
-  }
-}
-
-const saveResults = async (
-  entry: ParsedCatalogEntry,
-): Promise<ParsedCatalogEntry> => {
-  const name = majorNameToFileName(entry.parsed.name);
-  const year = entry.parsed.yearVersion;
-  const degree = name.includes("Minor") ? "minors" : "majors";
-  const college = entry.url.toString().split("/")[6].replaceAll("-", "_");
-
-  const filePath = join(
-    "degrees",
-    degree,
-    year.toString(),
-    college,
-    majorNameToFileName(name),
-    "parsed.json",
-  );
-
-  return writeFile(filePath, JSON.stringify(entry.parsed, null, 2))
-    .then(() => {
-      // console.log("wrote file: " + path)
-      return entry;
-    })
-    .catch(e => {
-      console.log(e);
-      return entry;
-    });
 };

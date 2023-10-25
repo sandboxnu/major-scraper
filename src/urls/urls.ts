@@ -1,4 +1,4 @@
-import { loadHtmlWithUrl2 } from "../utils";
+import { loadHtmlWithUrl } from "../utils";
 import { CatalogURLResult, College } from "./types";
 import { ResultType } from "../graduate-types/common";
 import { join } from "path";
@@ -114,7 +114,7 @@ const getChildrenForPathId = ($: CheerioStatic, url: URL) => {
 };
 
 const getUrlHtmls = async (queue: URL[]) => {
-  const fetchResults = await Promise.all(queue.map(loadHtmlWithUrl2));
+  const fetchResults = await Promise.all(queue.map(loadHtmlWithUrl));
 
   const ok = [];
   const errors = [];

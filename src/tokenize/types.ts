@@ -1,4 +1,4 @@
-import { TypedCatalogEntry, TypedCatalogEntry2 } from "../classify";
+import { TypedCatalogEntry } from "../classify";
 
 /**
  * An HTML document (catalog page) has a few identifiable features, along with a
@@ -147,10 +147,6 @@ export type WithExceptions<S> = S & {
 };
 
 export type TokenizedCatalogEntry = TypedCatalogEntry & {
-  tokenized: HDocument;
-};
-
-export type TokenizedCatalogEntry2 = TypedCatalogEntry2 & {
   programRequiredHours: number;
   sections: HSection[];
 };

@@ -7,9 +7,7 @@ export enum CatalogEntryType {
   Unknown = "Unknown",
 }
 
-export type TypedCatalogEntry = { url: URL; type: CatalogEntryType };
-
-export type TypedCatalogEntry2 = {
+export type TypedCatalogEntry = {
   url: URL;
   degreeType: CatalogEntryType;
   yearVersion: number;

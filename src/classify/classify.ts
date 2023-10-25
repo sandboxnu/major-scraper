@@ -3,24 +3,18 @@ import { College } from "../urls";
 import {
   ensureLengthAtLeast,
   loadHTML,
-  loadHTML2,
   majorNameToFileName,
   parseText,
 } from "../utils";
-import {
-  CatalogEntryType,
-  FilterError,
-  TypedCatalogEntry,
-  TypedCatalogEntry2,
-} from "./types";
+import { CatalogEntryType, FilterError, TypedCatalogEntry } from "./types";
 import { mkdir, writeFile } from "fs/promises";
 import { join } from "path";
 
 export const classify = async (
   url: URL,
   filterTypes: CatalogEntryType[],
-): Promise<TypedCatalogEntry2> => {
-  const html = await loadHTML2(url.href);
+): Promise<TypedCatalogEntry> => {
+  const html = await loadHTML(url.href);
 
   const { degreeType, yearVersion, college, majorName } = getMetadata(
     html,
@@ -43,13 +37,6 @@ export const classify = async (
 
   return { url, degreeType, yearVersion, college, majorName, savePath, html };
 };
-
-export const addTypeToUrl = async (url: URL): Promise<TypedCatalogEntry> => {
-  const type = getUrlType(await loadHTML(url.href));
-  return { url, type };
-};
-
-const saveHTML = async () => {};
 
 const getCollegeFromURL = (url: URL): College => {
   const college = url.toString().split("/")[4] as College;

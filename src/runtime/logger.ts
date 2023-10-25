@@ -1,8 +1,7 @@
 import { Pipeline, StageLabel } from "./types";
 import { ResultType } from "../graduate-types/common";
-import { Major2 } from "../graduate-types/major2";
-import { FilterError } from "./pipeline";
-import { CatalogEntryType } from "../classify/types";
+import { CatalogEntryType, FilterError } from "../classify/types";
+import { ParsedCatalogEntry } from "../parse";
 
 /**
  * Logs the progress of the scrape so the developer knows the scraper isn't deadlocked.
@@ -43,13 +42,7 @@ export const logProgress = async <T>(
  *
  * @param results The completed pipelines
  */
-export const logResults = (
-  results: Pipeline<{
-    parsed: Major2;
-    type: CatalogEntryType;
-    url: URL;
-  }>[],
-) => {
+export const logResults = (results: Pipeline<ParsedCatalogEntry>[]) => {
   const stats = new StatsLogger();
 
   for (const { result, trace, id } of results) {
@@ -66,14 +59,17 @@ export const logResults = (
 
 const logOkResult = (
   stats: StatsLogger,
-  result: { ok: { parsed: Major2; type: CatalogEntryType } },
+  result: { ok: ParsedCatalogEntry },
   id: URL,
 ) => {
   // record OK values
-  const { parsed, type } = result.ok;
+  const { parsed, degreeType } = result.ok;
   stats.recordField("status", "ok");
-  stats.recordField("entry type", type);
-  if (type === CatalogEntryType.Major && parsed.totalCreditsRequired <= 0) {
+  stats.recordField("entry type", degreeType);
+  if (
+    degreeType === CatalogEntryType.Major &&
+    parsed.totalCreditsRequired <= 0
+  ) {
     // only applies to majors, because concentrations and minors don't have hours requirement
     stats.recordError(new Error("major with hours <= 0"), id);
   }

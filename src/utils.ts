@@ -1,14 +1,12 @@
 import * as cheerio from "cheerio";
 import { Err, Ok, Result } from "./graduate-types/common";
-import { existsSync } from "fs";
-import { mkdir, readFile, writeFile } from "fs/promises";
 import undici from "undici";
 
-export const loadHTML2 = async (url: string): Promise<CheerioStatic> => {
+export const loadHTML = async (url: string): Promise<CheerioStatic> => {
   return cheerio.load(await wrappedGetRequest(url));
 };
 
-export const loadHtmlWithUrl2 = async (
+export const loadHtmlWithUrl = async (
   url: URL,
 ): Promise<{ url: URL; result: Result<CheerioStatic, unknown> }> => {
   let result: Result<CheerioStatic, unknown>;
@@ -19,55 +17,6 @@ export const loadHtmlWithUrl2 = async (
     result = Err(error);
   }
   return { url, result };
-};
-
-export const loadHtmlWithUrl = async (
-  url: URL,
-): Promise<{ url: URL; result: Result<CheerioStatic, unknown> }> => {
-  let result: Result<CheerioStatic, unknown>;
-  try {
-    result = Ok(await loadHTML(url.href));
-  } catch (error) {
-    result = Err(error);
-  }
-  return { url, result };
-};
-
-/**
- * Whether to cache the response bodies of requests. if set to true,
- * `cachedGetRequest` will cache requests.
- */
-const USE_CACHE = true;
-export const loadHTML = async (url: string): Promise<CheerioStatic> => {
-  const data = await cachedGetRequest(url);
-  return cheerio.load(data);
-};
-
-/**
- * If use cache is true, will attempt to look for request body in
- * `./catalogCache` before fetching. If does not exist, will save the response
- * in `./catalogCache` before returning response.
- *
- * @param url
- */
-const cachedGetRequest = async (url: string) => {
-  if (!USE_CACHE) {
-    return await wrappedGetRequest(url);
-  }
-
-  if (!existsSync("./catalogCache")) {
-    await mkdir("./catalogCache");
-  }
-
-  // https://stackoverflow.com/questions/35511331/how-to-make-a-valid-filename-from-an-arbitrary-string-in-javascript
-  const path = `./catalogCache/${url.replaceAll(/[\/|\\:*?"<>]/g, "-")}.html`;
-  if (existsSync(path)) {
-    return await readFile(path);
-  }
-
-  const data = await wrappedGetRequest(url);
-  await writeFile(path, data);
-  return data;
 };
 
 export const wrappedGetRequest = async (url: string) => {
