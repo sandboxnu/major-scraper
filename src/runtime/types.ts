@@ -1,4 +1,4 @@
-import { Result } from "../graduate-types/common";
+import { type Result } from "../graduate-types/common";
 
 /** Represents the label for a stage in the scraper pipeline */
 export enum StageLabel {

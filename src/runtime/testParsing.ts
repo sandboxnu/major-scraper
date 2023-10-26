@@ -1,6 +1,6 @@
 import bscs from "../../examples/bscs-tokens-v3.json";
 import { parseRows } from "../parse/parse";
-import { HDocument, HRow, HRowType } from "../../src/tokenize/types";
+import { type HDocument, type HRow, HRowType } from "../../src/tokenize/types";
 import { CatalogEntryType } from "../classify/types";
 
 interface prevStep {

@@ -1,5 +1,5 @@
-import { CatalogEntryType, TypedCatalogEntry } from "../classify";
-import { Major2 } from "../graduate-types";
+import { CatalogEntryType } from "../classify";
+import { type Major2 } from "../graduate-types";
 
 export type ParsedCatalogEntry = {
   url: URL;

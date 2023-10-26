@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "scrapers used to generate essential data such as majors and plans",
   "private": true,
+  "type": "module",
   "scripts": {
     "test": "pnpm parser:generate && jest",
     "scrape": "pnpm parser:generate && ts-node ./src/main.ts",

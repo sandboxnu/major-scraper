@@ -1,13 +1,13 @@
-import { CompiledRules, Grammar, Parser } from "nearley";
-import { ParsedCatalogEntry } from "./types";
+import { type CompiledRules, Grammar, Parser } from "nearley";
+import { type ParsedCatalogEntry } from "./types";
 import {
-  HRow,
+  type HRow,
   HRowType,
   HSectionType,
-  TextRow,
-  TokenizedCatalogEntry,
+  type TextRow,
+  type TokenizedCatalogEntry,
 } from "../tokenize";
-import { Major2, Section } from "../graduate-types";
+import { type Major2, type Section } from "../graduate-types";
 import { writeFile } from "fs/promises";
 
 // at runtime, generate the ./grammar.ts file from the grammar.ne file
@@ -39,6 +39,7 @@ export const parse = async (
   });
 
   const entries: HRow[][] = nonConcentrations.map(metaSection => {
+    const test = metaSection.entries;
     if (
       metaSection.entries.length >= 1 &&
       metaSection.entries[0].type != HRowType.HEADER

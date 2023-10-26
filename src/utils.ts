@@ -1,5 +1,5 @@
 import * as cheerio from "cheerio";
-import { Err, Ok, Result } from "./graduate-types/common";
+import { Err, Ok, type Result } from "./graduate-types/common";
 import undici from "undici";
 
 export const loadHTML = async (url: string): Promise<CheerioStatic> => {

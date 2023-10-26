@@ -6,7 +6,7 @@ import {
   majorNameToFileName,
   parseText,
 } from "../utils";
-import { CatalogEntryType, FilterError, TypedCatalogEntry } from "./types";
+import { CatalogEntryType, FilterError, type TypedCatalogEntry } from "./types";
 import { mkdir, writeFile } from "fs/promises";
 import { join } from "path";
 
@@ -46,8 +46,8 @@ const getCollegeFromURL = (url: URL): College => {
 
 const getMetadata = ($: CheerioStatic, url: URL) => {
   const degreeType = getUrlType($);
-  const catalogYear: string = parseText($("#edition")).split(" ")[0];
-  const yearVersion: number = parseInt(catalogYear.split("-")[0]);
+  const catalogYear = parseText($("#edition")).split(" ")[0];
+  const yearVersion = parseInt(catalogYear.split("-")[0]);
   const college = getCollegeFromURL(url);
   const majorName: string = parseText($("#site-title").find("h1"));
 
@@ -127,7 +127,7 @@ const getNameEnding = ($: CheerioStatic) => {
 
 const isMajorEnding = (ending: string) => {
   const bs = ending.substring(0, 2) === "bs";
-  const ba = ending[0] + ending[ending.length - 1] === "ba";
+  const ba = ending.charAt(0) + ending.charAt(ending.length - 1) === "ba";
   // very uncommon ending
   const ba1 = ending.substring(0, 2) === "ba";
   return bs || ba || ba1;

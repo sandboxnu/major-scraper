@@ -1,5 +1,5 @@
-import { HRow, HRowType } from "./types";
-import { Err, Ok, Result, ResultType } from "../graduate-types/common";
+import { type HRow, HRowType } from "./types";
+import { Err, Ok, type Result, ResultType } from "../graduate-types/common";
 import { ensureLength } from "../utils";
 import { getGlobalStatsLogger } from "../runtime/logger";
 

@@ -1,11 +1,16 @@
-import { CountAndHoursRow, HRow, HRowType, TextRow } from "../tokenize/types";
 import {
-  IAndCourse2,
-  IOrCourse2,
-  IRequiredCourse,
-  IXofManyCourse,
-  Requirement2,
-  Section,
+  type CountAndHoursRow,
+  type HRow,
+  HRowType,
+  type TextRow,
+} from "../tokenize/types";
+import {
+  type IAndCourse2,
+  type IOrCourse2,
+  type IRequiredCourse,
+  type IXofManyCourse,
+  type Requirement2,
+  type Section,
 } from "../graduate-types/major2";
 
 // grab the wrapper of the row type enum from tokenize types

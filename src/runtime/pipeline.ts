@@ -2,7 +2,7 @@ import { tokenize } from "../tokenize";
 import { classify } from "../classify";
 import { CatalogEntryType } from "../classify";
 import { Err, Ok, ResultType } from "../graduate-types";
-import { Pipeline, StageLabel } from "./types";
+import { StageLabel, type Pipeline } from "./types";
 import { createAgent } from "./axios";
 import {
   installGlobalStatsLogger,
