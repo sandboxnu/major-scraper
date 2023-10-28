@@ -12,7 +12,7 @@
 
     /* Strictness */
     "strict": true,
-    // "noUncheckedIndexedAccess": true,
+    "noUncheckedIndexedAccess": true,
 
     /* If NOT transpiling with TypeScript: (for future use if we want to compile this with esbuild)*/
     "moduleResolution": "Bundler",

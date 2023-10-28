@@ -181,7 +181,7 @@ class StatsLogger {
       this.fields[field] = new Map();
     }
     const map = this.fields[field];
-    map.set(value, (map.get(value) ?? 0) + 1);
+    map?.set(value, (map!.get(value) ?? 0) + 1);
   }
 
   /**

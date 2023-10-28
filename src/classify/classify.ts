@@ -1,7 +1,7 @@
 import assert from "assert";
 import { College } from "../urls";
 import {
-  ensureLengthAtLeast,
+  ensureAtLeastLength,
   loadHTML,
   majorNameToFileName,
   parseText,
@@ -39,15 +39,30 @@ export const classify = async (
 };
 
 const getCollegeFromURL = (url: URL): College => {
-  const college = url.toString().split("/")[4] as College;
-  assert(Object.values(College).includes(college));
+  const isArchived = url.href.includes("archive");
+  const college = url.toString().split("/")[isArchived ? 6 : 4] as College;
+  assert(
+    Object.values(College).includes(college),
+    `College ${college} is not supported.`,
+  );
   return college;
 };
 
 const getMetadata = ($: CheerioStatic, url: URL) => {
   const degreeType = getUrlType($);
-  const catalogYear = parseText($("#edition")).split(" ")[0];
-  const yearVersion = parseInt(catalogYear.split("-")[0]);
+
+  const catalogYear = ensureAtLeastLength(
+    parseText($("#edition")).split(" "),
+    1,
+    "Missing catalog year in html.",
+  )[0];
+  const unParsedYearVersion = ensureAtLeastLength(
+    catalogYear.split("-"),
+    1,
+    "Missing year version in html.",
+  )[0];
+  const yearVersion = parseInt(unParsedYearVersion);
+
   const college = getCollegeFromURL(url);
   const majorName: string = parseText($("#site-title").find("h1"));
 
@@ -58,6 +73,7 @@ const getMetadata = ($: CheerioStatic, url: URL) => {
     majorName,
   };
 };
+
 // try to get the type from each strategy, in order (name, tabs, container)
 const getUrlType = ($: CheerioStatic) => {
   const typeFromName = getTypeFromNameEnding($);
@@ -135,8 +151,9 @@ const isMajorEnding = (ending: string) => {
 
 const getTypeFromTabText = (tabs: Cheerio[]) => {
   // most entries have 3 tabs, but some have 2 or rarely 4
-  const [, tab] = ensureLengthAtLeast(2, tabs);
-  const tabText = parseText(tab);
+  const tabText = parseText(
+    ensureAtLeastLength(tabs, 2, "Missing tabs in html")[1],
+  );
 
   switch (tabText.toLowerCase()) {
     case "minor requirements":

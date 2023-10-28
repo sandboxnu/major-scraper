@@ -27,25 +27,59 @@ export const wrappedGetRequest = async (url: string) => {
   return await response.body.text();
 };
 
-export const ensureLength = <T>(n: number, l: T[], extraMessage?: string) => {
-  const length = l.length;
-  if (length !== n) {
-    const msg = `expected array length to equal exactly ${n}, but was ${length}${
-      extraMessage ?? ""
-    }`;
-    throw new Error(msg);
-  }
-  return l;
-};
+export function ensureExactLength<T, N extends number>(
+  arr: Array<T>,
+  length: N,
+  errorMessage?: string,
+) {
+  assertsExactLength(arr, length, errorMessage);
+  return arr;
+}
 
-export const ensureLengthAtLeast = <T>(n: number, l: T[]) => {
-  const length = l.length;
-  if (length < n) {
-    const msg = `expected array to be >= ${n}, but was ${length}`;
-    throw new Error(msg);
+type Tuple<
+  T,
+  N extends number,
+  Acc extends Array<T> = [],
+> = Acc["length"] extends N ? Acc : Tuple<T, N, [...Acc, T]>;
+
+function assertsExactLength<T, N extends number>(
+  arr: Array<T>,
+  length: N,
+  errorMessage?: string,
+): asserts arr is Tuple<T, N> {
+  if (arr.length !== length) {
+    throw new Error(
+      `${
+        errorMessage + " "
+      }Expected array length to be exactly ${length}, but was ${arr.length}`,
+    );
   }
-  return l;
-};
+}
+
+export function ensureAtLeastLength<T, N extends number>(
+  arr: Array<T>,
+  length: N,
+  errorMessage?: string,
+) {
+  assertsAtLeastLength(arr, length, errorMessage);
+  return arr;
+}
+
+type AtLeast<T, N extends number> = Tuple<T, N> & Array<T>;
+
+function assertsAtLeastLength<T, N extends number>(
+  arr: Array<T>,
+  length: N,
+  errorMessage?: string,
+): asserts arr is AtLeast<T, N> {
+  if (arr.length < length) {
+    throw new Error(
+      `${
+        errorMessage + " "
+      }Expected array length to be at least ${length}, but was ${arr.length}`,
+    );
+  }
+}
 
 export const parseText = (td: Cheerio) => {
   // replace &NBSP with space

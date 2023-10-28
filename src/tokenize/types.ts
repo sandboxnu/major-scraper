@@ -1,4 +1,4 @@
-import { TypedCatalogEntry } from "../classify";
+import { type TypedCatalogEntry } from "../classify";
 
 /**
  * An HTML document (catalog page) has a few identifiable features, along with a

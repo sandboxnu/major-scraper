@@ -1,4 +1,4 @@
-import { type CompiledRules, Grammar, Parser } from "nearley";
+import nearly from "nearley";
 import { type ParsedCatalogEntry } from "./types";
 import {
   type HRow,
@@ -9,13 +9,10 @@ import {
 } from "../tokenize";
 import { type Major2, type Section } from "../graduate-types";
 import { writeFile } from "fs/promises";
-
-// at runtime, generate the ./grammar.ts file from the grammar.ne file
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const grammar: CompiledRules = require("./grammar");
+import { default as grammar } from "./grammar.cjs";
 
 export const parseRows = (rows: HRow[]) => {
-  const parser = new Parser(Grammar.fromCompiled(grammar));
+  const parser = new nearly.Parser(nearly.Grammar.fromCompiled(grammar));
 
   // according to docs, "you would feed a Parser instance an array of objects"
   // https://nearley.js.org/docs/tokenizers#custom-token-matchers
@@ -42,7 +39,7 @@ export const parse = async (
     const test = metaSection.entries;
     if (
       metaSection.entries.length >= 1 &&
-      metaSection.entries[0].type != HRowType.HEADER
+      metaSection.entries[0]?.type != HRowType.HEADER
     ) {
       const newHeader: TextRow<HRowType.HEADER> = {
         type: HRowType.HEADER,
@@ -75,7 +72,7 @@ export const parse = async (
       );
       if (
         concentration.entries.length >= 1 &&
-        concentration.entries[0].type != HRowType.HEADER
+        concentration.entries[0]?.type != HRowType.HEADER
       ) {
         const newHeader: TextRow<HRowType.HEADER> = {
           type: HRowType.HEADER,
