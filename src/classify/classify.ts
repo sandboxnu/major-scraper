@@ -10,6 +10,7 @@ import { CatalogEntryType, FilterError } from "./types";
 import type { TypedCatalogEntry } from "./types";
 import { mkdir, writeFile } from "fs/promises";
 import { join } from "path";
+import { ARCHIVE_PLACEMENT, CURRENT_PLACEMENT } from "../constants";
 
 export const classify = async (
   url: URL,
@@ -41,7 +42,9 @@ export const classify = async (
 
 const getCollegeFromURL = (url: URL): College => {
   const isArchived = url.href.includes("archive");
-  const college = url.toString().split("/")[isArchived ? 6 : 4] as College;
+  const college = url.toString().split("/")[
+    isArchived ? ARCHIVE_PLACEMENT : CURRENT_PLACEMENT
+  ] as College;
   assert(
     Object.values(College).includes(college),
     `College ${college} is not supported.`,
