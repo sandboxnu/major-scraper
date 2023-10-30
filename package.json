@@ -13,6 +13,7 @@
   "dependencies": {
     "cheerio": "1.0.0-rc.12",
     "nearley": "^2.20.1",
+    "pnpm": "^8.10.0",
     "ts-node": "^10.8.0",
     "undici": "^5.26.3"
   },
