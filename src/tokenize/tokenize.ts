@@ -16,26 +16,25 @@ import {
   XOM_REGEX_CREDITS,
   XOM_REGEX_NUMBER,
 } from "./constants";
-import {
-  type CountAndHoursRow,
-  type CourseRow,
-  type HRow,
-  HRowType,
-  type HSection,
-  HSectionType,
-  type MultiCourseRow,
-  type RangeBoundedRow,
-  type RangeLowerBoundedRow,
-  type RangeUnboundedRow,
-  type TextRow,
-  type TokenizedCatalogEntry,
-  type WithExceptions,
+import { HSectionType, HRowType } from "./types";
+import type {
+  CountAndHoursRow,
+  CourseRow,
+  HRow,
+  HSection,
+  MultiCourseRow,
+  RangeBoundedRow,
+  RangeLowerBoundedRow,
+  RangeUnboundedRow,
+  TextRow,
+  TokenizedCatalogEntry,
+  WithExceptions,
 } from "./types";
 import { join } from "path";
 import { BASE_URL } from "../constants";
 import { categorizeTextRow } from "./textCategorize";
 import { writeFile } from "fs/promises";
-import { type TypedCatalogEntry } from "../classify";
+import type { TypedCatalogEntry } from "../classify";
 
 // should tokenize have the option to read the html locally or from the previous step
 export const tokenize = async (

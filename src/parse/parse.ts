@@ -1,13 +1,8 @@
 import nearly from "nearley";
-import { type ParsedCatalogEntry } from "./types";
-import {
-  type HRow,
-  HRowType,
-  HSectionType,
-  type TextRow,
-  type TokenizedCatalogEntry,
-} from "../tokenize";
-import { type Major2, type Section } from "../graduate-types";
+import type { ParsedCatalogEntry } from "./types";
+import { HRowType, HSectionType } from "../tokenize";
+import type { HRow, TextRow, TokenizedCatalogEntry } from "../tokenize";
+import type { Major2, Section } from "../graduate-types";
 import { writeFile } from "fs/promises";
 import { default as grammar } from "./grammar.cjs";
 

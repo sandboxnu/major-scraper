@@ -1,7 +1,8 @@
-import { type Pipeline, StageLabel } from "./types";
+import type { Pipeline } from "./types";
+import { StageLabel } from "./types";
 import { ResultType } from "../graduate-types/common";
-import { CatalogEntryType, FilterError } from "../classify/types";
-import { type ParsedCatalogEntry } from "../parse";
+import { CatalogEntryType, FilterError } from "../classify";
+import type { ParsedCatalogEntry } from "../parse";
 
 /**
  * Logs the progress of the scrape so the developer knows the scraper isn't deadlocked.

@@ -6,7 +6,8 @@ import {
   majorNameToFileName,
   parseText,
 } from "../utils";
-import { CatalogEntryType, FilterError, type TypedCatalogEntry } from "./types";
+import { CatalogEntryType, FilterError } from "./types";
+import type { TypedCatalogEntry } from "./types";
 import { mkdir, writeFile } from "fs/promises";
 import { join } from "path";
 

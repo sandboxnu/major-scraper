@@ -1,4 +1,5 @@
-import { type HRow, HRowType } from "./types";
+import type { HRow } from "./types";
+import { HRowType } from "./types";
 import { getGlobalStatsLogger } from "../runtime/logger";
 
 type TextRowTypes = HRow & {

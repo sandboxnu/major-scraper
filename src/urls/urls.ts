@@ -1,5 +1,6 @@
 import { loadHtmlWithUrl } from "../utils";
-import { type CatalogURLResult, College } from "./types";
+import type { CatalogURLResult } from "./types";
+import { College } from "./types";
 import { ResultType } from "../graduate-types/common";
 import { join } from "path";
 import {
