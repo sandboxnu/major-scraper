@@ -60,7 +60,7 @@ graduatenu.code-workspace
 
 # Scraper cache
 catalogCache/
-src/parse/grammar.js
+src/parse/grammar.cjs
 src/parse/postprocess.js
 results
 degrees
