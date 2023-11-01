@@ -5,15 +5,27 @@ import "./App.css";
 import { statSync } from "fs";
 import { BaseDirectory, readTextFile } from "@tauri-apps/api/fs";
 import { Token } from "./components/tokens";
+import { Major2 } from "../../src/graduate-types/major2";
+import { MajorView } from "./components/MajorView";
+
+const parseTokens = (tokens: string) => {
+  try {
+    return JSON.parse(tokens)["tokenized"]["sections"][0];
+  } catch(e) {
+    console.error(e);
+    return undefined;
+  }
+}
 
 function App() {
   const [greetMsg, setGreetMsg] = useState("");
   const [name, setName] = useState("");
-  const [major, setMajor] = useState();
-  const [tokens, setTokens] = useState("")
+  const [major, setMajor] = useState<Major2>();
+  const [tokens, setTokens] = useState("{}")
 
   useEffect(() => {
-    readTextFile('bscs-tokens-v1.json', { dir: BaseDirectory.Desktop }).then(val => setTokens(val))
+    readTextFile('bscs-tokens-v3.json', { dir: BaseDirectory.Desktop }).then(val => setTokens(val))
+    readTextFile('bscs-parse.json', {dir: BaseDirectory.Desktop}).then(val => setMajor(JSON.parse(val)))
   }, [])
 
   async function greet() {
@@ -37,11 +49,12 @@ function App() {
         </div>
         <div style={style.column}>
           <p>Tokens</p>
-          <Token section={JSON.parse(tokens)["tokenized"]["sections"][0]}></Token>
+          <Token section={parseTokens(tokens)}></Token>
 
         </div>
-        <div style={style.column}>
+        <div style={{...style.column, padding: 10, backgroundColor: "white"}}>
           <p>Parse</p>
+          <MajorView major={major}/>
         </div>
       </div>
     </div>
