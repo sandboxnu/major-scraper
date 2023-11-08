@@ -1,15 +1,9 @@
 import { IRequiredCourse } from "../../../src/graduate-types/major2";
-import { Box } from "./Box";
+import { MajorNode } from "./MajorNode";
 
 export const CourseView = ({ course }: { course?: IRequiredCourse }) => {
   if (course) {
-    return (
-      <Box>
-        <p>
-          COURSE {course.subject}
-          {course.classId}
-        </p>
-      </Box>
+    return (<MajorNode title={`${course.subject} ${course.classId}`} detail="COURSE"/>
     );
   }
 };
