@@ -1,18 +1,19 @@
 import { IOrCourse2 } from "../../../src/graduate-types/major2";
+import { Box } from "./Box";
+import { List } from "./List";
 import { RequirementView } from "./RequirementView";
-import { style } from "./styles";
 
 export const OrView = ({ or }: { or?: IOrCourse2 }) => {
   if (or) {
     return (
-      <div style={style.box}>
+      <Box>
         <p>OR</p>
-        <div>
+        <List>
           {or.courses.map((requirement) => (
             <RequirementView requirement={requirement} />
           ))}
-        </div>
-      </div>
+        </List>
+      </Box>
     );
   }
 };

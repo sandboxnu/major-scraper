@@ -1,12 +1,10 @@
-import { useEffect, useState } from "react";
-import reactLogo from "./assets/react.svg";
-import { invoke } from "@tauri-apps/api/tauri";
-import "./App.css";
-import { statSync } from "fs";
 import { BaseDirectory, readTextFile } from "@tauri-apps/api/fs";
-import { Token } from "./components/tokens";
+import { invoke } from "@tauri-apps/api/tauri";
+import { useEffect, useState } from "react";
 import { Major2 } from "../../src/graduate-types/major2";
+import "./App.css";
 import { MajorView } from "./components/MajorView";
+import { Token } from "./components/tokens";
 
 const parseTokens = (tokens: string) => {
   try {
@@ -59,7 +57,7 @@ function App() {
           <p>Tokens</p>
           <Token section={parseTokens(tokens)}></Token>
         </div>
-        <div style={{ ...style.column, padding: 10, backgroundColor: "white" }}>
+        <div className="border-gray-600 p-2 border-2">
           <p>Parse</p>
           <MajorView major={major} />
         </div>
@@ -79,7 +77,6 @@ const style = {
     display: "flex",
     flexDirection: "row",
     justifyContent: "flex-start",
-    textAlign: "center",
   },
   dropdownContainer: {},
 } satisfies Record<string, React.CSSProperties>;

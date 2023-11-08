@@ -1,5 +1,6 @@
 import { IAndCourse2 } from "../../../src/graduate-types/major2";
 import { Box } from "./Box";
+import { List } from "./List";
 import { RequirementView } from "./RequirementView";
 
 export const AndView = ({ and }: { and?: IAndCourse2 }) => {
@@ -7,11 +8,11 @@ export const AndView = ({ and }: { and?: IAndCourse2 }) => {
     return (
       <Box>
         <p>AND</p>
-        <div>
+        <List>
           {and.courses.map((course) => (
             <RequirementView requirement={course} />
           ))}
-        </div>
+        </List>
 
       </Box>
     );

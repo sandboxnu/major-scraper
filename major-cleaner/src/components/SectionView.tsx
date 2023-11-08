@@ -1,16 +1,17 @@
 import { Section } from "../../../src/graduate-types/major2";
+import { Box } from "./Box";
+import { List } from "./List";
 import { RequirementView } from "./RequirementView";
-import { style } from "./styles";
 
 export const SectionView = ({ section }: { section?: Section }) => {
   return (
-    <div style={style.box}>
+    <Box>
       <p>{section?.title}</p>
-      <div>
+      <List>
         {section?.requirements.map((req) => (
           <RequirementView requirement={req} />
         ))}
-      </div>
-    </div>
+      </List>
+    </Box>
   );
 };
