@@ -11,22 +11,26 @@ import { MajorView } from "./components/MajorView";
 const parseTokens = (tokens: string) => {
   try {
     return JSON.parse(tokens)["tokenized"]["sections"][0];
-  } catch(e) {
+  } catch (e) {
     console.error(e);
     return undefined;
   }
-}
+};
 
 function App() {
   const [greetMsg, setGreetMsg] = useState("");
   const [name, setName] = useState("");
   const [major, setMajor] = useState<Major2>();
-  const [tokens, setTokens] = useState("{}")
+  const [tokens, setTokens] = useState("{}");
 
   useEffect(() => {
-    readTextFile('bscs-tokens-v3.json', { dir: BaseDirectory.Desktop }).then(val => setTokens(val))
-    readTextFile('bscs-parse.json', {dir: BaseDirectory.Desktop}).then(val => setMajor(JSON.parse(val)))
-  }, [])
+    readTextFile("bscs-tokens-v3.json", { dir: BaseDirectory.Desktop }).then(
+      (val) => setTokens(val),
+    );
+    readTextFile("bscs-parse.json", { dir: BaseDirectory.Desktop }).then(
+      (val) => setMajor(JSON.parse(val)),
+    );
+  }, []);
 
   async function greet() {
     // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
@@ -36,7 +40,11 @@ function App() {
   return (
     <div>
       <div style={style.dropdownContainer}>
-        <select name="major" id="major" onChange={v => console.log(v.target.value)}>
+        <select
+          name="major"
+          id="major"
+          onChange={(v) => console.log(v.target.value)}
+        >
           <option value="CS">CS</option>
           {/* <option value="saab">Saab</option>
           <option value="mercedes">Mercedes</option>
@@ -50,11 +58,10 @@ function App() {
         <div style={style.column}>
           <p>Tokens</p>
           <Token section={parseTokens(tokens)}></Token>
-
         </div>
-        <div style={{...style.column, padding: 10, backgroundColor: "white"}}>
+        <div style={{ ...style.column, padding: 10, backgroundColor: "white" }}>
           <p>Parse</p>
-          <MajorView major={major}/>
+          <MajorView major={major} />
         </div>
       </div>
     </div>
@@ -74,9 +81,6 @@ const style = {
     justifyContent: "flex-start",
     textAlign: "center",
   },
-  dropdownContainer: {
-
-  }
-  
+  dropdownContainer: {},
 } satisfies Record<string, React.CSSProperties>;
 export default App;
