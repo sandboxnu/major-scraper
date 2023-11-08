@@ -1,7 +1,6 @@
 import { IAndCourse2 } from "../../../src/graduate-types/major2";
 import { Box } from "./Box";
 import { RequirementView } from "./RequirementView";
-import { style } from "./styles";
 
 export const AndView = ({ and }: { and?: IAndCourse2 }) => {
   if (and) {
