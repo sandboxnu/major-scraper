@@ -8,20 +8,22 @@ import {
 } from "../utils";
 import { CatalogEntryType, FilterError } from "./types";
 import type { TypedCatalogEntry } from "./types";
-import { mkdir, writeFile } from "fs/promises";
+import { mkdir, readFile, writeFile } from "fs/promises";
 import { join } from "path";
 import { ARCHIVE_PLACEMENT, CURRENT_PLACEMENT } from "../constants";
+import * as prettier from "prettier";
+import { existsSync } from "fs";
 
 export const classify = async (
   url: URL,
   filterTypes: CatalogEntryType[],
 ): Promise<TypedCatalogEntry> => {
   const html = await loadHTML(url.href);
-
   const { degreeType, yearVersion, college, majorName } = getMetadata(
     html,
     url,
   );
+  cleanUpHTML(html);
 
   if (!filterTypes.includes(degreeType)) {
     throw new FilterError(degreeType, filterTypes);
@@ -34,10 +36,60 @@ export const classify = async (
     college,
     majorNameToFileName(majorName),
   );
+
+  const storedHTMLPath = `${savePath}/html.html`;
+  const formattedNewHTML = await formatHTML(html.html());
+  if (existsSync(storedHTMLPath)) {
+    const storedHTML = await readFile(storedHTMLPath, {
+      encoding: "utf-8",
+    });
+
+    if (formattedNewHTML === storedHTML) {
+      throw new Error("No changes for HTML");
+    }
+  }
+
   await mkdir(savePath, { recursive: true });
-  await writeFile(`${savePath}/html.html`, html.html());
+  await writeFile(`${savePath}/html.html`, formattedNewHTML);
 
   return { url, degreeType, yearVersion, college, majorName, savePath, html };
+};
+
+const formatHTML = async (html: string) => {
+  return await prettier.format(html, {
+    parser: "html",
+    arrowParens: "avoid",
+    bracketSpacing: true,
+    insertPragma: false,
+    bracketSameLine: false,
+    printWidth: 80,
+    proseWrap: "preserve",
+    quoteProps: "as-needed",
+    requirePragma: false,
+    semi: true,
+    singleQuote: false,
+    tabWidth: 2,
+    trailingComma: "all",
+    useTabs: false,
+  });
+};
+
+const cleanUpHTML = ($: CheerioStatic) => {
+  $("script").remove();
+  $("noscript").remove();
+  $("footer").remove();
+  $("header > div.wrap").remove();
+  $("header > div.dec").remove();
+  $("nav").remove();
+  $("section button").remove();
+  $("[id=print-dialog]").remove();
+  $("hr").remove();
+  $("[id=col-nav]").remove();
+
+  // add predefined styling (gotten from the catalog's source css)
+  $("head").replaceWith(
+    '<head><link rel="stylesheet" type="text/css" href="/src/css/reset.css"/><link rel="stylesheet" type="text/css" href="/src/css/styles.css"/></head>',
+  );
 };
 
 const getCollegeFromURL = (url: URL): College => {

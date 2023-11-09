@@ -95,13 +95,13 @@ const logErrResult = (
   stats.recordField("status", "error");
   stats.recordField("stage failures", trace[trace.length - 1]);
 
-  // for (const err of errors) {
-  //   if (err instanceof Error) {
-  //     stats.recordError(err, id);
-  //   } else {
-  //     stats.recordError(new Error(`non-error value: ${err}`), id);
-  //   }
-  // }
+  for (const err of errors) {
+    if (err instanceof Error) {
+      stats.recordError(err, id);
+    } else {
+      stats.recordError(new Error(`non-error value: ${err}`), id);
+    }
+  }
 };
 
 /**

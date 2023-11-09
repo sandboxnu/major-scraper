@@ -12,7 +12,12 @@ export const parseRows = (rows: HRow[]) => {
   // according to docs, "you would feed a Parser instance an array of objects"
   // https://nearley.js.org/docs/tokenizers#custom-token-matchers
   // however signature only takes string, so cast to any
-  parser.feed(rows as any);
+  try {
+    parser.feed(rows as any);
+  } catch (error) {
+    // TODO: pretified the error message somehow since it is too long
+    // console.log(error.message);
+  }
 
   // make sure there are no multiple solutions, as our grammar should be unambiguous
   if (parser.results.length === 0) {
