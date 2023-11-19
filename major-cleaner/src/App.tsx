@@ -1,4 +1,4 @@
-import { BaseDirectory, readTextFile } from "@tauri-apps/api/fs";
+import { BaseDirectory, readTextFile, writeTextFile } from "@tauri-apps/api/fs";
 import { useEffect, useState } from "react";
 import { Major2 } from "../../src/graduate-types/major2";
 import "./App.css";
@@ -30,6 +30,10 @@ function App() {
       (val) => setMajor(JSON.parse(val)),
     );
   }, []);
+
+  useEffect(() => {
+    writeTextFile("bscs-new-lmao.json", JSON.stringify(major), {dir: BaseDirectory.Desktop})
+  }, [major])
 
   const handleChange: MajorChangeHandler = (change, location) => {
     if(major) {
