@@ -1,5 +1,5 @@
-import { Section } from "../../../src/graduate-types/major2";
-import { MajorNode } from "./MajorNode";
+import { Section } from "../../../../src/graduate-types/major2";
+import { MajorNode } from "../MajorNode";
 import { RequirementView } from "./RequirementView";
 
 export const SectionView = ({ section }: { section?: Section }) => {

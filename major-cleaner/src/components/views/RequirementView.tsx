@@ -1,4 +1,4 @@
-import { Requirement2 } from "../../../src/graduate-types/major2";
+import { Requirement2 } from "../../../../src/graduate-types/major2";
 import { AndView } from "./AndView";
 import { CourseView } from "./CourseView";
 import { OrView } from "./OrView";

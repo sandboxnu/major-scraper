@@ -1,7 +1,7 @@
-import { ICourseRange2 } from "../../../src/graduate-types/major2";
-import { Box } from "./Box";
+import { ICourseRange2 } from "../../../../src/graduate-types/major2";
+import { Box } from "../Box";
+import { List } from "../List";
 import { CourseView } from "./CourseView";
-import { List } from "./List";
 
 export const RangeView = ({ range }: { range?: ICourseRange2 }) => {
   if (range) {

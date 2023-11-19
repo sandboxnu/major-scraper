@@ -1,5 +1,5 @@
-import { IOrCourse2 } from "../../../src/graduate-types/major2";
-import { MajorNode } from "./MajorNode";
+import { IOrCourse2 } from "../../../../src/graduate-types/major2";
+import { MajorNode } from "../MajorNode";
 import { RequirementView } from "./RequirementView";
 
 export const OrView = ({ or }: { or?: IOrCourse2 }) => {

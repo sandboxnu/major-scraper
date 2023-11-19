@@ -3,8 +3,8 @@ import { invoke } from "@tauri-apps/api/tauri";
 import { useEffect, useState } from "react";
 import { Major2 } from "../../src/graduate-types/major2";
 import "./App.css";
-import { MajorView } from "./components/MajorView";
 import { Token } from "./components/tokens";
+import { MajorView } from "./components/views/MajorView";
 
 const parseTokens = (tokens: string) => {
   try {
