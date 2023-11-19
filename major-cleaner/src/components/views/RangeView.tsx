@@ -1,10 +1,15 @@
 import { ICourseRange2 } from "../../../../src/graduate-types/major2";
+import { CourseChange, MajorChangeHandler } from "../../types";
 import { Box } from "../Box";
 import { List } from "../List";
 import { CourseView } from "./CourseView";
 
-export const RangeView = ({ range }: { range?: ICourseRange2 }) => {
-  if (range) {
+interface RangeViewProps {
+  range: ICourseRange2;
+  onChange: MajorChangeHandler;
+}
+
+export const RangeView = ({ range, onChange }: RangeViewProps) => {
     return (
       <Box>
         <p>
@@ -12,11 +17,13 @@ export const RangeView = ({ range }: { range?: ICourseRange2 }) => {
         </p>
         <p>Exceptions:</p>
         <List>
-          {range.exceptions.map((course) => (
-            <CourseView course={course} />
+          {range.exceptions.map((course, index) => (
+            <CourseView course={course} onChange={function (change: CourseChange, location: number[]): void {
+              location.unshift(index)
+              onChange(change, location);
+            } } />
           ))}
         </List>
       </Box>
     );
-  }
 };

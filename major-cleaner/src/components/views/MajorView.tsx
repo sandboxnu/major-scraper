@@ -1,12 +1,25 @@
 import { Major2 } from "../../../../src/graduate-types/major2";
+import { MajorChangeHandler } from "../../types";
 import { List } from "../List";
 import { SectionView } from "./SectionView";
 
-export const MajorView = ({ major }: { major?: Major2 }) => {
-  if (major) {
-    return <List>{major.requirementSections.map((section) => (
-      <SectionView section={section} />))}</List>;
-  } else {
-    return;
-  }
+export interface MajorViewProps {
+  major: Major2;
+  onChange: MajorChangeHandler;
+}
+
+export const MajorView = (props: MajorViewProps) => {
+  return (
+    <List>
+      {props.major.requirementSections.map((section, index) => (
+        <SectionView
+          section={section}
+          onChange={(change, location) => {
+            location.unshift(index);
+            props.onChange(change, location);
+          }}
+        />
+      ))}
+    </List>
+  );
 };

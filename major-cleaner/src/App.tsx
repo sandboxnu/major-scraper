@@ -1,10 +1,11 @@
 import { BaseDirectory, readTextFile } from "@tauri-apps/api/fs";
-import { invoke } from "@tauri-apps/api/tauri";
 import { useEffect, useState } from "react";
 import { Major2 } from "../../src/graduate-types/major2";
 import "./App.css";
+import { handleSection } from "./change";
 import { Token } from "./components/tokens";
 import { MajorView } from "./components/views/MajorView";
+import { MajorChangeHandler } from "./types";
 
 const parseTokens = (tokens: string) => {
   try {
@@ -30,10 +31,21 @@ function App() {
     );
   }, []);
 
-  async function greet() {
-    // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
-    setGreetMsg(await invoke("greet", { name }));
+  const handleChange: MajorChangeHandler = (change, location) => {
+    if(major) {
+      const majorClone = {...major};
+      if(location.length > 0){
+        const locationIndex = location.shift();
+        if(locationIndex === undefined) {
+          throw new Error(majorClone.requirementSections.toString());
+        }
+        handleSection(majorClone.requirementSections[locationIndex], change, location);
+        setMajor(majorClone);
+      }
+    }
   }
+
+
 
   return (
     <div>
@@ -59,7 +71,7 @@ function App() {
         </div>
         <div className="border-gray-600 p-2 border-2">
           <p>Parse</p>
-          <MajorView major={major} />
+          {major && <MajorView major={major} onChange={handleChange} />}
         </div>
       </div>
     </div>
@@ -81,3 +93,4 @@ const style = {
   dropdownContainer: {},
 } satisfies Record<string, React.CSSProperties>;
 export default App;
+

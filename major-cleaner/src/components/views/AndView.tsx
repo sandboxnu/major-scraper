@@ -1,14 +1,26 @@
 import { IAndCourse2 } from "../../../../src/graduate-types/major2";
+import { MajorChangeHandler } from "../../types";
 import { MajorNode } from "../MajorNode";
 import { RequirementView } from "./RequirementView";
 
-export const AndView = ({ and }: { and?: IAndCourse2 }) => {
-  if (and) {
-    return (<MajorNode title="AND">          {and.courses.map((course) => (
-      <RequirementView requirement={course} />
-    ))}</MajorNode>
-    );
-  } else {
-    return;
-  }
+interface AndViewProps {
+  and: IAndCourse2;
+  onChange: MajorChangeHandler;
+}
+
+export const AndView = ({ and, onChange }: AndViewProps) => {
+  return (
+    <MajorNode title="AND">
+      {" "}
+      {and.courses.map((course, index) => (
+        <RequirementView
+          requirement={course}
+          onChange={(change, location) => {
+            location.unshift(index);
+            onChange(change, location);
+          }}
+        />
+      ))}
+    </MajorNode>
+  );
 };
