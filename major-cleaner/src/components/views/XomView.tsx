@@ -6,19 +6,21 @@ import { RequirementView } from "./RequirementView";
 interface XomViewProps {
   xom: IXofManyCourse;
   onChange: MajorChangeHandler;
+  index: number; 
 }
 
-export const XomView = ({ xom, onChange }: XomViewProps) => {
+export const XomView = ({ xom, onChange, index }: XomViewProps) => {
   return (
     <MajorNode title="XOM" subtitle={`${xom.numCreditsMin.toString()} credits`}>
       {" "}
-      {xom.courses.map((requirement, index) => (
+      {xom.courses.map((requirement, childIndex) => (
         <RequirementView
           requirement={requirement}
           onChange={(change, location) => {
             location.unshift(index);
             onChange(change, location);
           }}
+          index={childIndex}
         />
       ))}
     </MajorNode>

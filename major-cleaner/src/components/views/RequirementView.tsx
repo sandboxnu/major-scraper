@@ -10,25 +10,27 @@ import { XomView } from "./XomView";
 interface RequirementViewProps {
   requirement: Requirement2;
   onChange: MajorChangeHandler;
+  index: number
 }
 
 export const RequirementView = ({
   requirement,
-  onChange
+  onChange,
+  index
 }: RequirementViewProps) => {
   switch (requirement.type) {
     case "SECTION":
-      return <SectionView section={requirement} onChange={onChange}/>;
+      return <SectionView section={requirement} onChange={onChange} index={index}/>;
     case "COURSE":
-      return <CourseView course={requirement} onChange={onChange}/>;
+      return <CourseView course={requirement} onChange={onChange} index={index}/>;
     case "AND":
-      return <AndView and={requirement} onChange={onChange}/>;
+      return <AndView and={requirement} onChange={onChange} index={index}/>;
     case "XOM":
-      return <XomView xom={requirement} onChange={onChange}/>;
+      return <XomView xom={requirement} onChange={onChange} index={index}/>;
     case "OR":
-      return <OrView or={requirement} onChange={onChange}/>;
+      return <OrView or={requirement} onChange={onChange} index={index}/>;
     case "RANGE":
-      return <RangeView range={requirement} onChange={onChange} />;
+      return <RangeView range={requirement} onChange={onChange} index={index}/>;
     default:
       return JSON.stringify(requirement);
   }

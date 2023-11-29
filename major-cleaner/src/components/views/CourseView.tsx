@@ -4,11 +4,12 @@ import { Box } from "../Box";
 import { Editable } from "../core/Editable";
 
 interface CourseViewProps {
+  index: number;
   course: IRequiredCourse;
   onChange: MajorChangeHandler;
 }
 
-export const CourseView = ({ course, onChange }: CourseViewProps) => {
+export const CourseView = ({ index, course, onChange }: CourseViewProps) => {
   return (
     <Box>
       <div className="flex">
@@ -18,7 +19,7 @@ export const CourseView = ({ course, onChange }: CourseViewProps) => {
             onChange={(e) =>
               onChange(
                 { type: "COURSE", newCourse: { ...course, subject: e } },
-                [],
+                [index],
               )
             }
           />
@@ -27,7 +28,7 @@ export const CourseView = ({ course, onChange }: CourseViewProps) => {
             onChange={(e) =>
               onChange(
                 { type: "COURSE", newCourse: { ...course, classId: parseInt(e) } },
-                [],
+                [index],
               )}
           />
         </div>

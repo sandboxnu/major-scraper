@@ -15,9 +15,9 @@ export const MajorView = (props: MajorViewProps) => {
         <SectionView
           section={section}
           onChange={(change, location) => {
-            location.unshift(index);
             props.onChange(change, location);
           }}
+          index={index}
         />
       ))}
     </List>

@@ -5,7 +5,7 @@ export const Editable = (props: {
     initialValue: string;
   }): React.ReactNode => {
     const [editing, setEditing] = useState(false);
-    const [value, setValue] = useState("")
+    const [value, setValue] = useState(props.initialValue)
 
 
     const exitEditing = () => {

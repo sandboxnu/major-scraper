@@ -1,11 +1,11 @@
 import {
-    IAndCourse2,
-    ICourseRange2,
-    IOrCourse2,
-    IRequiredCourse,
-    IXofManyCourse,
-    Requirement2,
-    Section,
+  IAndCourse2,
+  ICourseRange2,
+  IOrCourse2,
+  IRequiredCourse,
+  IXofManyCourse,
+  Requirement2,
+  Section,
 } from "../../src/graduate-types/major2";
 import { CourseChange, MajorChange } from "./types";
 
@@ -31,7 +31,15 @@ export const handleSection = (
     location,
     (nextLocation) =>
       handleRequirement(section.requirements[nextLocation], change, location),
-    () => {},
+    () => {
+      if (change.type === "SECTION") {
+        section.title = change.newSection.title
+      } else if (change.type === "type") {
+        if(change.newType === "OR" || change.newType === "AND") {
+          section.requirements[change.location] = {type: change.newType, courses: change.courses}
+        }
+      }
+    },
   );
 
 
@@ -69,7 +77,9 @@ const handleAnd = (
   and: IAndCourse2,
   change: MajorChange,
   location: number[],
-) => hasMoreLocations(location, nextLocation => handleRequirement(and.courses[nextLocation], change, location), () => {});
+) => hasMoreLocations(location, nextLocation => handleRequirement(and.courses[nextLocation], change, location), () => {
+  
+});
 
 function handleCourse(
   requirement: IRequiredCourse,
