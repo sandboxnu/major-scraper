@@ -35,7 +35,7 @@ export const Dropdown = (props: {
         >
           <option value="AND">AND</option>
           <option value="OR">OR</option>
-          <option value="XOR">XOR</option>
+          <option value="XOM">XOM</option>
         </select>
       ) : props.initialValue ? (
         <p className="font-bold">{props.initialValue}</p>

@@ -35,8 +35,14 @@ export const handleSection = (
       if (change.type === "SECTION") {
         section.title = change.newSection.title
       } else if (change.type === "type") {
-        if(change.newType === "OR" || change.newType === "AND") {
+        if (change.newType === "OR" || change.newType === "AND") {
           section.requirements[change.location] = {type: change.newType, courses: change.courses}
+        } else if (change.newType === "XOM") {
+          section.requirements[change.location] = {
+            type: change.newType, 
+            courses: change.courses,
+            numCreditsMin: 0                        
+          }
         }
       }
     },

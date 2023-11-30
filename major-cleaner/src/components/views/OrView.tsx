@@ -1,7 +1,7 @@
 import { IOrCourse2 } from "../../../../src/graduate-types/major2";
-import { MajorChange, MajorChangeHandler } from "../../types";
-import { MajorNode } from "../MajorNode";
-import { RequirementView } from "./RequirementView";
+import { MajorChangeHandler } from "../../types";
+import { ListNode } from "../ListNode";
+import { Dropdown } from "../core/Dropdown";
 
 interface OrViewProps {
   or: IOrCourse2;
@@ -11,17 +11,18 @@ interface OrViewProps {
 
 export const OrView = ({ index, or, onChange }: OrViewProps) => {
   return (
-    <MajorNode title="OR">
-      {or.courses.map((requirement, childIndex) => (
-        <RequirementView
-          requirement={requirement}
-          onChange={function (change: MajorChange, location: number[]): void {
-            location.unshift(index);
-            onChange(change, location);
-          }}
-          index={childIndex}
-        />
-      ))}
-    </MajorNode>
+    <ListNode
+      leftChild={
+        <Dropdown
+          initialValue={"OR"}
+          onChange={(e) => onChange(
+            { type: "type", newType: e, location: index, courses: or.courses },
+            []
+          )}
+        />} 
+      requirements={or.courses} 
+      index={index} 
+      onChange={onChange}
+    />
   );
 };

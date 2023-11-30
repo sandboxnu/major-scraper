@@ -1,7 +1,8 @@
 import { IXofManyCourse } from "../../../../src/graduate-types/major2";
 import { MajorChangeHandler } from "../../types";
-import { MajorNode } from "../MajorNode";
-import { RequirementView } from "./RequirementView";
+import { ListNode } from "../ListNode";
+import { Dropdown } from "../core/Dropdown";
+import { Editable } from "../core/Editable";
 
 interface XomViewProps {
   xom: IXofManyCourse;
@@ -11,18 +12,30 @@ interface XomViewProps {
 
 export const XomView = ({ xom, onChange, index }: XomViewProps) => {
   return (
-    <MajorNode title="XOM" subtitle={`${xom.numCreditsMin.toString()} credits`}>
-      {" "}
-      {xom.courses.map((requirement, childIndex) => (
-        <RequirementView
-          requirement={requirement}
-          onChange={(change, location) => {
-            location.unshift(index);
-            onChange(change, location);
-          }}
-          index={childIndex}
+    <ListNode
+      middleChild={
+        <Editable 
+          onChange={(val) => {
+            onChange({
+              type: "XOM",
+              newXom: {...xom, numCreditsMin: Number(val)}
+            }, 
+            [index])
+          }} 
+          initialValue={`${xom.numCreditsMin} creadits`}
         />
-      ))}
-    </MajorNode>
+      }
+      leftChild={
+        <Dropdown
+          initialValue={"XOM"}
+          onChange={(e) => onChange(
+            { type: "type", newType: e, location: index, courses: xom.courses },
+            []
+          )}
+        />} 
+      requirements={xom.courses} 
+      index={index} 
+      onChange={onChange}
+    />
   );
 };

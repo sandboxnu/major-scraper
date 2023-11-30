@@ -17,8 +17,6 @@ const parseTokens = (tokens: string) => {
 };
 
 function App() {
-  const [greetMsg, setGreetMsg] = useState("");
-  const [name, setName] = useState("");
   const [major, setMajor] = useState<Major2>();
   const [tokens, setTokens] = useState("{}");
 
