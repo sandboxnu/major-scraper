@@ -42,8 +42,12 @@ function App() {
           throw new Error(majorClone.requirementSections.toString());
         }
         handleSection(majorClone.requirementSections[locationIndex], change, location);
-        setMajor(majorClone);
+      } else {
+        if(change.type === "DELETE") {
+          majorClone.requirementSections.splice(change.location, 1)
+        }
       }
+      setMajor(majorClone);
     }
   }
 

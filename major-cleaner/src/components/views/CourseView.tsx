@@ -1,3 +1,4 @@
+import { convertFileSrc } from "@tauri-apps/api/tauri";
 import { IRequiredCourse } from "../../../../src/graduate-types/major2";
 import { MajorChangeHandler } from "../../types";
 import { Box } from "../Box";
@@ -33,6 +34,12 @@ export const CourseView = ({ index, course, onChange }: CourseViewProps) => {
           />
         </div>
         <p className="flex-1 text-right">COURSE</p>
+        <button onClick={() => {
+          onChange({
+            type: "DELETE",
+            location: index
+          }, [])
+        }}> 🗑 </button>
       </div>
     </Box>
   );

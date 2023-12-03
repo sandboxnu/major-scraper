@@ -7,7 +7,7 @@ import {
   Requirement2,
   Section,
 } from "../../src/graduate-types/major2";
-import { CourseChange, MajorChange } from "./types";
+import { MajorChange } from "./types";
 
 const hasMoreLocations = (
   location: number[],
@@ -44,6 +44,9 @@ export const handleSection = (
             numCreditsMin: 0                        
           }
         }
+      } else if (change.type === "DELETE") {
+        console.log("hereeee", change.location)
+        section.requirements.splice(change.location, 1);
       }
     },
   );
@@ -54,7 +57,6 @@ const handleRequirement = (
   change: MajorChange,
   location: number[],
 ) => {
-    console.log(location);
   switch (requirement.type) {
     case "AND":
       handleAnd(requirement, change, location);
@@ -84,37 +86,52 @@ const handleAnd = (
   change: MajorChange,
   location: number[],
 ) => hasMoreLocations(location, nextLocation => handleRequirement(and.courses[nextLocation], change, location), () => {
-  
+  if (change.type === "DELETE") {
+    console.log("hereeee", change.location)
+    and.courses.splice(change.location, 1);
+  }
 });
 
 function handleCourse(
   requirement: IRequiredCourse,
-  change: CourseChange,
+  change: MajorChange,
   location: number[],
 ) {
+  if (change.type === "COURSE") {
     requirement.subject = change.newCourse.subject;
     requirement.classId = change.newCourse.classId;
+  }
 }
 
 function handleOr(
-  requirement: IOrCourse2,
-  change: CourseChange,
+  or: IOrCourse2,
+  change: MajorChange,
   location: number[],
 ) {
-    hasMoreLocations(location, nextLocation => handleRequirement(requirement.courses[nextLocation], change, location), () => {});
+    hasMoreLocations(location, nextLocation => handleRequirement(or.courses[nextLocation], change, location), () => {
+       if (change.type === "DELETE") {
+        console.log("hereeee", change.location)
+        or.courses.splice(change.location, 1);
+  }
+    });
 }
 
 function handleXom(
-  requirement: IXofManyCourse,
-  change: CourseChange,
+  xom: IXofManyCourse,
+  change: MajorChange,
   location: number[],
 ) {
-    hasMoreLocations(location, nextLocation => handleRequirement(requirement.courses[nextLocation], change, location), () => {});
+    hasMoreLocations(location, nextLocation => handleRequirement(xom.courses[nextLocation], change, location), () => {
+      if (change.type === "DELETE") {
+        console.log("hereeee", change.location)
+        xom.courses.splice(change.location, 1);
+      }
+    });
 }
 
 function handleRange(
   requirement: ICourseRange2,
-  change: CourseChange,
+  change: MajorChange,
   location: number[],
 ) {
     throw new Error("wtf");

@@ -13,24 +13,33 @@ export interface MajorNodeProps extends PropsWithChildren{
     index: number,
     onChange: MajorChangeHandler
 }
-export const ListNode = (props: MajorNodeProps) => {
+export const ListNode = ({leftChild, middleChild, rightTitle, index, onChange, requirements}: MajorNodeProps) => {
     return (<Box>
     <div className="flex">
       <div className="flex flex-1 gap-2">
-        {props.leftChild}
-        {props.middleChild}
-      {props.rightTitle && <p className="flex-1 text-right">{props.rightTitle}</p>}
+        {leftChild}
+        {middleChild}
+      {rightTitle && <p className="flex-1 text-right">{rightTitle}</p>}
       </div>
+      <button onClick={() => {
+        onChange({
+          type: "DELETE",
+          location: index
+        }, [])
+      }}> 🗑 </button>
     </div>
-    {props.requirements.map((req, childIndex) => (
+    {requirements.map((req, childIndex) => (
       <RequirementView
-        requirement={req}
-        onChange={(change, location) => {
-          location.unshift(props.index);
-          props.onChange(change, location);
-        }}
-        index={childIndex}
+      requirement={req}
+      onChange={(change, location) => {
+        location.unshift(index);
+        onChange(change, location);
+      }}
+      index={childIndex}
       />
-    ))}
+      ))}
+      <div>
+        <button>+</button>
+      </div>
   </Box>)
 }
