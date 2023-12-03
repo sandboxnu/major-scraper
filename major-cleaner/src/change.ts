@@ -26,31 +26,37 @@ export const handleSection = (
   section: Section,
   change: MajorChange,
   location: number[],
-) => 
+) =>
   hasMoreLocations(
     location,
     (nextLocation) =>
       handleRequirement(section.requirements[nextLocation], change, location),
     () => {
       if (change.type === "SECTION") {
-        section.title = change.newSection.title
+        section.title = change.newSection.title;
       } else if (change.type === "type") {
         if (change.newType === "OR" || change.newType === "AND") {
-          section.requirements[change.location] = {type: change.newType, courses: change.courses}
+          section.requirements[change.location] = {
+            type: change.newType,
+            courses: change.courses,
+          };
         } else if (change.newType === "XOM") {
           section.requirements[change.location] = {
-            type: change.newType, 
+            type: change.newType,
             courses: change.courses,
-            numCreditsMin: 0                        
-          }
+            numCreditsMin: 0,
+          };
         }
       } else if (change.type === "DELETE") {
-        console.log("hereeee", change.location)
+        console.log("hereeee", change.location);
         section.requirements.splice(change.location, 1);
+      } else if (change.type === "ADD_COURSE") {
+        section.requirements.push({ type: "COURSE", classId: 0, subject: "" });
+      }      else if (change.type === "ADD_GROUP") {
+        section.requirements.push({ type: "AND", courses: [] });
       }
     },
   );
-
 
 const handleRequirement = (
   requirement: Requirement2,
@@ -81,16 +87,22 @@ const handleRequirement = (
   }
 };
 
-const handleAnd = (
-  and: IAndCourse2,
-  change: MajorChange,
-  location: number[],
-) => hasMoreLocations(location, nextLocation => handleRequirement(and.courses[nextLocation], change, location), () => {
-  if (change.type === "DELETE") {
-    console.log("hereeee", change.location)
-    and.courses.splice(change.location, 1);
-  }
-});
+const handleAnd = (and: IAndCourse2, change: MajorChange, location: number[]) =>
+  hasMoreLocations(
+    location,
+    (nextLocation) =>
+      handleRequirement(and.courses[nextLocation], change, location),
+    () => {
+      if (change.type === "DELETE") {
+        console.log("hereeee", change.location);
+        and.courses.splice(change.location, 1);
+      } else if (change.type === "ADD_COURSE") {
+        and.courses.push({ type: "COURSE", classId: 0, subject: "" });
+      }      else if (change.type === "ADD_GROUP") {
+        and.courses.push({ type: "AND", courses: [] });
+      }
+    },
+  );
 
 function handleCourse(
   requirement: IRequiredCourse,
@@ -103,17 +115,22 @@ function handleCourse(
   }
 }
 
-function handleOr(
-  or: IOrCourse2,
-  change: MajorChange,
-  location: number[],
-) {
-    hasMoreLocations(location, nextLocation => handleRequirement(or.courses[nextLocation], change, location), () => {
-       if (change.type === "DELETE") {
-        console.log("hereeee", change.location)
+function handleOr(or: IOrCourse2, change: MajorChange, location: number[]) {
+  hasMoreLocations(
+    location,
+    (nextLocation) =>
+      handleRequirement(or.courses[nextLocation], change, location),
+    () => {
+      if (change.type === "DELETE") {
+        console.log("hereeee", change.location);
         or.courses.splice(change.location, 1);
-  }
-    });
+      } else if (change.type === "ADD_COURSE") {
+        or.courses.push({ type: "COURSE", classId: 0, subject: "" });
+      }      else if (change.type === "ADD_GROUP") {
+        or.courses.push({ type: "AND", courses: [] });
+      }
+    },
+  );
 }
 
 function handleXom(
@@ -121,12 +138,22 @@ function handleXom(
   change: MajorChange,
   location: number[],
 ) {
-    hasMoreLocations(location, nextLocation => handleRequirement(xom.courses[nextLocation], change, location), () => {
+  hasMoreLocations(
+    location,
+    (nextLocation) =>
+      handleRequirement(xom.courses[nextLocation], change, location),
+    () => {
       if (change.type === "DELETE") {
-        console.log("hereeee", change.location)
+        console.log("hereeee", change.location);
         xom.courses.splice(change.location, 1);
+      } else if (change.type === "ADD_COURSE") {
+        xom.courses.push({ type: "COURSE", classId: 0, subject: "" });
       }
-    });
+      else if (change.type === "ADD_GROUP") {
+        xom.courses.push({ type: "AND", courses: [] });
+      }
+    },
+  );
 }
 
 function handleRange(
@@ -134,5 +161,5 @@ function handleRange(
   change: MajorChange,
   location: number[],
 ) {
-    throw new Error("wtf");
+  throw new Error("wtf");
 }

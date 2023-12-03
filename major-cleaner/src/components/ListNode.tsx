@@ -1,8 +1,8 @@
 import { PropsWithChildren } from "react"
-import { Box } from "./Box"
 import { Requirement2 } from "../../../src/graduate-types/major2"
-import { RequirementView } from "./views/RequirementView"
 import { MajorChangeHandler } from "../types"
+import { Box } from "./Box"
+import { RequirementView } from "./views/RequirementView"
 
 export interface MajorNodeProps extends PropsWithChildren{
     rightTitle?: string,
@@ -38,8 +38,9 @@ export const ListNode = ({leftChild, middleChild, rightTitle, index, onChange, r
       index={childIndex}
       />
       ))}
-      <div>
-        <button>+</button>
+      <div className="flex">
+        <button onClick={() => onChange({type: "ADD_COURSE"},[index])}className="flex-1">+ course</button>
+        <button onClick={() => onChange({type: "ADD_GROUP"},[index])}className="flex-1">++ group</button>
       </div>
   </Box>)
 }

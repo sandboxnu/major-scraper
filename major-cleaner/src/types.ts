@@ -2,7 +2,7 @@ import { IRequiredCourse, IXofManyCourse, Requirement2, Section } from "../../sr
 
 export type MajorChangeHandler = (change: MajorChange, location: number[]) => void;
 
-export type MajorChange = CourseChange | SectionChange | TypeChange | XomChange | DeleteChange
+export type MajorChange = CourseChange | SectionChange | TypeChange | XomChange | DeleteChange | AddCourse | AddGroup
 
 export type CourseChange = {type: "COURSE", newCourse: IRequiredCourse}
 
@@ -18,4 +18,12 @@ export type XomChange = {
 export type DeleteChange = {
     type: "DELETE",
     location: number
+}
+
+export type AddGroup = {
+    type: "ADD_GROUP"
+}
+
+export type AddCourse = {
+    type: "ADD_COURSE"
 }
