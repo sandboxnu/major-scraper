@@ -24,7 +24,6 @@
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
-  text-align: center;
 }
 
 .column {
@@ -59,7 +58,9 @@ a:hover {
 }
 
 h1 {
-  text-align: center;
+  font-size: 1.5em !important;
+  font-weight: bold !important;
+  margin: 0.5em 0;
 }
 
 input,
@@ -115,4 +116,8 @@ button {
   button:active {
     background-color: #0f0f0f69;
   }
+}
+
+body {
+
 }
