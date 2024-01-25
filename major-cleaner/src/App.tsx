@@ -87,7 +87,7 @@ function App() {
         <div style={styles.column}>
           <p style={styles.columnHeader}>HTML</p>
           <div style={styles.content}>
-            <pre>
+            <pre style={styles.pre}>
               {html}
             </pre>
           </div>
@@ -141,7 +141,6 @@ const styles = {
     flexBasis: "100%",
     overflow: 'auto',
     borderRadius: 5,
-    padding: 5,
     overflowY: 'hidden',
     display: "flex",
     flexDirection: "column"
@@ -149,10 +148,17 @@ const styles = {
   columnHeader: {
     fontWeight: "bold",
     background: '#111',
-    margin: "-5px -5px 5px -5px",
-    padding: "5px",
+    padding: "6px 10px",
   },
   content: {
+    overflowY: 'auto',
+    padding: "10px",
+  },
+  pre: {
+    whiteSpace: 'pre-wrap',
+    overflowWrap: 'break-word',
+    // width: '100%',
+    // height: '100%',
     overflowY: 'auto'
   },
   dropdownContainer: {},
