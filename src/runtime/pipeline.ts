@@ -28,7 +28,7 @@ export const runPipeline = async (yearStart: number) => {
     return createPipeline(entry)
       .then(
         addPhase(StageLabel.Classify, classify, [
-          CatalogEntryType.Minor,
+          // CatalogEntryType.Minor,
           CatalogEntryType.Major,
           CatalogEntryType.Concentration,
         ]),

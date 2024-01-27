@@ -5,6 +5,7 @@ import type { HRow, TextRow, TokenizedCatalogEntry } from "../tokenize";
 import type { Major2, Section } from "../graduate-types";
 import { writeFile } from "fs/promises";
 import { default as grammar } from "./grammar.cjs";
+import { FileName } from "../classify";
 
 export const parseRows = (rows: HRow[]) => {
   const parser = new nearly.Parser(nearly.Grammar.fromCompiled(grammar));
@@ -114,7 +115,7 @@ export const parse = async (
   };
 
   await writeFile(
-    `${entry.savePath}/parsed.json`,
+    `${entry.savePath}/${FileName.PARSED}.${entry.saveStage}.json`,
     JSON.stringify(major, null, 2),
   );
 

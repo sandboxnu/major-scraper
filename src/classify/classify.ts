@@ -6,7 +6,7 @@ import {
   majorNameToFileName,
   parseText,
 } from "../utils";
-import { CatalogEntryType, FilterError } from "./types";
+import { CatalogEntryType, FileName, FilterError, SaveStage } from "./types";
 import type { TypedCatalogEntry } from "./types";
 import { mkdir, readFile, writeFile } from "fs/promises";
 import { join } from "path";
@@ -36,23 +36,38 @@ export const classify = async (
     college,
     majorNameToFileName(majorName),
   );
+  await mkdir(savePath, { recursive: true });
 
-  const storedHTMLPath = `${savePath}/html.html`;
+  const stagingHTMLPath = `${savePath}/${FileName.RAW}.${SaveStage.STAGING}.html`;
+  const initialHTMLPath = `${savePath}/${FileName.RAW}.${SaveStage.INITIAL}.html`;
   const formattedNewHTML = await formatHTML(html.html());
-  if (existsSync(storedHTMLPath)) {
-    const storedHTML = await readFile(storedHTMLPath, {
+
+  let saveStage: SaveStage = SaveStage.INITIAL;
+
+  if (existsSync(stagingHTMLPath)) {
+    const stagingHTML = await readFile(stagingHTMLPath, {
       encoding: "utf-8",
     });
 
-    if (formattedNewHTML === storedHTML) {
-      throw new Error("No changes for HTML");
+    if (formattedNewHTML !== stagingHTML) {
+      await writeFile(initialHTMLPath, formattedNewHTML);
+    } else {
+      saveStage = SaveStage.STAGING;
     }
+  } else {
+    await writeFile(initialHTMLPath, formattedNewHTML);
   }
 
-  await mkdir(savePath, { recursive: true });
-  await writeFile(`${savePath}/html.html`, formattedNewHTML);
-
-  return { url, degreeType, yearVersion, college, majorName, savePath, html };
+  return {
+    url,
+    degreeType,
+    yearVersion,
+    college,
+    majorName,
+    savePath,
+    saveStage,
+    html,
+  };
 };
 
 const formatHTML = async (html: string) => {

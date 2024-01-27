@@ -14,8 +14,21 @@ export type TypedCatalogEntry = {
   college: College;
   majorName: string;
   savePath: string;
+  saveStage: SaveStage;
   html: CheerioStatic;
 };
+
+export enum SaveStage {
+  INITIAL = "initial",
+  STAGING = "staging",
+  COMMIT = "commit",
+}
+
+export enum FileName {
+  RAW = "raw",
+  TOKENS = "tokens",
+  PARSED = "parsed",
+}
 
 export class FilterError {
   actual;
