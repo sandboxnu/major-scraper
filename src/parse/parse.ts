@@ -5,6 +5,7 @@ import type { HRow, TextRow, TokenizedCatalogEntry } from "../tokenize";
 import type { Major2, Section } from "../graduate-types";
 import { writeFile } from "fs/promises";
 import { default as grammar } from "./grammar.cjs";
+import { FileName } from "../classify";
 
 export const parseRows = (rows: HRow[]) => {
   const parser = new nearly.Parser(nearly.Grammar.fromCompiled(grammar));
@@ -12,7 +13,12 @@ export const parseRows = (rows: HRow[]) => {
   // according to docs, "you would feed a Parser instance an array of objects"
   // https://nearley.js.org/docs/tokenizers#custom-token-matchers
   // however signature only takes string, so cast to any
-  parser.feed(rows as any);
+  try {
+    parser.feed(rows as any);
+  } catch (error) {
+    // TODO: pretified the error message somehow since it is too long
+    // console.log(error.message);
+  }
 
   // make sure there are no multiple solutions, as our grammar should be unambiguous
   if (parser.results.length === 0) {
@@ -109,7 +115,7 @@ export const parse = async (
   };
 
   await writeFile(
-    `${entry.savePath}/parsed.json`,
+    `${entry.savePath}/${FileName.PARSED}.${entry.saveStage}.json`,
     JSON.stringify(major, null, 2),
   );
 

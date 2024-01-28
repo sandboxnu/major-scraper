@@ -34,7 +34,7 @@ import { join } from "path";
 import { BASE_URL } from "../constants";
 import { categorizeTextRow } from "./textCategorize";
 import { writeFile } from "fs/promises";
-import type { TypedCatalogEntry } from "../classify";
+import { FileName, type TypedCatalogEntry } from "../classify";
 
 // should tokenize have the option to read the html locally or from the previous step
 export const tokenize = async (
@@ -70,7 +70,7 @@ export const tokenize = async (
   };
 
   await writeFile(
-    `${entry.savePath}/tokens.json`,
+    `${entry.savePath}/${FileName.TOKENS}.${entry.saveStage}.json`,
     JSON.stringify(tokenized, null, 2),
   );
 
