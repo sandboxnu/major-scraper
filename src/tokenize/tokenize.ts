@@ -40,15 +40,8 @@ import { FileName, type TypedCatalogEntry } from "../classify";
 export const tokenize = async (
   entry: TypedCatalogEntry,
 ): Promise<TokenizedCatalogEntry> => {
-  const requirementsContainer = getRequirementsContainer(entry.html);
-  const sections = await tokenizeSections(entry.html, requirementsContainer);
+  const { sections, programRequiredHours } = await tokenizeHTML(entry.html);
 
-  const programRequiredHours = getProgramRequiredHours(
-    entry.html,
-    requirementsContainer,
-  );
-
-  // TODO: replace with actual categorization
   for (const s of sections) {
     for (const r of s.entries) {
       if (
@@ -78,6 +71,26 @@ export const tokenize = async (
     ...entry,
     programRequiredHours,
     sections,
+  };
+};
+
+/**
+ * Helper method, mainly use for snapshot test
+ * @param html the raw major
+ * @returns the tokens (sections) and the required hours of the major
+ */
+export const tokenizeHTML = async (html: CheerioStatic) => {
+  const requirementsContainer = getRequirementsContainer(html);
+  const sections = await tokenizeSections(html, requirementsContainer);
+
+  const programRequiredHours = getProgramRequiredHours(
+    html,
+    requirementsContainer,
+  );
+
+  return {
+    sections,
+    programRequiredHours,
   };
 };
 
