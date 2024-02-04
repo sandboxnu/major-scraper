@@ -5,7 +5,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "test": "pnpm parser:generate && jest",
+    "test": "pnpm parser:generate && vitest --watch=false",
+    "test:watch": "pnpm parser:generate && vitest --watch",
     "scrape": "pnpm parser:generate && tsx ./src/main.ts",
     "parser:generate": "nearleyc src/parse/grammar.ne -o src/parse/grammar.ts"
   },
@@ -16,24 +17,11 @@
   },
   "devDependencies": {
     "@types/cheerio": "0.22.14",
-    "@types/jest": "^27.5.2",
     "@types/nearley": "^2.11.4",
-    "@types/node": "^16.18.59",
-    "jest": "^27.5.1",
+    "@types/node": "^18.16.0",
     "prettier": "^3.0.3",
-    "ts-jest": "^27.1.5",
     "tsx": "^3.14.0",
-    "typescript": "^5.2.2"
-  },
-  "jest": {
-    "moduleFileExtensions": [
-      "ts",
-      "tsx",
-      "js"
-    ],
-    "transform": {
-      "\\.(ts|tsx)$": "ts-jest"
-    },
-    "testEnvironment": "node"
+    "typescript": "^5.2.2",
+    "vitest": "^1.2.2"
   }
 }
