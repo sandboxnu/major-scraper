@@ -1,11 +1,9 @@
 import { assertUnreachable } from "../graduate-types/common";
 import {
-  ensureLength,
-  ensureLengthAtLeast,
+  ensureAtLeastLength,
+  ensureExactLength,
   loadHTML,
-  majorNameToFileName,
   parseText,
-  wrappedGetRequest,
 } from "../utils";
 import {
   COURSE_REGEX,
@@ -18,14 +16,12 @@ import {
   XOM_REGEX_CREDITS,
   XOM_REGEX_NUMBER,
 } from "./constants";
-import {
+import { HSectionType, HRowType } from "./types";
+import type {
   CountAndHoursRow,
   CourseRow,
-  HDocument,
   HRow,
-  HRowType,
   HSection,
-  HSectionType,
   MultiCourseRow,
   RangeBoundedRow,
   RangeLowerBoundedRow,
@@ -35,85 +31,20 @@ import {
   WithExceptions,
 } from "./types";
 import { join } from "path";
-import { BASE_URL, STORE_TOKENS_AND_HTML } from "../constants";
+import { BASE_URL } from "../constants";
 import { categorizeTextRow } from "./textCategorize";
-import { existsSync } from "fs";
-import { mkdir, writeFile } from "fs/promises";
-import * as cheerio from "cheerio";
-import { TypedCatalogEntry } from "../classify";
+import { writeFile } from "fs/promises";
+import { FileName, type TypedCatalogEntry } from "../classify";
 
-export const tokenizeEntry = async (
+// should tokenize have the option to read the html locally or from the previous step
+export const tokenize = async (
   entry: TypedCatalogEntry,
 ): Promise<TokenizedCatalogEntry> => {
-  const tokenized = await fetchAndTokenizeHTML(entry.url);
-  return { ...entry, tokenized };
-};
-
-/**
- * Fetch html for page and convert into intermediate representation (IR)
- *
- * @param url The url of the page to tokenize
- */
-const fetchAndTokenizeHTML = async (url: URL): Promise<HDocument> => {
-  const html = await wrappedGetRequest(url.href);
-  const token = await tokenizeHTML(cheerio.load(html));
-
-  const majorName = token.majorName;
-  const year = token.yearVersion;
-  const degree = majorName.includes("Minor") ? "minors" : "majors";
-  // in the url, the college will always be at the 6th place in the url
-  const college = url.toString().split("/")[6].replaceAll("-", "_");
-
-  const filePath = join(
-    "degrees",
-    degree,
-    year.toString(),
-    college,
-    majorNameToFileName(majorName),
-  );
-
-  if (!existsSync("./degrees")) {
-    await mkdir("./degrees");
-  }
-
-  if (!existsSync(join("degrees", degree))) {
-    await mkdir(join("degrees", degree));
-  }
-
-  if (!existsSync(join("degrees", degree, year.toString()))) {
-    await mkdir(join("degrees", degree, year.toString()));
-  }
-
-  if (!existsSync(join("degrees", degree, year.toString(), college))) {
-    await mkdir(join("degrees", degree, year.toString(), college));
-  }
-
-  if (!existsSync(filePath)) {
-    await mkdir(filePath);
-  }
-
-  if (STORE_TOKENS_AND_HTML) {
-    await writeFile(`${filePath}/cached.html`, html);
-    await writeFile(`${filePath}/tokens.json`, JSON.stringify(token, null, 2));
-  }
-  return token;
-};
-
-/**
- * Tokenize scraped html into intermediate representation (IR)
- *
- * @param $ The cheerio static for the page to tokenize
- */
-export const tokenizeHTML = async ($: CheerioStatic): Promise<HDocument> => {
-  const majorName: string = parseText($("#site-title").find("h1"));
-  const catalogYear: string = parseText($("#edition")).split(" ")[0];
-  const yearVersion: number = parseInt(catalogYear.split("-")[0]);
-
-  const requirementsContainer = getRequirementsContainer($);
-  const sections = await tokenizeSections($, requirementsContainer);
+  const requirementsContainer = getRequirementsContainer(entry.html);
+  const sections = await tokenizeSections(entry.html, requirementsContainer);
 
   const programRequiredHours = getProgramRequiredHours(
-    $,
+    entry.html,
     requirementsContainer,
   );
 
@@ -125,15 +56,27 @@ export const tokenizeHTML = async ($: CheerioStatic): Promise<HDocument> => {
         r.type === HRowType.SUBHEADER ||
         r.type === HRowType.COMMENT
       ) {
-        categorizeTextRow(r);
+        categorizeTextRow(r, entry.majorName);
       }
     }
   }
 
-  return {
+  const tokenized = {
+    url: entry.url,
+    majorName: entry.majorName,
+    yearVersion: entry.yearVersion,
     programRequiredHours,
-    yearVersion,
-    majorName,
+    sections,
+  };
+
+  await writeFile(
+    `${entry.savePath}/${FileName.TOKENS}.${entry.saveStage}.json`,
+    JSON.stringify(tokenized, null, 2),
+  );
+
+  return {
+    ...entry,
+    programRequiredHours,
     sections,
   };
 };
@@ -156,7 +99,11 @@ const getRequirementsContainer = ($: CheerioStatic) => {
     throw new Error(`unexpected # of matching ids: ${container.length}`);
   } else if (tabsContainer.length === 1) {
     const tabsArr = tabsContainer.find("ul > li > a").toArray().map($);
-    const [, requirementsTab] = ensureLengthAtLeast(2, tabsArr);
+    const [, requirementsTab] = ensureAtLeastLength(
+      tabsArr,
+      2,
+      "Missing tabs for requirements container",
+    );
     const containerId = requirementsTab.attr("href");
     return $(containerId);
   }
@@ -188,11 +135,11 @@ const getProgramRequiredHours = (
     for (const next of [nextAll[0], nextAll[nextAll.length - 1]]) {
       // keep if matches "minimum of <n>" or "<n>"
       // regex matches space characters (\x) and non-breaking space (\xa0)
-      const parts = parseText(next).split(/[\s\xa0]+/);
+      const parts = parseText(next!).split(/[\s\xa0]+/);
       // regex matches digits (\d) groups of at least 1 (+)
-      if (/\d+/.test(parts[0])) {
+      if (/\d+/.test(parts[0]!)) {
         return Number(parts[0]);
-      } else if (/\d+/.test(parts[2])) {
+      } else if (/\d+/.test(parts[2]!)) {
         return Number(parts[2]);
       }
     }
@@ -302,8 +249,8 @@ const tokenizeRows = ($: CheerioStatic, table: CheerioElement): HRow[] => {
  * @param tds
  */
 const getRowType = ($: CheerioStatic, tr: CheerioElement, tds: Cheerio[]) => {
-  const trClasses = new Set(tr.attribs["class"].split(" "));
-  const td = tds[0];
+  const trClasses = new Set(tr.attribs["class"]?.split(" "));
+  const td = ensureAtLeastLength(tds, 1)[0];
   const tdClasses = new Set(td.attr("class")?.split(" "));
 
   if (tdClasses.size > 0) {
@@ -406,10 +353,7 @@ const constructTextRow = <T>(
   tds: Cheerio[],
   type: T,
 ): TextRow<T> => {
-  if (tds.length !== 2) {
-    throw new Error(tds.toString());
-  }
-  const [c1, c2] = ensureLength(2, tds);
+  const [c1, c2] = ensureExactLength(tds, 2);
   const description = parseText(c1);
   const hour = parseHour(c2);
   return { hour, description, type };
@@ -419,7 +363,7 @@ const constructPlainCourseRow = (
   $: CheerioStatic,
   tds: Cheerio[],
 ): CourseRow<HRowType.PLAIN_COURSE> => {
-  const [code, desc, hourCol] = ensureLength(3, tds);
+  const [code, desc, hourCol] = ensureExactLength(tds, 3);
   const { subject, classId } = parseCourseTitle(parseText(code));
   const description = parseText(desc);
   const hour = parseHour(hourCol);
@@ -430,7 +374,7 @@ const constructOrCourseRow = (
   $: CheerioStatic,
   tds: Cheerio[],
 ): CourseRow<HRowType.OR_COURSE> => {
-  const [code, desc] = ensureLength(2, tds);
+  const [code, desc] = ensureExactLength(tds, 2);
   // remove "or "
   const { subject, classId } = parseCourseTitle(
     parseText(code).substring(3).trim(),
@@ -448,7 +392,7 @@ const constructMultiCourseRow = (
   | MultiCourseRow<HRowType.AND_COURSE>
   | MultiCourseRow<HRowType.OR_OF_AND_COURSE> => {
   // some ORs of ANDs don't have a third cell for hour column
-  const [code, desc, hourCol] = ensureLengthAtLeast(2, tds);
+  const [code, desc, hourCol] = ensureAtLeastLength(tds, 2);
   const titles = code
     .find(".code")
     .toArray()
@@ -469,8 +413,9 @@ const constructMultiCourseRow = (
   const courses = titles.map(({ subject, classId }, i) => ({
     subject,
     classId,
-    description: descriptions[i],
+    description: descriptions[i] as string, // TODO: remove casting later
   }));
+
   const hour = hourCol ? parseHour(hourCol) : 0;
   return {
     hour,
@@ -488,7 +433,7 @@ const constructRangeLowerBoundedMaybeExceptions = (
       RangeLowerBoundedRow<HRowType.RANGE_LOWER_BOUNDED_WITH_EXCEPTIONS>
     >
   | RangeLowerBoundedRow<HRowType.RANGE_LOWER_BOUNDED> => {
-  const [desc, hourCol] = ensureLength(2, tds);
+  const [desc, hourCol] = ensureAtLeastLength(tds, 2);
   const hour = parseHour(hourCol);
   // text should match one of the following:
   // - CS 9999 or higher[, except CS 9999, CS 9999, CS 3999,... <etc>]
@@ -497,18 +442,18 @@ const constructRangeLowerBoundedMaybeExceptions = (
   const text = parseText(desc);
   // should match the form [["CS 9999", "CS", "9999"], [...]]
   const matches = Array.from(text.matchAll(RANGE_LOWER_BOUNDED_PARSE));
-  const [[, subject, , , , id], ...exceptions] = ensureLengthAtLeast(
-    1,
+  const [[, subject, , , , id], ...exceptions] = ensureAtLeastLength(
     matches,
+    1,
   );
   if (exceptions.length > 0) {
     return {
       type: HRowType.RANGE_LOWER_BOUNDED_WITH_EXCEPTIONS,
       hour,
-      subject,
+      subject: subject as string, // TODO: remove this casting later
       classIdStart: Number(id),
       exceptions: exceptions.map(([, subject, , , , id]) => ({
-        subject,
+        subject: subject as string, // TODO: remove this casting later
         classId: Number(id),
       })),
     };
@@ -516,7 +461,7 @@ const constructRangeLowerBoundedMaybeExceptions = (
   return {
     type: HRowType.RANGE_LOWER_BOUNDED,
     hour,
-    subject,
+    subject: subject as string, // TODO: remove this casting later
     classIdStart: Number(id),
   };
 };
@@ -527,7 +472,7 @@ const constructRangeBoundedMaybeExceptions = (
 ):
   | RangeBoundedRow<HRowType.RANGE_BOUNDED>
   | WithExceptions<RangeBoundedRow<HRowType.RANGE_BOUNDED_WITH_EXCEPTIONS>> => {
-  const [desc, hourCol] = ensureLength(2, tds);
+  const [desc, hourCol] = ensureExactLength(tds, 2);
   const hour = parseHour(hourCol);
   // text should match the form:
   // 1. CS 1000 to CS 5999
@@ -536,10 +481,10 @@ const constructRangeBoundedMaybeExceptions = (
   // should match the form [["CS 9999", "CS", "9999"], [...]]
   const matches = Array.from(text.matchAll(COURSE_REGEX));
   const [[, subject, classIdStart], [, , classIdEnd], ...exceptions] =
-    ensureLengthAtLeast(2, matches);
+    ensureAtLeastLength(matches, 2);
   const result = {
     hour,
-    subject,
+    subject: subject as string, // TODO: remove this casting later
     classIdStart: Number(classIdStart),
     classIdEnd: Number(classIdEnd),
   };
@@ -548,7 +493,7 @@ const constructRangeBoundedMaybeExceptions = (
       ...result,
       type: HRowType.RANGE_BOUNDED_WITH_EXCEPTIONS,
       exceptions: exceptions.map(([, subject, id]) => ({
-        subject,
+        subject: subject as string, // TODO: remove this casting later
         classId: Number(id),
       })),
     };
@@ -563,14 +508,14 @@ const constructRangeUnbounded = (
   $: CheerioStatic,
   tds: Cheerio[],
 ): RangeUnboundedRow<HRowType.RANGE_UNBOUNDED> => {
-  const [desc, hourCol] = ensureLength(2, tds);
+  const [desc, hourCol] = ensureExactLength(tds, 2);
   const hour = parseHour(hourCol);
   // text should match one of the following:
   // - Any course in ARTD, ARTE, ARTF, ARTG, ARTH, and GAME subject areas as long as prerequisites have been met.
   // - BIOE, CHME, CIVE, EECE, ME, IE, MEIE, and ENGR to Department approval.
   const text = parseText(desc);
   const matches = Array.from(text.match(SUBJECT_REGEX) ?? []);
-  const subjects = ensureLengthAtLeast(3, matches);
+  const subjects = ensureAtLeastLength(matches, 3);
   return {
     type: HRowType.RANGE_UNBOUNDED,
     hour,
@@ -592,7 +537,7 @@ const constructSectionInfo = (
   $: CheerioStatic,
   tds: Cheerio[],
 ): CountAndHoursRow<HRowType.SECTION_INFO> => {
-  const [c1, c2] = ensureLength(2, tds, tds.toString());
+  const [c1, c2] = ensureExactLength(tds, 2, tds.toString());
   const hour = parseHour(c2);
   const description = parseText(c1);
 
@@ -636,14 +581,16 @@ const constructXOfMany = (
   $: CheerioStatic,
   tds: Cheerio[],
 ): TextRow<HRowType.X_OF_MANY> => {
-  const [c1, c2] = ensureLength(2, tds, tds.toString());
+  const [c1, c2] = ensureExactLength(tds, 2, tds.toString());
   let hour = parseHour(c2);
   const description = parseText(c1);
 
   if (!hour) {
     const matchesNumber = description.toLowerCase().match(XOM_REGEX_NUMBER);
     if (matchesNumber) {
-      const numberTranslation = XOM_NUMBERS.get(matchesNumber[1]);
+      const numberTranslation = XOM_NUMBERS.get(
+        ensureAtLeastLength(matchesNumber, 2)[1],
+      );
       if (numberTranslation != undefined) {
         hour = numberTranslation * 4;
       }
@@ -664,10 +611,11 @@ const constructXOfMany = (
 
 const parseHour = (td: Cheerio) => {
   const hourText = td.text();
-  return parseInt(hourText.split("-")[0]) || 0;
+  return parseInt(ensureAtLeastLength(hourText.split("-"), 1)[0]) || 0;
 };
+
 const parseCourseTitle = (parsedCourse: string) => {
-  const [subject, classId] = ensureLength(2, parsedCourse.split(" "));
+  const [subject, classId] = ensureExactLength(parsedCourse.split(" "), 2);
   return {
     subject,
     classId: Number(classId),

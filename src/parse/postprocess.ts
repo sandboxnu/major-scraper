@@ -1,5 +1,6 @@
-import { CountAndHoursRow, HRow, HRowType, TextRow } from "../tokenize/types";
-import {
+import type { CountAndHoursRow, HRow, TextRow } from "../tokenize";
+import { HRowType } from "../tokenize";
+import type {
   IAndCourse2,
   IOrCourse2,
   IRequiredCourse,
