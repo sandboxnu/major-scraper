@@ -7,8 +7,7 @@
   "scripts": {
     "test": "pnpm parser:generate && jest",
     "scrape": "pnpm parser:generate && tsx ./src/main.ts",
-    "parser:generate": "nearleyc src/parse/grammar.ne -o src/parse/grammar.cjs",
-    "parser:test": "nearley-test src/parse/grammar.cjs"
+    "parser:generate": "nearleyc src/parse/grammar.ne -o src/parse/grammar.ts"
   },
   "dependencies": {
     "cheerio": "1.0.0-rc.12",

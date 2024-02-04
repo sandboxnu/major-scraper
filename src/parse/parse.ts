@@ -4,8 +4,8 @@ import { HRowType, HSectionType } from "../tokenize";
 import type { HRow, TextRow, TokenizedCatalogEntry } from "../tokenize";
 import type { Major2, Section } from "../graduate-types";
 import { writeFile } from "fs/promises";
-import { default as grammar } from "./grammar.cjs";
 import { FileName } from "../classify";
+import grammar from "./grammar";
 
 export const parseRows = (rows: HRow[]) => {
   const parser = new nearly.Parser(nearly.Grammar.fromCompiled(grammar));
