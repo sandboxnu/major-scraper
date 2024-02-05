@@ -81,6 +81,51 @@ export const RANGE_UNBOUNDED_TOKEN: HRow = {
   subjects: ["ARTD", "ARTE", "ARTF", "ARTG", "ARTH", "GAME"],
 };
 
+export const RANGE_UNBOUNDED_PARSED: ICourseRange2[] = [
+  {
+    type: "RANGE",
+    subject: "ARTD",
+    idRangeStart: 0,
+    idRangeEnd: 9999,
+    exceptions: [],
+  },
+  {
+    type: "RANGE",
+    subject: "ARTE",
+    idRangeStart: 0,
+    idRangeEnd: 9999,
+    exceptions: [],
+  },
+  {
+    type: "RANGE",
+    subject: "ARTF",
+    idRangeStart: 0,
+    idRangeEnd: 9999,
+    exceptions: [],
+  },
+  {
+    type: "RANGE",
+    subject: "ARTG",
+    idRangeStart: 0,
+    idRangeEnd: 9999,
+    exceptions: [],
+  },
+  {
+    type: "RANGE",
+    subject: "ARTH",
+    idRangeStart: 0,
+    idRangeEnd: 9999,
+    exceptions: [],
+  },
+  {
+    type: "RANGE",
+    subject: "GAME",
+    idRangeStart: 0,
+    idRangeEnd: 9999,
+    exceptions: [],
+  },
+];
+
 export const RANGE_LOWER_BOUNDED_WITH_EXCEPTION_TOKEN: HRow = {
   type: HRowType.RANGE_LOWER_BOUNDED_WITH_EXCEPTIONS,
   hour: 0,

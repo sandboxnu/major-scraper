@@ -20,6 +20,8 @@ import {
   RANGE_LOWER_BOUNDED_TOKEN,
   RANGE_LOWER_BOUNDED_WITH_EXCEPTION_PARSED,
   RANGE_LOWER_BOUNDED_WITH_EXCEPTION_TOKEN,
+  RANGE_UNBOUNDED_PARSED,
+  RANGE_UNBOUNDED_TOKEN,
 } from "test/parseConstant";
 
 function expectReqs(tokens: HRow[], reqs: Requirement2[]) {
@@ -112,10 +114,9 @@ describe("parser", () => {
   });
 
   describe("rangeCourse", () => {
-    test.todo("unbounded");
-    // test("unbounded", () => {
-    //   expectReqs([RANGE_UNBOUNDED_TOKEN], []);
-    // });
+    test("unbounded", () => {
+      expectReqs([RANGE_UNBOUNDED_TOKEN], RANGE_UNBOUNDED_PARSED);
+    });
 
     test("lower bounded", () => {
       expectReqs([RANGE_LOWER_BOUNDED_TOKEN], [RANGE_LOWER_BOUNDED_PARSED]);
