@@ -1,7 +1,57 @@
 import * as cheerio from "cheerio";
-import { Err, Ok } from "./graduate-types/common";
+import { Err, Ok, ResultType } from "./graduate-types/common";
 import type { Result } from "./graduate-types/common";
 import undici from "undici";
+
+export async function retryFetchHTML(
+  url: URL,
+  numRetries: number = 5,
+  sleepTime: number = 500,
+): Promise<Result<CheerioStatic, string>> {
+  for (let i = 0; i < numRetries - 1; i++) {
+    const res = await fetchHTML(url);
+
+    if (res.type === ResultType.Ok) {
+      return res;
+    }
+
+    // Network fails like 404 etc
+    if (res.type === ResultType.Err && !res.err.includes("Fetch failed")) {
+      return res;
+    }
+
+    setTimeout(() => {}, sleepTime);
+  }
+
+  return await fetchHTML(url);
+}
+
+export async function fetchHTML(
+  url: URL,
+): Promise<Result<CheerioStatic, string>> {
+  try {
+    const res = await fetch(url, {
+      method: "GET",
+      headers: {
+        "Content-Type": "text/html",
+        "User-Agent":
+          "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36",
+      },
+    });
+
+    if (!res.ok) {
+      return Err(
+        `Network response with status ${res.status} when fetching HTML`,
+      );
+    }
+
+    const rawText = await res.text();
+    const html = cheerio.load(rawText);
+    return Ok(html);
+  } catch (error) {
+    return Err(`Fetch failed: ${(error as TypeError).cause}`);
+  }
+}
 
 export const loadHTML = async (url: string): Promise<CheerioStatic> => {
   return cheerio.load(await wrappedGetRequest(url));
