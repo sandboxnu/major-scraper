@@ -11,8 +11,10 @@
     "parser:generate": "nearleyc src/parse/grammar.ne -o src/parse/grammar.ts"
   },
   "dependencies": {
+    "@clack/prompts": "^0.7.0",
     "cheerio": "1.0.0-rc.12",
     "nearley": "^2.20.1",
+    "picocolors": "^1.0.0",
     "undici": "^5.27.0"
   },
   "devDependencies": {
