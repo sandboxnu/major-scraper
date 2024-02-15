@@ -2,9 +2,9 @@ import assert from "assert";
 import { College } from "../urls";
 import {
   ensureAtLeastLength,
-  loadHTML,
   majorNameToFileName,
   parseText,
+  retryFetchHTML,
 } from "../utils";
 import { CatalogEntryType, FileName, FilterError, SaveStage } from "./types";
 import type { TypedCatalogEntry } from "./types";
@@ -13,12 +13,24 @@ import { join } from "path";
 import { ARCHIVE_PLACEMENT, CURRENT_PLACEMENT } from "../constants";
 import * as prettier from "prettier";
 import { existsSync } from "fs";
+import { Err, Ok, type Result } from "@/types";
+import { ResultType } from "@/graduate-types";
 
 export const classify = async (
   url: URL,
   filterTypes: CatalogEntryType[],
-): Promise<TypedCatalogEntry> => {
-  const html = await loadHTML(url.href);
+): Promise<Result<TypedCatalogEntry, { url: URL; message: string }>> => {
+  const result = await retryFetchHTML(url);
+
+  if (result.type === ResultType.Err) {
+    return Err({
+      url,
+      message: result.err,
+    });
+  }
+
+  const html = result.ok;
+
   const { degreeType, yearVersion, college, majorName } = getMetadata(
     html,
     url,
@@ -26,7 +38,11 @@ export const classify = async (
   cleanUpHTML(html);
 
   if (!filterTypes.includes(degreeType)) {
-    throw new FilterError(degreeType, filterTypes);
+    // throw new FilterError(degreeType, filterTypes);
+    return Err({
+      url,
+      message: `Catalog of type ${degreeType} was filtered`,
+    });
   }
 
   const savePath = join(
@@ -58,7 +74,7 @@ export const classify = async (
     await writeFile(initialHTMLPath, formattedNewHTML);
   }
 
-  return {
+  return Ok({
     url,
     degreeType,
     yearVersion,
@@ -67,7 +83,7 @@ export const classify = async (
     savePath,
     saveStage,
     html,
-  };
+  });
 };
 
 const formatHTML = async (html: string) => {
