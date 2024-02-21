@@ -16,8 +16,9 @@ export const parseRows = (rows: HRow[]) => {
   try {
     parser.feed(rows as any);
   } catch (error) {
-    // TODO: pretified the error message somehow since it is too long
-    // console.log(error.message);
+    //   // TODO: pretified the error message somehow since it is too long
+    //   // console.log(error.message);
+    throw new Error("Parsing fail");
   }
 
   // make sure there are no multiple solutions, as our grammar should be unambiguous
