@@ -64,7 +64,19 @@ export async function scrapeMajorLinks(startYear: number) {
 
     for (const element of children) {
       const path = getLinkForEl(element);
-      const url = new URL(join(BASE_URL, path));
+      const url = new URL(
+        join(
+          BASE_URL,
+          // some links just includes the dev version of the catalog
+          // so we just replace that with the correpsonding url from the current catalog
+          path.replace(
+            "https://nextcatalog.northeastern.edu/",
+            startYear === CURRENT_CATALOG_YEAR
+              ? ""
+              : `archive/${startYear}-${startYear + 1}/`,
+          ),
+        ),
+      );
 
       if (
         !seen.has(url.href) &&
