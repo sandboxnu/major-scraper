@@ -19,14 +19,11 @@ import { ResultType } from "@/graduate-types";
 export const classify = async (
   url: URL,
   filterTypes: CatalogEntryType[],
-): Promise<Result<TypedCatalogEntry, { url: URL; message: string }>> => {
+): Promise<TypedCatalogEntry> => {
   const result = await retryFetchHTML(url);
 
   if (result.type === ResultType.Err) {
-    return Err({
-      url,
-      message: result.err,
-    });
+    throw new Error(result.err);
   }
 
   const html = result.ok;
@@ -38,11 +35,7 @@ export const classify = async (
   cleanUpHTML(html);
 
   if (!filterTypes.includes(degreeType)) {
-    // throw new FilterError(degreeType, filterTypes);
-    return Err({
-      url,
-      message: `Catalog of type ${degreeType} was filtered`,
-    });
+    throw new Error(`Catalog of type ${degreeType} was filtered`);
   }
 
   const savePath = join(
@@ -74,7 +67,7 @@ export const classify = async (
     await writeFile(initialHTMLPath, formattedNewHTML);
   }
 
-  return Ok({
+  return {
     url,
     degreeType,
     yearVersion,
@@ -83,7 +76,7 @@ export const classify = async (
     savePath,
     saveStage,
     html,
-  });
+  };
 };
 
 const formatHTML = async (html: string) => {
@@ -151,7 +144,30 @@ const getMetadata = ($: CheerioStatic, url: URL) => {
   const yearVersion = parseInt(unParsedYearVersion);
 
   const college = getCollegeFromURL(url);
-  const majorName: string = parseText($("#site-title").find("h1"));
+  let majorName: string = "";
+
+  // This is mainly for business majors, since
+  // each of the concentration has its own page separated from the
+  // major page. Therefore we stored the concentration with the name
+  // of the major in the url instead of the html name for the tokenize
+  // stage to get them when tokenizing the major containing the concentration
+  if (degreeType === CatalogEntryType.Concentration) {
+    if (url.pathname.includes("archive")) {
+      majorName = ensureAtLeastLength(
+        url.pathname.split("/"),
+        7,
+        "URL missing major name",
+      )[6].replaceAll("-", " ");
+    } else {
+      majorName = ensureAtLeastLength(
+        url.pathname.split("/"),
+        5,
+        "URL missing major name",
+      )[4].replaceAll("-", " ");
+    }
+  } else {
+    majorName = parseText($("#site-title").find("h1"));
+  }
 
   return {
     degreeType,

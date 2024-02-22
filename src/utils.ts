@@ -101,7 +101,7 @@ function assertsExactLength<T, N extends number>(
   if (arr.length !== length) {
     throw new Error(
       `${
-        errorMessage + " "
+        errorMessage == null ? "" : errorMessage + "\n"
       }Expected array length to be exactly ${length}, but was ${arr.length}`,
     );
   }
@@ -126,7 +126,7 @@ function assertsAtLeastLength<T, N extends number>(
   if (arr.length < length) {
     throw new Error(
       `${
-        errorMessage + " "
+        errorMessage == null ? "" : errorMessage + "\n"
       }Expected array length to be at least ${length}, but was ${arr.length}`,
     );
   }
@@ -154,5 +154,9 @@ export const fatalError = (message: string): never => {
 };
 
 export const majorNameToFileName = (majorName: string): string => {
-  return majorName.replaceAll(",", "").replaceAll(" ", "_");
+  return majorName
+    .toLowerCase()
+    .replaceAll(",", "")
+    .replaceAll(" ", "_")
+    .replaceAll("-", "_");
 };

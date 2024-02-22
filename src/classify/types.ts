@@ -1,10 +1,10 @@
 import { College } from "../urls";
 
 export enum CatalogEntryType {
-  Major = "Major",
-  Minor = "Minor",
-  Concentration = "Concentration",
-  Unknown = "Unknown",
+  Major = "major",
+  Minor = "minor",
+  Concentration = "concentration",
+  Unknown = "unknown",
 }
 
 export type TypedCatalogEntry = {
