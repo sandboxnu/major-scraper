@@ -1,12 +1,9 @@
-import { retryFetchHTML } from "../utils";
+import { ensureAtLeastLength, fatalError, retryFetchHTML } from "../utils";
 import { College } from "./types";
 import { join } from "path";
-import {
-  BASE_URL,
-  CURRENT_CATALOG_YEAR,
-  EARLIEST_CATALOG_YEAR,
-} from "../constants";
+import { BASE_URL } from "../constants";
 import { matchResult } from "@/types";
+import type { AssertionError } from "assert";
 
 const isParent = (el: Cheerio) => {
   return el.hasClass("isparent");
@@ -36,17 +33,9 @@ const getChildrenForPathId = ($: CheerioStatic, url: URL) => {
   return current.children();
 };
 
-export async function scrapeMajorLinks(startYear: number) {
-  if (startYear < EARLIEST_CATALOG_YEAR) {
-    throw new Error("Scraping for years before 2016-2017 is not supported.");
-  }
-
-  if (startYear > CURRENT_CATALOG_YEAR) {
-    throw new Error("Start year has not exist yet");
-  }
-
+export async function scrapeMajorLinks(startYear: number, currentYear: number) {
   const path =
-    startYear == CURRENT_CATALOG_YEAR
+    startYear === currentYear
       ? "undergraduate"
       : `archive/${startYear}-${startYear + 1}/undergraduate`;
 
@@ -71,7 +60,7 @@ export async function scrapeMajorLinks(startYear: number) {
           // so we just replace that with the correpsonding url from the current catalog
           path.replace(
             "https://nextcatalog.northeastern.edu/",
-            startYear === CURRENT_CATALOG_YEAR
+            startYear === currentYear
               ? ""
               : `archive/${startYear}-${startYear + 1}/`,
           ),
@@ -112,4 +101,25 @@ export async function scrapeMajorLinks(startYear: number) {
   }
 
   return { entries, errors };
+}
+
+export async function getCurrentYear(): Promise<number> {
+  const $ = matchResult(await retryFetchHTML(new URL(BASE_URL)), {
+    Ok: value => value,
+    Err: message => {
+      fatalError(`Cannot fetch the current year. ${message}`);
+    },
+  });
+  const text = $("a:contains('Academic Catalog')").text();
+  try {
+    return Number(
+      ensureAtLeastLength(
+        text.match(/(\d{4})/g)!,
+        1,
+        "Main catalog missing latest academic year",
+      )[0],
+    );
+  } catch (e) {
+    fatalError((e as AssertionError).message);
+  }
 }

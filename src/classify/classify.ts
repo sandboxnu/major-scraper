@@ -6,20 +6,18 @@ import {
   parseText,
   retryFetchHTML,
 } from "../utils";
-import { CatalogEntryType, FileName, FilterError, SaveStage } from "./types";
+import { CatalogEntryType, FileName, SaveStage } from "./types";
 import type { TypedCatalogEntry } from "./types";
 import { mkdir, readFile, writeFile } from "fs/promises";
 import { join } from "path";
 import { ARCHIVE_PLACEMENT, CURRENT_PLACEMENT } from "../constants";
 import * as prettier from "prettier";
 import { existsSync } from "fs";
-import { Err, Ok, type Result } from "@/types";
 import { ResultType } from "@/graduate-types";
 
-export const classify = async (
-  entry: { url: URL },
-  // filterTypes: CatalogEntryType[],
-): Promise<TypedCatalogEntry> => {
+export const classify = async (entry: {
+  url: URL;
+}): Promise<TypedCatalogEntry> => {
   const result = await retryFetchHTML(entry.url);
 
   if (result.type === ResultType.Err) {
@@ -34,14 +32,8 @@ export const classify = async (
   );
   cleanUpHTML(html);
 
-  if (
-    ![
-      CatalogEntryType.Minor,
-      CatalogEntryType.Major,
-      CatalogEntryType.Concentration,
-    ].includes(degreeType)
-  ) {
-    throw new Error(`Catalog of type ${degreeType} was filtered`);
+  if ([CatalogEntryType.Unknown].includes(degreeType)) {
+    throw new Error("Unknown catalog type");
   }
 
   const savePath = join(
@@ -71,6 +63,10 @@ export const classify = async (
     }
   } else {
     await writeFile(initialHTMLPath, formattedNewHTML);
+  }
+
+  if (degreeType === CatalogEntryType.Concentration) {
+    throw new Error("Concentration catalog");
   }
 
   return {

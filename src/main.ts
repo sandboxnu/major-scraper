@@ -1,7 +1,9 @@
 import { intro, log, outro } from "@clack/prompts";
-import { CURRENT_CATALOG_YEAR, EARLIEST_CATALOG_YEAR } from "./constants";
+import { EARLIEST_CATALOG_YEAR } from "./constants";
 import color from "picocolors";
 import { scrape } from "@/runtime/pipeline";
+import { fatalError } from "@/utils";
+import { getCurrentYear } from "@/urls";
 
 intro(color.inverse(" Welcome to Major Scraper "));
 
@@ -10,9 +12,13 @@ if (args.length === 0) {
   args = ["current"];
 }
 
+const currentYear = await getCurrentYear();
+
+log.info(`The current catalog year is ${currentYear}`);
+
 const years: number[] = args.map((arg: string) => {
   if (arg === "current") {
-    return CURRENT_CATALOG_YEAR;
+    return currentYear;
   }
 
   if (arg.match(/\d{4}/)) {
@@ -24,8 +30,10 @@ const years: number[] = args.map((arg: string) => {
       );
     }
 
-    if (year > CURRENT_CATALOG_YEAR) {
-      fatalError("Get the Delorean Doc, we are going to the future :)");
+    if (year > currentYear) {
+      fatalError(
+        `Get the Delorean Doc, we are going to the future :). Year ${year} is later than current year ${currentYear}`,
+      );
     }
 
     return year;
@@ -37,12 +45,7 @@ const years: number[] = args.map((arg: string) => {
 });
 
 for (const year of years) {
-  await scrape(year);
+  await scrape(year, currentYear);
 }
 
 outro("Finished scraping! Have fun validating them ;)");
-
-function fatalError(message: string): never {
-  log.error(message);
-  process.exit(0);
-}

@@ -7,11 +7,11 @@ import { scrapeMajorLinks } from "@/urls";
 import { log, note, spinner } from "@clack/prompts";
 import color from "picocolors";
 
-export async function scrape(year: number) {
+export async function scrape(year: number, currentYear: number) {
   log.info(color.bold(`Scraping the ${year} - ${year + 1} catalog`));
   const spin = spinner();
 
-  await scrapeMajorLinksStage(spin, year)
+  await scrapeMajorLinksStage(spin, year, currentYear)
     .then(addPhase(spin, "Classify", classify))
     .then(addPhase(spin, "Tokenize", tokenize))
     .then(addPhase(spin, "Parse", parse));
@@ -22,10 +22,11 @@ export async function scrape(year: number) {
 async function scrapeMajorLinksStage(
   spin: ReturnType<typeof spinner>,
   year: number,
+  currentYear: number,
 ) {
   const stageName = color.cyan("Scrape major links");
   spin.start(`${stageName} - started`);
-  const { entries, errors } = await scrapeMajorLinks(year);
+  const { entries, errors } = await scrapeMajorLinks(year, currentYear);
   spin.stop(`${stageName} - finished`);
 
   note(

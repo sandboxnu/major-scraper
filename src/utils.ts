@@ -2,6 +2,7 @@ import * as cheerio from "cheerio";
 import { Err, Ok, ResultType } from "./graduate-types/common";
 import type { Result } from "./graduate-types/common";
 import undici from "undici";
+import { log } from "@clack/prompts";
 
 export async function retryFetchHTML(
   url: URL,
@@ -136,6 +137,11 @@ export const parseText = (td: Cheerio) => {
   // replace &NBSP with space
   return td.text().replaceAll("\xa0", " ").trim();
 };
+
+export function fatalError(message: string): never {
+  log.error(message);
+  process.exit(0);
+}
 
 export const majorNameToFileName = (majorName: string): string => {
   return majorName
