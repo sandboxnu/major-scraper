@@ -1,99 +1,103 @@
-import { tokenize } from "../tokenize";
-import { classify } from "../classify";
-import { CatalogEntryType } from "../classify";
-import { Err, Ok, ResultType } from "../graduate-types";
-import { StageLabel, type Pipeline } from "./types";
-import { createAgent } from "./axios";
-import {
-  installGlobalStatsLogger,
-  logProgress,
-  logResults,
-  clearGlobalStatsLogger,
-  getGlobalStatsLogger,
-} from "./logger";
-import { writeFile } from "fs/promises";
-import { scrapeMajorLinks } from "../urls";
-import { parse } from "../parse";
+import { classify } from "@/classify";
+import { Err } from "@/graduate-types";
+import { parse } from "@/parse";
+import { tokenize } from "@/tokenize";
+import { matchPipe, Ok, type Result } from "@/types";
+import { scrapeMajorLinks } from "@/urls";
+import { log, note, spinner } from "@clack/prompts";
+import color from "picocolors";
 
-export const runPipeline = async (yearStart: number) => {
-  const unregisterAgent = createAgent();
-  const { entries, unfinished } = await scrapeMajorLinks(yearStart);
+export async function scrape(year: number) {
+  log.info(color.bold(`Scraping the ${year} - ${year + 1} catalog`));
+  const spin = spinner();
 
-  if (unfinished.length > 0) {
-    console.log("didn't finish searching some entries", ...unfinished);
-  }
+  await scrapeMajorLinksStage(spin, year)
+    .then(addPhase(spin, "Classify", classify))
+    .then(addPhase(spin, "Tokenize", tokenize))
+    .then(addPhase(spin, "Parse", parse));
 
-  installGlobalStatsLogger();
-  const pipelines = entries.map(entry => {
-    return createPipeline(entry)
-      .then(
-        addPhase(StageLabel.Classify, classify, [
-          // CatalogEntryType.Minor,
-          CatalogEntryType.Major,
-          CatalogEntryType.Concentration,
-        ]),
-      )
-      .then(addPhase(StageLabel.Tokenize, tokenize))
-      .then(addPhase(StageLabel.Parse, parse));
-  });
+  log.success(`Finished scraping ${year} - ${year + 1} catalog!`);
+}
 
-  const results = await logProgress(pipelines);
+async function scrapeMajorLinksStage(
+  spin: ReturnType<typeof spinner>,
+  year: number,
+) {
+  const stageName = color.cyan("Scrape major links");
+  spin.start(`${stageName} - started`);
+  const { entries, errors } = await scrapeMajorLinks(year);
+  spin.stop(`${stageName} - finished`);
 
-  await unregisterAgent();
-  logResults(results);
-  await saveComments();
-  clearGlobalStatsLogger();
-};
+  note(
+    `Number of entries passed: ${entries.length}\nNumber of entries failed: ${
+      errors.length
+    }${errors.length !== 0 ? "\n" + JSON.stringify(errors, null, 2) : ""}`,
+    `${stageName} - stats`,
+  );
 
-const saveComments = async () => {
-  const comments = getGlobalStatsLogger()?.comments;
-  if (comments === undefined) {
-    return;
-  }
+  return entries.map(url => ({
+    url,
+  }));
+}
 
-  const obj: { [key: string]: string[] } = {};
-  Array.from(comments.entries())
-    .sort((a, b) => -a[1].length + b[1].length)
-    .forEach(([key, value]) => (obj[key] = value));
-  await writeFile("./degrees/comments.json", JSON.stringify(obj, null, 2));
-};
+function addPhase<T extends { url: URL }, R>(
+  spin: ReturnType<typeof spinner>,
+  name: string,
+  stageFunc: (entry: T) => Promise<R>,
+) {
+  return async function (entries: T[]) {
+    const phaseName = color.cyan(name);
+    spin.start(`${phaseName} - started`);
+    const entryResults: Result<R, { url: URL; message: string }>[] =
+      await Promise.all(
+        entries.map(async entry => {
+          try {
+            return Ok(await stageFunc(entry));
+          } catch (e) {
+            return Err({
+              url: entry.url,
+              message: (e as Error).message,
+            });
+          }
+        }),
+      );
+    spin.stop(`${phaseName} - finished`);
 
-// convenience constructor for making a pipeline
-const createPipeline = (input: URL): Promise<Pipeline<URL>> => {
-  return Promise.resolve({
-    id: input,
-    trace: [],
-    result: Ok(input),
-  });
-};
+    const log = new Map<string, string[]>();
+    let successCount = 0;
+    let errorCount = 0;
+    const nextEntries: R[] = [];
 
-/**
- * Wraps the provided function with a try/catch so that errors don't break the
- * whole scraper.
- *
- * @param phase The identifier for the stage, to be recorded in pipeline trace.
- * @param next  The function representing this stage. the first argument of this
- *   function must be the primary entry input.
- * @param args  Any additional arguments the stage function requires.
- */
-const addPhase = <Input, Args extends any[], Output>(
-  phase: StageLabel,
-  next:
-    | ((...args: [Input, ...Args]) => Promise<Output>)
-    | ((...args: [Input, ...Args]) => Output),
-  ...args: Args
-) => {
-  return async (input: Pipeline<Input>): Promise<Pipeline<Output>> => {
-    const { id, trace, result } = input;
-    if (result.type === ResultType.Err) {
-      return { id, trace, result };
-    }
-    const newTrace = [...trace, phase];
-    try {
-      const applied = await next(result.ok, ...args);
-      return { id, trace: newTrace, result: Ok(applied) };
-    } catch (e) {
-      return { id, trace: newTrace, result: Err([e]) };
-    }
+    entryResults.forEach(
+      matchPipe({
+        Ok: value => {
+          successCount++;
+          nextEntries.push(value);
+        },
+        Err: error => {
+          errorCount++;
+
+          if (!log.has(error.message)) {
+            log.set(error.message, []);
+          }
+
+          log.get(error.message)!.push(error.url.href);
+        },
+      }),
+    );
+    const notes = Array.from(
+      log,
+      ([name, value]) =>
+        `${color.bold(name)} ${JSON.stringify(value, null, 2)}`,
+    );
+
+    note(
+      `Number of entries passed: ${successCount}\nNumber of entries failed: ${errorCount}\n\n${notes.join(
+        "\n\n",
+      )}`,
+      `${phaseName} - stats`,
+    );
+
+    return nextEntries;
   };
-};
+}

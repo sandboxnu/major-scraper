@@ -17,10 +17,10 @@ import { Err, Ok, type Result } from "@/types";
 import { ResultType } from "@/graduate-types";
 
 export const classify = async (
-  url: URL,
-  filterTypes: CatalogEntryType[],
+  entry: { url: URL },
+  // filterTypes: CatalogEntryType[],
 ): Promise<TypedCatalogEntry> => {
-  const result = await retryFetchHTML(url);
+  const result = await retryFetchHTML(entry.url);
 
   if (result.type === ResultType.Err) {
     throw new Error(result.err);
@@ -30,11 +30,17 @@ export const classify = async (
 
   const { degreeType, yearVersion, college, majorName } = getMetadata(
     html,
-    url,
+    entry.url,
   );
   cleanUpHTML(html);
 
-  if (!filterTypes.includes(degreeType)) {
+  if (
+    ![
+      CatalogEntryType.Minor,
+      CatalogEntryType.Major,
+      CatalogEntryType.Concentration,
+    ].includes(degreeType)
+  ) {
     throw new Error(`Catalog of type ${degreeType} was filtered`);
   }
 
@@ -68,7 +74,7 @@ export const classify = async (
   }
 
   return {
-    url,
+    url: entry.url,
     degreeType,
     yearVersion,
     college,
