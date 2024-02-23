@@ -78,6 +78,7 @@ export const tokenizeHTML = async (
   html: CheerioStatic,
   yearVersion: number,
   saveStage: SaveStage,
+  saveDir: string = "degrees",
 ) => {
   const requirementsContainer = getRequirementsContainer(html);
   const sections = await tokenizeSections(
@@ -85,6 +86,7 @@ export const tokenizeHTML = async (
     requirementsContainer,
     yearVersion,
     saveStage,
+    saveDir,
   );
 
   const programRequiredHours = getProgramRequiredHours(
@@ -190,6 +192,7 @@ const tokenizeSections = async (
   requirementsContainer: Cheerio,
   yearVersion: number,
   saveStage: SaveStage,
+  saveDir: string,
 ): Promise<HSection[]> => {
   // use a stack to keep track of the course list title and description
   const descriptions: string[] = [];
@@ -236,7 +239,7 @@ const tokenizeSections = async (
             `Link path incomplete for concentration: ${link}`,
           );
           const filePath = join(
-            "degrees",
+            saveDir,
             CatalogEntryType.Concentration,
             yearVersion.toString(),
             college,
@@ -260,6 +263,7 @@ const tokenizeSections = async (
             concentrationPage(containerId),
             yearVersion,
             saveStage,
+            saveDir,
           ),
         ),
       );
