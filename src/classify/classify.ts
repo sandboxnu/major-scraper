@@ -13,7 +13,7 @@ import { join } from "path";
 import { ARCHIVE_PLACEMENT, CURRENT_PLACEMENT } from "../constants";
 import * as prettier from "prettier";
 import { existsSync } from "fs";
-import { ResultType } from "@/graduate-types";
+import { ResultType } from "@/types";
 
 export const classify = async (entry: {
   url: URL;
@@ -36,13 +36,38 @@ export const classify = async (entry: {
     throw new Error("Unknown catalog type");
   }
 
+  // This is mainly for business majors, since
+  // each of the concentration has its own page separated from the
+  // major page. Therefore we stored the concentration with the name
+  // of the major in the url instead of the html name for the tokenize
+  // stage to get them when tokenizing the major containing the concentration
+  let saveFolder: string = "";
+  if (degreeType === CatalogEntryType.Concentration) {
+    if (entry.url.pathname.includes("archive")) {
+      saveFolder = ensureAtLeastLength(
+        entry.url.pathname.split("/"),
+        7,
+        "URL missing major name",
+      )[6];
+    } else {
+      saveFolder = ensureAtLeastLength(
+        entry.url.pathname.split("/"),
+        5,
+        "URL missing major name",
+      )[4];
+    }
+  } else {
+    saveFolder = majorName;
+  }
+
   const savePath = join(
     "degrees",
     degreeType,
     yearVersion.toString(),
     college,
-    majorNameToFileName(majorName),
+    majorNameToFileName(saveFolder),
   );
+
   await mkdir(savePath, { recursive: true });
 
   const stagingHTMLPath = `${savePath}/${FileName.RAW}.${SaveStage.STAGING}.html`;
@@ -146,30 +171,8 @@ const getMetadata = ($: CheerioStatic, url: URL) => {
   const yearVersion = parseInt(unParsedYearVersion);
 
   const college = getCollegeFromURL(url);
-  let majorName: string = "";
 
-  // This is mainly for business majors, since
-  // each of the concentration has its own page separated from the
-  // major page. Therefore we stored the concentration with the name
-  // of the major in the url instead of the html name for the tokenize
-  // stage to get them when tokenizing the major containing the concentration
-  if (degreeType === CatalogEntryType.Concentration) {
-    if (url.pathname.includes("archive")) {
-      majorName = ensureAtLeastLength(
-        url.pathname.split("/"),
-        7,
-        "URL missing major name",
-      )[6].replaceAll("-", " ");
-    } else {
-      majorName = ensureAtLeastLength(
-        url.pathname.split("/"),
-        5,
-        "URL missing major name",
-      )[4].replaceAll("-", " ");
-    }
-  } else {
-    majorName = parseText($("#site-title").find("h1"));
-  }
+  const majorName = parseText($("#site-title").find("h1"));
 
   return {
     degreeType,

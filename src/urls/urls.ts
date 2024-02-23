@@ -1,8 +1,12 @@
-import { ensureAtLeastLength, fatalError, retryFetchHTML } from "../utils";
+import {
+  ensureAtLeastLength,
+  fatalError,
+  matchResult,
+  retryFetchHTML,
+} from "../utils";
 import { College } from "./types";
 import { join } from "path";
 import { BASE_URL } from "../constants";
-import { matchResult } from "@/types";
 import type { AssertionError } from "assert";
 
 const isParent = (el: Cheerio) => {

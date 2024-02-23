@@ -1,9 +1,10 @@
 import { classify } from "@/classify";
-import { Err } from "@/graduate-types";
 import { parse } from "@/parse";
+import { PhaseLabel } from "@/runtime/types";
 import { tokenize } from "@/tokenize";
-import { matchPipe, Ok, type Result } from "@/types";
+import { Err, Ok, type Result } from "@/types";
 import { scrapeMajorLinks } from "@/urls";
+import { matchPipe } from "@/utils";
 import { log, note, spinner } from "@clack/prompts";
 import color from "picocolors";
 
@@ -11,20 +12,20 @@ export async function scrape(year: number, currentYear: number) {
   log.info(color.bold(`Scraping the ${year} - ${year + 1} catalog`));
   const spin = spinner();
 
-  await scrapeMajorLinksStage(spin, year, currentYear)
-    .then(addPhase(spin, "Classify", classify))
-    .then(addPhase(spin, "Tokenize", tokenize))
-    .then(addPhase(spin, "Parse", parse));
+  await scrapeMajorLinksPhase(spin, year, currentYear)
+    .then(addPhase(spin, PhaseLabel.Classify, classify))
+    .then(addPhase(spin, PhaseLabel.Tokenize, tokenize))
+    .then(addPhase(spin, PhaseLabel.Parse, parse));
 
   log.success(`Finished scraping ${year} - ${year + 1} catalog!`);
 }
 
-async function scrapeMajorLinksStage(
+async function scrapeMajorLinksPhase(
   spin: ReturnType<typeof spinner>,
   year: number,
   currentYear: number,
 ) {
-  const stageName = color.cyan("Scrape major links");
+  const stageName = color.cyan(PhaseLabel.ScrapeMajorLinks);
   spin.start(`${stageName} - started`);
   const { entries, errors } = await scrapeMajorLinks(year, currentYear);
   spin.stop(`${stageName} - finished`);

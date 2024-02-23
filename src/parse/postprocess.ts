@@ -7,7 +7,7 @@ import type {
   IXofManyCourse,
   Requirement2,
   Section,
-} from "../graduate-types/major2";
+} from "../major2";
 
 // grab the wrapper of the row type enum from tokenize types
 type GetRow<RowType> = HRow & { type: RowType };

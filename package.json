@@ -1,8 +1,7 @@
 {
-  "name": "@graduate/scrapers-v2",
+  "name": "major-scraper",
   "version": "1.0.0",
-  "description": "scrapers used to generate essential data such as majors and plans",
-  "private": true,
+  "description": "Generate essential data such as majors and plans",
   "type": "module",
   "scripts": {
     "test": "pnpm parser:generate && vitest --watch=false",

@@ -1,7 +1,7 @@
 import { intro, log, outro } from "@clack/prompts";
 import { EARLIEST_CATALOG_YEAR } from "./constants";
 import color from "picocolors";
-import { scrape } from "@/runtime/pipeline";
+import { scrape } from "@/runtime";
 import { fatalError } from "@/utils";
 import { getCurrentYear } from "@/urls";
 

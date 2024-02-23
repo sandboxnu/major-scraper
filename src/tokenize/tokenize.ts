@@ -1,5 +1,5 @@
-import { assertUnreachable } from "../graduate-types/common";
 import {
+  assertUnreachable,
   ensureAtLeastLength,
   ensureExactLength,
   majorNameToFileName,
@@ -31,7 +31,6 @@ import type {
   WithExceptions,
 } from "./types";
 import { join } from "path";
-import { categorizeTextRow } from "./textCategorize";
 import { readFile, writeFile } from "fs/promises";
 import {
   CatalogEntryType,
@@ -49,18 +48,6 @@ export const tokenize = async (
     entry.yearVersion,
     entry.saveStage,
   );
-
-  for (const s of sections) {
-    for (const r of s.entries) {
-      if (
-        r.type === HRowType.HEADER ||
-        r.type === HRowType.SUBHEADER ||
-        r.type === HRowType.COMMENT
-      ) {
-        categorizeTextRow(r, entry.majorName);
-      }
-    }
-  }
 
   const tokenized = {
     url: entry.url,

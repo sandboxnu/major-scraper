@@ -1,8 +1,6 @@
 import * as cheerio from "cheerio";
-import { Err, Ok, ResultType } from "./graduate-types/common";
-import type { Result } from "./graduate-types/common";
-import undici from "undici";
 import { log } from "@clack/prompts";
+import { ResultType, type Matcher, type Result, Err, Ok } from "@/types";
 
 export async function retryFetchHTML(
   url: URL,
@@ -53,31 +51,6 @@ export async function fetchHTML(
     return Err(`Fetch failed: ${(error as TypeError).cause}`);
   }
 }
-
-export const loadHTML = async (url: string): Promise<CheerioStatic> => {
-  return cheerio.load(await wrappedGetRequest(url));
-};
-
-export const loadHtmlWithUrl = async (
-  url: URL,
-): Promise<{ url: URL; result: Result<CheerioStatic, unknown> }> => {
-  let result: Result<CheerioStatic, unknown>;
-  try {
-    const html = cheerio.load(await wrappedGetRequest(url.href));
-    result = Ok(html);
-  } catch (error) {
-    result = Err(error);
-  }
-  return { url, result };
-};
-
-export const wrappedGetRequest = async (url: string) => {
-  const response = await undici.request(url, { maxRedirections: 1 });
-  if (response.statusCode !== 200) {
-    throw new Error(`Non-ok status code: ${response.statusCode}, url: ${url}`);
-  }
-  return await response.body.text();
-};
 
 export function ensureExactLength<T, N extends number>(
   arr: Array<T>,
@@ -143,6 +116,10 @@ export function fatalError(message: string): never {
   process.exit(0);
 }
 
+export const assertUnreachable = (_: never): never => {
+  throw new Error("This code is unreachable");
+};
+
 export const majorNameToFileName = (majorName: string): string => {
   return majorName
     .toLowerCase()
@@ -150,3 +127,19 @@ export const majorNameToFileName = (majorName: string): string => {
     .replaceAll(" ", "_")
     .replaceAll("-", "_");
 };
+
+export function matchResult<T, E, R1, R2>(
+  result: Result<T, E>,
+  matcher: Matcher<T, E, R1, R2>,
+) {
+  return result.type === ResultType.Ok
+    ? matcher.Ok(result.ok)
+    : matcher.Err(result.err);
+}
+
+export function matchPipe<T, E, R1, R2>(matcher: Matcher<T, E, R1, R2>) {
+  return (result: Result<T, E>) =>
+    result.type === ResultType.Ok
+      ? matcher.Ok(result.ok)
+      : matcher.Err(result.err);
+}
