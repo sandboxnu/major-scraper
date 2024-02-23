@@ -4,7 +4,7 @@ import {
   ensureExactLength,
   majorNameToFileName,
   parseText,
-} from "../utils";
+} from "@/utils";
 import {
   COURSE_REGEX,
   RANGE_BOUNDED_MAYBE_EXCEPTIONS,
@@ -37,7 +37,7 @@ import {
   FileName,
   SaveStage,
   type TypedCatalogEntry,
-} from "../classify";
+} from "@/classify";
 import { load } from "cheerio";
 
 export const tokenize = async (

@@ -1,16 +1,16 @@
 import assert from "assert";
-import { College } from "../urls";
+import { College } from "@/urls";
 import {
   ensureAtLeastLength,
   majorNameToFileName,
   parseText,
   retryFetchHTML,
-} from "../utils";
+} from "@/utils";
 import { CatalogEntryType, FileName, SaveStage } from "./types";
 import type { TypedCatalogEntry } from "./types";
 import { mkdir, readFile, writeFile } from "fs/promises";
 import { join } from "path";
-import { ARCHIVE_PLACEMENT, CURRENT_PLACEMENT } from "../constants";
+import { ARCHIVE_PLACEMENT, CURRENT_PLACEMENT } from "@/constants";
 import * as prettier from "prettier";
 import { existsSync } from "fs";
 import { ResultType } from "@/types";

@@ -3,10 +3,10 @@ import {
   fatalError,
   matchResult,
   retryFetchHTML,
-} from "../utils";
+} from "@/utils";
 import { College } from "./types";
 import { join } from "path";
-import { BASE_URL } from "../constants";
+import { BASE_URL } from "@/constants";
 import type { AssertionError } from "assert";
 
 const isParent = (el: Cheerio) => {
