@@ -1,10 +1,12 @@
-import { classify } from "@/classify";
+import { ConcentrationError, classify } from "@/classify";
 import { parse } from "@/parse";
-import { PhaseLabel } from "@/runtime/types";
+import {
+  PhaseLabel,
+  type ErrorLog,
+  type MandatoryPipelineEntry,
+} from "@/runtime/types";
 import { tokenize } from "@/tokenize";
-import { Err, Ok, type Result } from "@/types";
 import { scrapeMajorLinks } from "@/urls";
-import { matchPipe } from "@/utils";
 import { log, note, spinner } from "@clack/prompts";
 import color from "picocolors";
 
@@ -12,7 +14,11 @@ export async function scrape(year: number, currentYear: number) {
   log.info(color.bold(`Scraping the ${year} - ${year + 1} catalog`));
   const spin = spinner();
 
-  await scrapeMajorLinksPhase(spin, year, currentYear)
+  await phaseLogger(
+    spin,
+    PhaseLabel.ScrapeMajorLinks,
+    scrapeMajorLinks(year, currentYear),
+  )
     .then(addPhase(spin, PhaseLabel.Classify, classify))
     .then(addPhase(spin, PhaseLabel.Tokenize, tokenize))
     .then(addPhase(spin, PhaseLabel.Parse, parse));
@@ -20,86 +26,112 @@ export async function scrape(year: number, currentYear: number) {
   log.success(`Finished scraping ${year} - ${year + 1} catalog!`);
 }
 
-async function scrapeMajorLinksPhase(
-  spin: ReturnType<typeof spinner>,
-  year: number,
-  currentYear: number,
-) {
-  const stageName = color.cyan(PhaseLabel.ScrapeMajorLinks);
-  spin.start(`${stageName} - started`);
-  const { entries, errors } = await scrapeMajorLinks(year, currentYear);
-  spin.stop(`${stageName} - finished`);
-
-  note(
-    `Number of entries passed: ${entries.length}\nNumber of entries failed: ${
-      errors.length
-    }${errors.length !== 0 ? "\n" + JSON.stringify(errors, null, 2) : ""}`,
-    `${stageName} - stats`,
-  );
-
-  return entries.map(url => ({
-    url,
-  }));
-}
-
-function addPhase<T extends { url: URL }, R>(
+/**
+ * Main function for adding new phase to the scraper
+ * This function was made higher-order mainly to shorten the
+ * arrow function syntax when using .then
+ * See @function scrape for example usage
+ * @param spin The spinner object to log to CLI
+ * @param name The name of the scraper phase to display
+ * @param stageFunc The function to process individual entry
+ */
+function addPhase<T extends { url: URL; savePath?: string }, R>(
   spin: ReturnType<typeof spinner>,
   name: string,
   stageFunc: (entry: T) => Promise<R>,
 ) {
   return async function (entries: T[]) {
-    const phaseName = color.cyan(name);
-    spin.start(`${phaseName} - started`);
-    const entryResults: Result<R, { url: URL; message: string }>[] =
-      await Promise.all(
-        entries.map(async entry => {
-          try {
-            return Ok(await stageFunc(entry));
-          } catch (e) {
-            return Err({
-              url: entry.url,
-              message: (e as Error).message,
-            });
-          }
-        }),
-      );
-    spin.stop(`${phaseName} - finished`);
-
-    const log = new Map<string, string[]>();
-    let successCount = 0;
-    let errorCount = 0;
-    const nextEntries: R[] = [];
-
-    entryResults.forEach(
-      matchPipe({
-        Ok: value => {
-          successCount++;
-          nextEntries.push(value);
-        },
-        Err: error => {
-          errorCount++;
-
-          if (!log.has(error.message)) {
-            log.set(error.message, []);
-          }
-
-          log.get(error.message)!.push(error.url.href);
-        },
-      }),
-    );
-    const notes = Array.from(
-      log,
-      ([name, value]) =>
-        `${color.bold(name)} ${JSON.stringify(value, null, 2)}`,
-    );
-
-    note(
-      `Number of entries passed: ${successCount}\nNumber of entries failed: ${errorCount}\n\n${notes.join(
-        "\n\n",
-      )}`,
-      `${phaseName} - stats`,
-    );
-
-    return nextEntries;
+    return await phaseLogger(spin, name, phaseResult(entries, stageFunc));
   };
+}
+
+/**
+ * Helper function for separating the successful entries and the errors
+ * @param entries The entries to this phase
+ * @param phaseFunc The function to process individual entry
+ */
+async function phaseResult<T extends MandatoryPipelineEntry, R>(
+  entries: T[],
+  phaseFunc: (entry: T) => Promise<R>,
+) {
+  const nextEntries: R[] = [];
+  const errorLog: ErrorLog[] = [];
+
+  await Promise.all(
+    // .forEach would not work here since it
+    // doesn't play well with async
+    entries.map(async entry => {
+      try {
+        nextEntries.push(await phaseFunc(entry));
+      } catch (e) {
+        let message: string = "";
+        let savePath: string | undefined;
+
+        if (e instanceof ConcentrationError) {
+          message = "Concentration Catalog";
+          savePath = e.savePath;
+        } else {
+          message = (e as Error).message;
+          savePath = entry.savePath;
+        }
+
+        errorLog.push({
+          message,
+          entryInfo: savePath ? savePath : entry.url.href,
+        });
+      }
+    }),
+  );
+
+  return { errorLog, nextEntries };
+}
+
+/**
+ * Helper function to log the stats and errors of a phase
+ * This abstraction is to maintain consistency between
+ * The first phase (Scrape Major Links) and the other phase
+ * @param spin The spinner objec to log to CLI
+ * @param name The phase name
+ * @param result The promised result of the phase
+ */
+async function phaseLogger<R>(
+  spin: ReturnType<typeof spinner>,
+  name: string,
+  result: Promise<{
+    errorLog: ErrorLog[];
+    nextEntries: R[];
+  }>,
+) {
+  const phaseName = color.cyan(name);
+
+  spin.start(`${phaseName} - started`);
+  const { errorLog, nextEntries } = await result;
+  spin.stop(`${phaseName} - finished`);
+
+  const aggregatedLog = new Map<string, string[]>();
+
+  errorLog.forEach(err => {
+    if (!aggregatedLog.has(err.message)) {
+      aggregatedLog.set(err.message, []);
+    }
+
+    aggregatedLog.get(err.message)!.push(err.entryInfo);
+  });
+
+  const errorNotes = Array.from(
+    aggregatedLog,
+    ([name, value]) => `${color.bold(name)} ${JSON.stringify(value, null, 2)}`,
+  );
+
+  const stats = `Number of entries: ${
+    nextEntries.length + errorLog.length
+  }\n  Passed: ${nextEntries.length}\n  Failed: ${errorLog.length}`;
+
+  const errorString = `${
+    errorNotes.length === 0 ? "" : "\n\n"
+  }${errorNotes.join("\n\n")}`;
+
+  note(`${stats}${errorString}`, `${phaseName} - stats`);
+
+  return nextEntries;
 }

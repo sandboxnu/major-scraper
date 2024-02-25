@@ -6,7 +6,12 @@ import {
   parseText,
   retryFetchHTML,
 } from "@/utils";
-import { CatalogEntryType, FileName, SaveStage } from "./types";
+import {
+  CatalogEntryType,
+  ConcentrationError,
+  FileName,
+  SaveStage,
+} from "./types";
 import type { TypedCatalogEntry } from "./types";
 import { mkdir, readFile, writeFile } from "fs/promises";
 import { join } from "path";
@@ -36,38 +41,32 @@ export const classify = async (entry: {
     throw new Error("Unknown catalog type");
   }
 
-  // This is mainly for business majors, since
-  // each of the concentration has its own page separated from the
-  // major page. Therefore we stored the concentration with the name
-  // of the major in the url instead of the html name for the tokenize
-  // stage to get them when tokenizing the major containing the concentration
-  let saveFolder: string = "";
+  const savePath = getSavePathFolder(
+    entry.url,
+    degreeType,
+    yearVersion,
+    college,
+    majorName,
+  );
+  const saveStage = await getSaveStage(savePath, html);
+
   if (degreeType === CatalogEntryType.Concentration) {
-    if (entry.url.pathname.includes("archive")) {
-      saveFolder = ensureAtLeastLength(
-        entry.url.pathname.split("/"),
-        7,
-        "URL missing major name",
-      )[6];
-    } else {
-      saveFolder = ensureAtLeastLength(
-        entry.url.pathname.split("/"),
-        5,
-        "URL missing major name",
-      )[4];
-    }
-  } else {
-    saveFolder = majorName;
+    throw new ConcentrationError(savePath);
   }
 
-  const savePath = join(
-    "degrees",
+  return {
+    url: entry.url,
     degreeType,
-    yearVersion.toString(),
+    yearVersion,
     college,
-    majorNameToFileName(saveFolder),
-  );
+    majorName,
+    savePath,
+    saveStage,
+    html,
+  };
+};
 
+async function getSaveStage(savePath: string, html: CheerioStatic) {
   await mkdir(savePath, { recursive: true });
 
   const stagingHTMLPath = `${savePath}/${FileName.RAW}.${SaveStage.STAGING}.html`;
@@ -90,21 +89,48 @@ export const classify = async (entry: {
     await writeFile(initialHTMLPath, formattedNewHTML);
   }
 
+  return saveStage;
+}
+
+function getSavePathFolder(
+  url: URL,
+  degreeType: CatalogEntryType,
+  yearVersion: number,
+  college: College,
+  majorName: string,
+) {
+  // This is mainly for business majors, since
+  // each of the concentration has its own page separated from the
+  // major page. Therefore we stored the concentration with the name
+  // of the major in the url instead of the html name for the tokenize
+  // stage to get them when tokenizing the major containing the concentration
+  let saveFolder: string = "";
   if (degreeType === CatalogEntryType.Concentration) {
-    throw new Error("Concentration catalog");
+    if (url.pathname.includes("archive")) {
+      saveFolder = ensureAtLeastLength(
+        url.pathname.split("/"),
+        7,
+        "URL missing major name",
+      )[6];
+    } else {
+      saveFolder = ensureAtLeastLength(
+        url.pathname.split("/"),
+        5,
+        "URL missing major name",
+      )[4];
+    }
+  } else {
+    saveFolder = majorName;
   }
 
-  return {
-    url: entry.url,
+  return join(
+    "degrees",
     degreeType,
-    yearVersion,
+    yearVersion.toString(),
     college,
-    majorName,
-    savePath,
-    saveStage,
-    html,
-  };
-};
+    majorNameToFileName(saveFolder),
+  );
+}
 
 const formatHTML = async (html: string) => {
   return await prettier.format(html, {

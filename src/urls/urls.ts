@@ -8,6 +8,7 @@ import { College } from "./types";
 import { join } from "path";
 import { BASE_URL } from "@/constants";
 import type { AssertionError } from "assert";
+import type { ErrorLog, MandatoryPipelineEntry } from "@/runtime/types";
 
 const isParent = (el: Cheerio) => {
   return el.hasClass("isparent");
@@ -47,8 +48,8 @@ export async function scrapeMajorLinks(startYear: number, currentYear: number) {
     college => new URL(join(BASE_URL, path, college, "/")),
   );
 
-  const entries: URL[] = [];
-  const errors: { url: URL; message: string }[] = [];
+  const nextEntries: MandatoryPipelineEntry[] = [];
+  const errorLog: ErrorLog[] = [];
   const seen = new Set(initQueue.map(url => url.href));
   let queue: URL[] = initQueue;
 
@@ -72,13 +73,19 @@ export async function scrapeMajorLinks(startYear: number, currentYear: number) {
       );
 
       if (
-        !seen.has(url.href) &&
-        Object.values(College).some(linkPart => url.href.includes(linkPart))
+        seen.has(url.href) ||
+        !Object.values(College).some(linkPart => url.href.includes(linkPart))
       ) {
-        const bucket = isParent(element) ? nextQueue : entries;
-        bucket.push(url);
-        seen.add(url.href);
+        continue;
       }
+
+      if (isParent(element)) {
+        nextQueue.push(url);
+      } else {
+        nextEntries.push({ url });
+      }
+
+      seen.add(url.href);
     }
   };
 
@@ -92,8 +99,8 @@ export async function scrapeMajorLinks(startYear: number, currentYear: number) {
             processHTML(html, url, nextQueue);
           },
           Err: message => {
-            errors.push({
-              url,
+            errorLog.push({
+              entryInfo: url.href,
               message,
             });
           },
@@ -104,7 +111,7 @@ export async function scrapeMajorLinks(startYear: number, currentYear: number) {
     queue = nextQueue;
   }
 
-  return { entries, errors };
+  return { nextEntries, errorLog };
 }
 
 export async function getCurrentYear(): Promise<number> {
