@@ -1,7 +1,6 @@
 import { describe, expect, test } from "vitest";
-import { parseRows } from "../src/parse";
-import { type HRow } from "../src/tokenize";
-import type { Requirement2 } from "../src/graduate-types";
+import { parseRows } from "@/parse";
+import { type HRow } from "@/tokenize";
 import {
   AND_COURSE_PARSED,
   AND_COURSE_TOKEN,
@@ -23,6 +22,7 @@ import {
   RANGE_UNBOUNDED_PARSED,
   RANGE_UNBOUNDED_TOKEN,
 } from "test/parseConstant";
+import type { Requirement2 } from "@/types";
 
 function expectReqs(tokens: HRow[], reqs: Requirement2[]) {
   expect(parseRows([HEADER_TOKEN, ...tokens])).toStrictEqual<Requirement2[]>([

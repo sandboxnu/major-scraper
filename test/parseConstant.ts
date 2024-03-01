@@ -1,8 +1,4 @@
-import type {
-  IAndCourse2,
-  ICourseRange2,
-  IRequiredCourse,
-} from "@/graduate-types";
+import type { IAndCourse2, ICourseRange2, IRequiredCourse } from "@/types";
 import { HRowType, type HRow } from "@/tokenize";
 
 export const HEADER_TOKEN: HRow = {

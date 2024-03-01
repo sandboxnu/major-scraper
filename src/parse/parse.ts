@@ -1,11 +1,11 @@
 import nearly from "nearley";
 import type { ParsedCatalogEntry } from "./types";
-import { HRowType, HSectionType } from "../tokenize";
-import type { HRow, TextRow, TokenizedCatalogEntry } from "../tokenize";
-import type { Major2, Section } from "../graduate-types";
+import { HRowType, HSectionType } from "@/tokenize";
+import type { HRow, TextRow, TokenizedCatalogEntry } from "@/tokenize";
 import { writeFile } from "fs/promises";
-import { FileName } from "../classify";
+import { FileName } from "@/classify";
 import grammar from "./grammar";
+import type { Major2, Section } from "@/types";
 
 export const parseRows = (rows: HRow[]) => {
   const parser = new nearly.Parser(nearly.Grammar.fromCompiled(grammar));
@@ -16,8 +16,9 @@ export const parseRows = (rows: HRow[]) => {
   try {
     parser.feed(rows as any);
   } catch (error) {
-    // TODO: pretified the error message somehow since it is too long
-    // console.log(error.message);
+    //   // TODO: pretified the error message somehow since it is too long
+    //   // console.log(error.message);
+    throw new Error("Parsing fail");
   }
 
   // make sure there are no multiple solutions, as our grammar should be unambiguous

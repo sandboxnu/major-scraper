@@ -1,5 +1,5 @@
-import type { CountAndHoursRow, HRow, TextRow } from "../tokenize";
-import { HRowType } from "../tokenize";
+import type { CountAndHoursRow, HRow, TextRow } from "@/tokenize";
+import { HRowType } from "@/tokenize";
 import type {
   IAndCourse2,
   IOrCourse2,
@@ -7,7 +7,7 @@ import type {
   IXofManyCourse,
   Requirement2,
   Section,
-} from "../graduate-types/major2";
+} from "@/types";
 
 // grab the wrapper of the row type enum from tokenize types
 type GetRow<RowType> = HRow & { type: RowType };

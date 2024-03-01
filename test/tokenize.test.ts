@@ -5,6 +5,7 @@ import {
   BIOENG_BIOCHEM_2022,
   CHEMICAL_ENG_2022,
   CS_BSCS_2022,
+  CS_BUSINESS_ADMIN_2022,
   CS_GAME_DEV_2022,
   CS_HISTORY_2022,
   CS_MATH_2022,
@@ -15,23 +16,23 @@ import {
 } from "./testUrls";
 import { load } from "cheerio";
 import { readFile } from "fs/promises";
+import { SaveStage } from "@/classify";
 
 const readAndTokenizeHTML = async (filePath: string) => {
   const text = await readFile(filePath, {
     encoding: "utf-8",
   });
-  return await tokenizeHTML(load(text));
+  return await tokenizeHTML(load(text), 2022, SaveStage.INITIAL, "./test/raw");
 };
 
-let unregisterAgent: () => Promise<void>;
 describe("tokenize", () => {
   test("CS & Game Dev", async () => {
     expect(await readAndTokenizeHTML(CS_GAME_DEV_2022)).toMatchSnapshot();
   });
 
-  // test("CS & Business (nested linked concentration page)", async () => {
-  //   expect(await readAndTokenizeHTML(CS_BUSINESS_ADMIN_PATH)).toMatchSnapshot();
-  // });
+  test("CS & Business (nested linked concentration page)", async () => {
+    expect(await readAndTokenizeHTML(CS_BUSINESS_ADMIN_2022)).toMatchSnapshot();
+  });
 
   test("PHYSICS (3 courses per AND)", async () => {
     expect(await readAndTokenizeHTML(PHYSICS_2022)).toMatchSnapshot();

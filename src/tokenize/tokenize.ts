@@ -1,10 +1,10 @@
-import { assertUnreachable } from "../graduate-types/common";
 import {
+  assertUnreachable,
   ensureAtLeastLength,
   ensureExactLength,
-  loadHTML,
+  majorNameToFileName,
   parseText,
-} from "../utils";
+} from "@/utils";
 import {
   COURSE_REGEX,
   RANGE_BOUNDED_MAYBE_EXCEPTIONS,
@@ -31,28 +31,23 @@ import type {
   WithExceptions,
 } from "./types";
 import { join } from "path";
-import { BASE_URL } from "../constants";
-import { categorizeTextRow } from "./textCategorize";
-import { writeFile } from "fs/promises";
-import { FileName, type TypedCatalogEntry } from "../classify";
+import { readFile, writeFile } from "fs/promises";
+import {
+  CatalogEntryType,
+  FileName,
+  SaveStage,
+  type TypedCatalogEntry,
+} from "@/classify";
+import { load } from "cheerio";
 
-// should tokenize have the option to read the html locally or from the previous step
 export const tokenize = async (
   entry: TypedCatalogEntry,
 ): Promise<TokenizedCatalogEntry> => {
-  const { sections, programRequiredHours } = await tokenizeHTML(entry.html);
-
-  for (const s of sections) {
-    for (const r of s.entries) {
-      if (
-        r.type === HRowType.HEADER ||
-        r.type === HRowType.SUBHEADER ||
-        r.type === HRowType.COMMENT
-      ) {
-        categorizeTextRow(r, entry.majorName);
-      }
-    }
-  }
+  const { sections, programRequiredHours } = await tokenizeHTML(
+    entry.html,
+    entry.yearVersion,
+    entry.saveStage,
+  );
 
   const tokenized = {
     url: entry.url,
@@ -79,9 +74,20 @@ export const tokenize = async (
  * @param html the raw major
  * @returns the tokens (sections) and the required hours of the major
  */
-export const tokenizeHTML = async (html: CheerioStatic) => {
+export const tokenizeHTML = async (
+  html: CheerioStatic,
+  yearVersion: number,
+  saveStage: SaveStage,
+  saveDir: string = "degrees",
+) => {
   const requirementsContainer = getRequirementsContainer(html);
-  const sections = await tokenizeSections(html, requirementsContainer);
+  const sections = await tokenizeSections(
+    html,
+    requirementsContainer,
+    yearVersion,
+    saveStage,
+    saveDir,
+  );
 
   const programRequiredHours = getProgramRequiredHours(
     html,
@@ -104,12 +110,24 @@ export const tokenizeHTML = async (html: CheerioStatic) => {
 const getRequirementsContainer = ($: CheerioStatic) => {
   const tabsContainer = $("#contentarea #tabs");
   if (tabsContainer.length === 0) {
-    // had no tabs, so just look for id ending in "requirementstextcontainer"
-    const container = $("[id$='requirementstextcontainer']");
-    if (container.length === 1) {
-      return container;
+    // had no tabs, so just look for id ending in this list
+    const containers = [
+      "requirementstextcontainer",
+      "programtextcontainer",
+      "protextcontainer",
+      "progrtextcontainer",
+      "progtextcontainer",
+    ]
+      .map(id => $(`[id$='${id}']`))
+      .filter(container => container.length === 1);
+
+    if (containers.length >= 1) {
+      return containers[0]!;
     }
-    throw new Error(`unexpected # of matching ids: ${container.length}`);
+
+    throw new Error(
+      `Unable to find the requirement container in container without tabs`,
+    );
   } else if (tabsContainer.length === 1) {
     const tabsArr = tabsContainer.find("ul > li > a").toArray().map($);
     const [, requirementsTab] = ensureAtLeastLength(
@@ -120,7 +138,9 @@ const getRequirementsContainer = ($: CheerioStatic) => {
     const containerId = requirementsTab.attr("href");
     return $(containerId);
   }
-  throw new Error("unable to find a requirementstextcontainer");
+  throw new Error(
+    "Unable to find the requirement container in container with tabs",
+  );
 };
 
 /**
@@ -170,6 +190,9 @@ const getProgramRequiredHours = (
 const tokenizeSections = async (
   $: CheerioStatic,
   requirementsContainer: Cheerio,
+  yearVersion: number,
+  saveStage: SaveStage,
+  saveDir: string,
 ): Promise<HSection[]> => {
   // use a stack to keep track of the course list title and description
   const descriptions: string[] = [];
@@ -195,20 +218,53 @@ const tokenizeSections = async (
       };
       courseList.push(courseTable);
     } else if (
-      // only necessary for business concentrations
+      // if we encounter an unordered list and preceding element contains text "concentration",
+      // assume the list is of links for business concentrations.
       element.name === "ul" &&
       parseText($(element).prev()).includes("concentration")
     ) {
-      // if we encounter an unordered list and preceding element contains text "concentration",
-      // assume the list is of links for business concentrations.
-      // only applies to:
-      // https://catalog.northeastern.edu/undergraduate/business/business-administration-bsba/#programrequirementstext
       const links = constructNestedLinks($, element);
-      const pages = await Promise.all(links.map(loadHTML));
+      if (links.length === 0) {
+        return courseList;
+      }
+
+      // get all the concentration locally instead of fetching
+      // them from the catalog by mapping the url path (in this case called link)
+      // to the local folder path
+      const pages = await Promise.all(
+        links.map(async link => {
+          const [, , college, , majorName] = ensureAtLeastLength(
+            link.split("/"),
+            5,
+            `Link path incomplete for concentration: ${link}`,
+          );
+          const filePath = join(
+            saveDir,
+            CatalogEntryType.Concentration,
+            yearVersion.toString(),
+            college,
+            majorNameToFileName(majorName),
+            `${FileName.RAW}.${saveStage}.html`,
+          );
+
+          const text = await readFile(filePath, {
+            encoding: "utf-8",
+          });
+
+          return load(text);
+        }),
+      );
+
       const containerId = "#concentrationrequirementstextcontainer";
       const concentrations = await Promise.all(
         pages.map(concentrationPage =>
-          tokenizeSections(concentrationPage, concentrationPage(containerId)),
+          tokenizeSections(
+            concentrationPage,
+            concentrationPage(containerId),
+            yearVersion,
+            saveStage,
+            saveDir,
+          ),
         ),
       );
       courseList.push(...concentrations.flat());
@@ -227,11 +283,16 @@ const tokenizeSections = async (
  */
 const constructNestedLinks = ($: CheerioStatic, element: CheerioElement) => {
   // TODO: add support to non-current catalogs
-  return $(element)
-    .find("li > a")
-    .toArray()
-    .map(link => $(link).attr("href"))
-    .map(path => join(BASE_URL, path));
+  return (
+    $(element)
+      .find("li > a")
+      .toArray()
+      .map(link => $(link).attr("href"))
+      // some majors also have an unordered list but they link to the same page
+      // in those case we can just skip them
+      // see Health Science and Business Admin BS concentration for an example
+      .filter(path => !path.includes("#"))
+  );
 };
 
 /**
@@ -366,7 +427,11 @@ const constructTextRow = <T>(
   tds: Cheerio[],
   type: T,
 ): TextRow<T> => {
-  const [c1, c2] = ensureExactLength(tds, 2);
+  const [c1, c2] = ensureExactLength(
+    tds,
+    2,
+    `Row ${tds} missing hour/description`,
+  );
   const description = parseText(c1);
   const hour = parseHour(c2);
   return { hour, description, type };
@@ -387,7 +452,11 @@ const constructOrCourseRow = (
   $: CheerioStatic,
   tds: Cheerio[],
 ): CourseRow<HRowType.OR_COURSE> => {
-  const [code, desc] = ensureExactLength(tds, 2);
+  const [code, desc] = ensureExactLength(
+    tds,
+    2,
+    `OR COURSE row ${tds} missing course code/description`,
+  );
   // remove "or "
   const { subject, classId } = parseCourseTitle(
     parseText(code).substring(3).trim(),
@@ -485,7 +554,11 @@ const constructRangeBoundedMaybeExceptions = (
 ):
   | RangeBoundedRow<HRowType.RANGE_BOUNDED>
   | WithExceptions<RangeBoundedRow<HRowType.RANGE_BOUNDED_WITH_EXCEPTIONS>> => {
-  const [desc, hourCol] = ensureExactLength(tds, 2);
+  const [desc, hourCol] = ensureExactLength(
+    tds,
+    2,
+    `RANGE row ${tds} missing course description/hour`,
+  );
   const hour = parseHour(hourCol);
   // text should match the form:
   // 1. CS 1000 to CS 5999
@@ -521,7 +594,12 @@ const constructRangeUnbounded = (
   $: CheerioStatic,
   tds: Cheerio[],
 ): RangeUnboundedRow<HRowType.RANGE_UNBOUNDED> => {
-  const [desc, hourCol] = ensureExactLength(tds, 2);
+  const [desc, hourCol] = ensureExactLength(
+    tds,
+    2,
+    `RANGE UNBOUNDED row ${tds} missing course description/hour`,
+  );
+
   const hour = parseHour(hourCol);
   // text should match one of the following:
   // - Any course in ARTD, ARTE, ARTF, ARTG, ARTH, and GAME subject areas as long as prerequisites have been met.
@@ -550,7 +628,11 @@ const constructSectionInfo = (
   $: CheerioStatic,
   tds: Cheerio[],
 ): CountAndHoursRow<HRowType.SECTION_INFO> => {
-  const [c1, c2] = ensureExactLength(tds, 2, tds.toString());
+  const [c1, c2] = ensureExactLength(
+    tds,
+    2,
+    `SECTION INFO row ${tds} missing course description/hour`,
+  );
   const hour = parseHour(c2);
   const description = parseText(c1);
 
@@ -594,7 +676,11 @@ const constructXOfMany = (
   $: CheerioStatic,
   tds: Cheerio[],
 ): TextRow<HRowType.X_OF_MANY> => {
-  const [c1, c2] = ensureExactLength(tds, 2, tds.toString());
+  const [c1, c2] = ensureExactLength(
+    tds,
+    2,
+    `XOM row ${tds} missing course description/hour`,
+  );
   let hour = parseHour(c2);
   const description = parseText(c1);
 
@@ -628,7 +714,11 @@ const parseHour = (td: Cheerio) => {
 };
 
 const parseCourseTitle = (parsedCourse: string) => {
-  const [subject, classId] = ensureExactLength(parsedCourse.split(" "), 2);
+  const [subject, classId] = ensureExactLength(
+    parsedCourse.split(" "),
+    2,
+    `Course title ${parsedCourse} missing classID/subject`,
+  );
   return {
     subject,
     classId: Number(classId),

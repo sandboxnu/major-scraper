@@ -1,8 +1,7 @@
 {
-  "name": "@graduate/scrapers-v2",
+  "name": "major-scraper",
   "version": "1.0.0",
-  "description": "scrapers used to generate essential data such as majors and plans",
-  "private": true,
+  "description": "Generate essential data such as majors and plans",
   "type": "module",
   "scripts": {
     "test": "pnpm parser:generate && vitest --watch=false",
@@ -11,9 +10,10 @@
     "parser:generate": "nearleyc src/parse/grammar.ne -o src/parse/grammar.ts"
   },
   "dependencies": {
+    "@clack/prompts": "^0.7.0",
     "cheerio": "1.0.0-rc.12",
     "nearley": "^2.20.1",
-    "undici": "^5.27.0"
+    "picocolors": "^1.0.0"
   },
   "devDependencies": {
     "@types/cheerio": "0.22.14",

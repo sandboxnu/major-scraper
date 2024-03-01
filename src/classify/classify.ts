@@ -1,41 +1,72 @@
 import assert from "assert";
-import { College } from "../urls";
+import { College } from "@/urls";
 import {
   ensureAtLeastLength,
-  loadHTML,
   majorNameToFileName,
   parseText,
-} from "../utils";
-import { CatalogEntryType, FileName, FilterError, SaveStage } from "./types";
+  retryFetchHTML,
+} from "@/utils";
+import {
+  CatalogEntryType,
+  ConcentrationError,
+  FileName,
+  SaveStage,
+} from "./types";
 import type { TypedCatalogEntry } from "./types";
 import { mkdir, readFile, writeFile } from "fs/promises";
 import { join } from "path";
-import { ARCHIVE_PLACEMENT, CURRENT_PLACEMENT } from "../constants";
+import { ARCHIVE_PLACEMENT, CURRENT_PLACEMENT } from "@/constants";
 import * as prettier from "prettier";
 import { existsSync } from "fs";
+import { ResultType } from "@/types";
 
-export const classify = async (
-  url: URL,
-  filterTypes: CatalogEntryType[],
-): Promise<TypedCatalogEntry> => {
-  const html = await loadHTML(url.href);
+export const classify = async (entry: {
+  url: URL;
+}): Promise<TypedCatalogEntry> => {
+  const result = await retryFetchHTML(entry.url);
+
+  if (result.type === ResultType.Err) {
+    throw new Error(result.err);
+  }
+
+  const html = result.ok;
+
   const { degreeType, yearVersion, college, majorName } = getMetadata(
     html,
-    url,
+    entry.url,
   );
   cleanUpHTML(html);
 
-  if (!filterTypes.includes(degreeType)) {
-    throw new FilterError(degreeType, filterTypes);
+  if ([CatalogEntryType.Unknown].includes(degreeType)) {
+    throw new Error("Unknown catalog type");
   }
 
-  const savePath = join(
-    "degrees",
+  const savePath = getSavePathFolder(
+    entry.url,
     degreeType,
-    yearVersion.toString(),
+    yearVersion,
     college,
-    majorNameToFileName(majorName),
+    majorName,
   );
+  const saveStage = await getSaveStage(savePath, html);
+
+  if (degreeType === CatalogEntryType.Concentration) {
+    throw new ConcentrationError(savePath);
+  }
+
+  return {
+    url: entry.url,
+    degreeType,
+    yearVersion,
+    college,
+    majorName,
+    savePath,
+    saveStage,
+    html,
+  };
+};
+
+async function getSaveStage(savePath: string, html: CheerioStatic) {
   await mkdir(savePath, { recursive: true });
 
   const stagingHTMLPath = `${savePath}/${FileName.RAW}.${SaveStage.STAGING}.html`;
@@ -58,17 +89,48 @@ export const classify = async (
     await writeFile(initialHTMLPath, formattedNewHTML);
   }
 
-  return {
-    url,
+  return saveStage;
+}
+
+function getSavePathFolder(
+  url: URL,
+  degreeType: CatalogEntryType,
+  yearVersion: number,
+  college: College,
+  majorName: string,
+) {
+  // This is mainly for business majors, since
+  // each of the concentration has its own page separated from the
+  // major page. Therefore we stored the concentration with the name
+  // of the major in the url instead of the html name for the tokenize
+  // stage to get them when tokenizing the major containing the concentration
+  let saveFolder: string = "";
+  if (degreeType === CatalogEntryType.Concentration) {
+    if (url.pathname.includes("archive")) {
+      saveFolder = ensureAtLeastLength(
+        url.pathname.split("/"),
+        7,
+        "URL missing major name",
+      )[6];
+    } else {
+      saveFolder = ensureAtLeastLength(
+        url.pathname.split("/"),
+        5,
+        "URL missing major name",
+      )[4];
+    }
+  } else {
+    saveFolder = majorName;
+  }
+
+  return join(
+    "degrees",
     degreeType,
-    yearVersion,
+    yearVersion.toString(),
     college,
-    majorName,
-    savePath,
-    saveStage,
-    html,
-  };
-};
+    majorNameToFileName(saveFolder),
+  );
+}
 
 const formatHTML = async (html: string) => {
   return await prettier.format(html, {
@@ -135,7 +197,8 @@ const getMetadata = ($: CheerioStatic, url: URL) => {
   const yearVersion = parseInt(unParsedYearVersion);
 
   const college = getCollegeFromURL(url);
-  const majorName: string = parseText($("#site-title").find("h1"));
+
+  const majorName = parseText($("#site-title").find("h1"));
 
   return {
     degreeType,
