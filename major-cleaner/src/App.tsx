@@ -2,12 +2,14 @@ import { useEffect, useState } from "react";
 import { Major2 } from "../../src/graduate-types/major2";
 import "./App.css";
 import { handleSection } from "./change";
-import { Token } from "./components/tokens";
+import { Tokens } from "./components/tokens";
 import { MajorView } from "./components/views/MajorView";
 import { MajorChangeHandler } from "./types";
 import { invoke } from "@tauri-apps/api";
 import { HSection } from "../../src/tokenize/types";
 import React from "react";
+import resetStyle from "../../src/css/reset.css?inline";
+import actualStyle from "../../src/css/styles.css?inline";
 
 const parseTokens = (tokens: string) => {
   try {
@@ -16,6 +18,7 @@ const parseTokens = (tokens: string) => {
     console.log(token)
     return token
   } catch (e) {
+    console.log(tokens)
     console.error(e);
     return undefined;
   }
@@ -23,7 +26,7 @@ const parseTokens = (tokens: string) => {
 
 type Year = "2023" | "2022" | "2021" | "2020" | "2019"
 type College = "computer-information-science" | "arts-media-design"
-type Form = "html.html" | "parsed.json" | "tokens.json"
+type Form = "raw.initial.html" | "parsed.initial.json" | "tokens.initial.json"
 
 const read_major_file = async (year: Year, college: College, name: string, form: Form) => {
   return await invoke<string>("read_major_file", {
@@ -34,19 +37,36 @@ const read_major_file = async (year: Year, college: College, name: string, form:
   })
 }
 
+function prepareHTML(html: string): string {
+  console.log("reset style", resetStyle)
+  console.log("SDFLKSDJFLKSDJFLKSDJLKFJSLDKJFLKSDJFLKSDJLKFJSDLK")
+  const styleReplaced = html
+    .replace(`href="/src/css/reset.css"`, `href="data:text/css;base64,${btoa(resetStyle)}"`)
+    .replace(`href="/src/css/styles.css"`, `href="data:text/css;base64,${btoa(actualStyle)}"`)
+
+  return "data:text/html;base64," + btoa(styleReplaced)
+}
+
 function App() {
   const [major, setMajor] = useState<Major2>();
   const [html, setHtml] = useState<string>("");
   const [tokenSections, setTokenSections] = useState<HSection[]>();
 
   useEffect(() => {
-    read_major_file("2023", "computer-information-science", "Computer_Science_BSCS", "html.html")
+    read_major_file("2023", "computer-information-science", "Computer_Science_BSCS", "raw.initial.html")
       .then(setHtml);
-    read_major_file("2023", "computer-information-science", "Computer_Science_BSCS", "tokens.json")
+    read_major_file("2023", "computer-information-science", "Computer_Science_BSCS", "tokens.initial.json")
       .then(parseTokens)
       .then(tokens => setTokenSections(tokens));
-    read_major_file("2023", "computer-information-science", "Computer_Science_BSCS", "parsed.json")
-      .then((val) => setMajor(JSON.parse(val)));
+    read_major_file("2023", "computer-information-science", "Computer_Science_BSCS", "parsed.initial.json")
+      .then((val) => {
+        try {
+          setMajor(JSON.parse(val))
+        }
+        catch (e) {
+          console.error(val, e)
+        }
+      });
     // read_major_file("2023", "computer-information-science", "Computer_Science_and_Behavioral_Neuroscience_BS", "parsed.json")
     //   .then((val) => setMajor(JSON.parse(val)));
   }, []);
@@ -69,8 +89,6 @@ function App() {
     }
   }
 
-
-
   return (
     <div style={styles.appContainer}>
       <div style={styles.dropdownContainer}>
@@ -87,9 +105,7 @@ function App() {
         <div style={styles.column}>
           <p style={styles.columnHeader}>HTML</p>
           <div style={styles.content}>
-            <pre style={styles.pre}>
-              {html}
-            </pre>
+            <iframe src={prepareHTML(html)} style={styles.iframe} width="100%"/>
           </div>
         </div>
         <div style={styles.column}>
@@ -99,7 +115,7 @@ function App() {
               tokenSections && tokenSections.map(section => (
                 <React.Fragment>
                   <h1>{section.description}</h1>
-                  <Token section={section} />
+                  <Tokens section={section} />
                 </React.Fragment>
               ))
             }
@@ -153,6 +169,7 @@ const styles = {
   content: {
     overflowY: 'auto',
     padding: "10px",
+    height: "100%",
   },
   pre: {
     whiteSpace: 'pre-wrap',
@@ -160,6 +177,9 @@ const styles = {
     // width: '100%',
     // height: '100%',
     overflowY: 'auto'
+  },
+  iframe: {
+    height: "100%",
   },
   dropdownContainer: {},
 } satisfies Record<string, React.CSSProperties>;

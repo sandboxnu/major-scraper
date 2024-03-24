@@ -118,6 +118,56 @@ button {
   }
 }
 
-body {
+.tokensList {
 
+}
+
+.tokensList > p {
+  padding: 2px 4px;
+  background: black;
+  border-radius: 4px;
+  margin: 3px 0;
+}
+
+.tokenRow {
+  display: flex;
+  gap: 5px;
+  margin-left: 15px;
+}
+
+.header {
+  margin-left: 0px;
+  font-size: 20px;
+  margin: 15px 0px 0px 0px;
+}
+
+.tokenRow > p {
+  padding: 1px 4px;
+  background: black;
+  border: 1px solid #ffffff55;
+  border-radius: 4px;
+  margin: 2px 0px;
+  align-self: flex-start;
+}
+.tokenRow > p.icon, .tokenRow > p.blankIcon {
+  width: 25px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.tokenRow > .blankIcon {
+  background: transparent;
+  border: transparent;
+}
+
+.tokenRow.comment {
+  color: rgb(255, 229, 143);
+}
+
+.missing {
+  color: red;
+}
+
+iframe {
+  border-radius: 10px;
 }
