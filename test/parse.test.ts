@@ -1,110 +1,143 @@
-import { HRow, HRowType } from "../src/tokenize/types";
-import { parseRows } from "../src/parse/parse";
+import { describe, expect, test } from "vitest";
+import { parseRows } from "@/parse";
+import { type HRow } from "@/tokenize";
 import {
-  IOrCourse2,
-  IRequiredCourse,
-  Requirement2,
-} from "../src/graduate-types/major2";
+  AND_COURSE_PARSED,
+  AND_COURSE_TOKEN,
+  HEADER_TOKEN,
+  OR_COURSE_PARSED,
+  OR_COURSE_TOKEN,
+  OR_OF_AND_COURSE_PARSED,
+  OR_OF_AND_COURSE_TOKEN,
+  PLAIN_COURSE_PARSED,
+  PLAIN_COURSE_TOKEN,
+  RANGE_BOUNDED_PARSED,
+  RANGE_BOUNDED_TOKEN,
+  RANGE_BOUNDED_WITH_EXCEPTIONS_PARSED,
+  RANGE_BOUNDED_WITH_EXCEPTIONS_TOKEN,
+  RANGE_LOWER_BOUNDED_PARSED,
+  RANGE_LOWER_BOUNDED_TOKEN,
+  RANGE_LOWER_BOUNDED_WITH_EXCEPTION_PARSED,
+  RANGE_LOWER_BOUNDED_WITH_EXCEPTION_TOKEN,
+  RANGE_UNBOUNDED_PARSED,
+  RANGE_UNBOUNDED_TOKEN,
+} from "test/parseConstant";
+import type { Requirement2 } from "@/types";
 
-const course: HRow = {
-  type: HRowType.PLAIN_COURSE,
-  description: "",
-  classId: 2500,
-  hour: 4,
-  subject: "CS",
-};
-const orCourse: HRow = {
-  type: HRowType.OR_COURSE,
-  subject: "CS",
-  hour: 1,
-  classId: 2501,
-  description: "",
-};
-const output: IRequiredCourse = {
-  type: "COURSE",
-  classId: 2500,
-  subject: "CS",
-};
-const output2: IRequiredCourse = {
-  type: "COURSE",
-  classId: 2501,
-  subject: "CS",
-};
-const orCourseOutput: IOrCourse2 = {
-  courses: [output, output2, output2],
-  type: "OR",
-};
+function expectReqs(tokens: HRow[], reqs: Requirement2[]) {
+  expect(parseRows([HEADER_TOKEN, ...tokens])).toStrictEqual<Requirement2[]>([
+    {
+      type: "SECTION",
+      title: "Test Requirement",
+      requirements: reqs,
+      minRequirementCount: reqs.length,
+    },
+  ]);
+}
 
-describe("parse", () => {
+describe("parser", () => {
   test("course", () => {
-    // streaming-type parser, so produces an extra array
-    // expect(parseRows([course, course])).toEqual([[output, output]]);
-    // expect(parseRows([course])).toEqual([[output]]);
-    expect(parseRows([course, course])).toStrictEqual<Requirement2[]>([
-      output,
-      output,
-    ]);
+    expectReqs(
+      [PLAIN_COURSE_TOKEN, PLAIN_COURSE_TOKEN],
+      [PLAIN_COURSE_PARSED, PLAIN_COURSE_PARSED],
+    );
+  });
+  describe("orCourse", () => {
+    test("single OR course", () => {
+      expectReqs(
+        [PLAIN_COURSE_TOKEN, OR_COURSE_TOKEN],
+        [
+          {
+            type: "OR",
+            courses: [PLAIN_COURSE_PARSED, OR_COURSE_PARSED],
+          },
+        ],
+      );
+    });
+
+    test("should aggregate multiple consecutive OR course into one requirement", () => {
+      expectReqs(
+        [PLAIN_COURSE_TOKEN, OR_COURSE_TOKEN, OR_COURSE_TOKEN, OR_COURSE_TOKEN],
+        [
+          {
+            type: "OR",
+            courses: [
+              PLAIN_COURSE_PARSED,
+              OR_COURSE_PARSED,
+              OR_COURSE_PARSED,
+              OR_COURSE_PARSED,
+            ],
+          },
+        ],
+      );
+    });
+
+    test("AND course followed by an OR course", () => {
+      expectReqs(
+        [AND_COURSE_TOKEN, OR_COURSE_TOKEN],
+        [
+          {
+            type: "OR",
+            courses: [AND_COURSE_PARSED, OR_COURSE_PARSED],
+          },
+        ],
+      );
+    });
+
+    test("AND course followed by an OR OF AND course", () => {
+      expectReqs(
+        [AND_COURSE_TOKEN, OR_OF_AND_COURSE_TOKEN],
+        [
+          {
+            type: "OR",
+            courses: [AND_COURSE_PARSED, OR_OF_AND_COURSE_PARSED],
+          },
+        ],
+      );
+    });
   });
 
-  test("or courses", () => {
-    // expect(parseRows([course, orCourse, orCourse])).toEqual([[orCourseOutput]]);
-    expect(parseRows([course, orCourse, orCourse])).toStrictEqual<
-      Requirement2[]
-    >([orCourseOutput]);
+  describe("andCourse", () => {
+    test("single AND course", () => {
+      expectReqs(
+        [AND_COURSE_TOKEN, PLAIN_COURSE_TOKEN],
+        [AND_COURSE_PARSED, PLAIN_COURSE_PARSED],
+      );
+    });
+
+    test("multiple AND courses", () => {
+      expectReqs(
+        [AND_COURSE_TOKEN, AND_COURSE_TOKEN],
+        [AND_COURSE_PARSED, AND_COURSE_PARSED],
+      );
+    });
   });
 
-  test("and", () => {
-    const input: HRow[] = [
-      {
-        type: HRowType.AND_COURSE,
-        description: "",
-        hour: 0,
-        courses: [
-          { subject: "CS", classId: 2500, description: "" },
-          { subject: "CS", classId: 2501, description: "" },
-          { subject: "CS", classId: 2510, description: "" },
-          { subject: "CS", classId: 2511, description: "" },
-        ],
-      },
-      {
-        type: HRowType.AND_COURSE,
-        description: "",
-        hour: 0,
-        courses: [
-          { subject: "CS", classId: 3500, description: "" },
-          { subject: "CS", classId: 2501, description: "" },
-        ],
-      },
-    ];
-    expect(parseRows(input)).toMatchSnapshot();
-  });
+  describe("rangeCourse", () => {
+    test("unbounded", () => {
+      expectReqs([RANGE_UNBOUNDED_TOKEN], RANGE_UNBOUNDED_PARSED);
+    });
 
-  test("and and or", () => {
-    const input: HRow[] = [
-      course,
-      orCourse,
-      orCourse,
-      {
-        type: HRowType.AND_COURSE,
-        description: "",
-        hour: 0,
-        courses: [
-          { subject: "CS", classId: 2500, description: "" },
-          { subject: "CS", classId: 2501, description: "" },
-          { subject: "CS", classId: 2510, description: "" },
-          { subject: "CS", classId: 2511, description: "" },
-        ],
-      },
-      {
-        type: HRowType.AND_COURSE,
-        description: "",
-        hour: 0,
-        courses: [
-          { subject: "CS", classId: 3500, description: "" },
-          { subject: "CS", classId: 2501, description: "" },
-        ],
-      },
-    ];
-    expect(parseRows(input)).toMatchSnapshot();
+    test("lower bounded", () => {
+      expectReqs([RANGE_LOWER_BOUNDED_TOKEN], [RANGE_LOWER_BOUNDED_PARSED]);
+    });
+
+    test("lower bounded with exceptions", () => {
+      expectReqs(
+        [RANGE_LOWER_BOUNDED_WITH_EXCEPTION_TOKEN],
+        [RANGE_LOWER_BOUNDED_WITH_EXCEPTION_PARSED],
+      );
+    });
+
+    test("bounded", () => {
+      expectReqs([RANGE_BOUNDED_TOKEN], [RANGE_BOUNDED_PARSED]);
+    });
+
+    test("bounded with exceptions", () => {
+      expectReqs(
+        [RANGE_BOUNDED_WITH_EXCEPTIONS_TOKEN],
+        [RANGE_BOUNDED_WITH_EXCEPTIONS_PARSED],
+      );
+    });
   });
 });

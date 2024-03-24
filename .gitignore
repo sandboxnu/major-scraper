@@ -49,19 +49,6 @@ graduatenu.code-workspace
 .vscode/
 .idea/
 
-# Yarn2 gitignore for non-zero installs
-.pnp.*
-.yarn/*
-!.yarn/patches
-!.yarn/plugins
-!.yarn/releases
-!.yarn/sdks
-!.yarn/versions
-
 # Scraper cache
-catalogCache/
-src/parse/grammar.cjs
-src/parse/postprocess.js
-results
 degrees
-major_output
+src/parse/grammar.ts

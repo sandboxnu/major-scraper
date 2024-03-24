@@ -1,5 +1,5 @@
-import type { CountAndHoursRow, HRow, TextRow } from "../tokenize";
-import { HRowType } from "../tokenize";
+import type { CountAndHoursRow, HRow, TextRow } from "@/tokenize";
+import { HRowType } from "@/tokenize";
 import type {
   IAndCourse2,
   IOrCourse2,
@@ -7,7 +7,7 @@ import type {
   IXofManyCourse,
   Requirement2,
   Section,
-} from "../graduate-types/major2";
+} from "@/types";
 
 // grab the wrapper of the row type enum from tokenize types
 type GetRow<RowType> = HRow & { type: RowType };
@@ -118,10 +118,14 @@ export const processRangeU: Processor<HRowType.RANGE_UNBOUNDED> = tokens => {
 };
 
 export const processOr = (
-  tokens: [Requirement2, Requirement2[]],
+  tokens: [Requirement2 | Requirement2[], Requirement2[]],
 ): IOrCourse2 => {
   const [req, ors] = tokens;
-  return { type: "OR", courses: [req, ...ors] };
+  if (Array.isArray(req)) {
+    return { type: "OR", courses: [...req, ...ors] };
+  } else {
+    return { type: "OR", courses: [req, ...ors] };
+  }
 };
 
 export const processOrOfAnd: Processor<
@@ -154,4 +158,19 @@ export const processXOM = ([xom, reqs]: [
       courses: reqs.flat(),
     },
   ];
+};
+
+export default {
+  processSection,
+  processSectionWithInfo,
+  processCourse,
+  processRangeLB,
+  processRangeLBE,
+  processRangeB,
+  processRangeBE,
+  processRangeU,
+  processOr,
+  processOrOfAnd,
+  processAnd,
+  processXOM,
 };

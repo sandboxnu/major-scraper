@@ -1,44 +1,51 @@
-import { CURRENT_CATALOG_YEAR, EARLIEST_CATALOG_YEAR } from "./constants";
-import { runPipeline } from "./runtime/pipeline";
-import { fatalError } from "./utils";
+import { intro, log, outro } from "@clack/prompts";
+import { EARLIEST_CATALOG_YEAR } from "./constants";
+import color from "picocolors";
+import { scrape } from "@/runtime";
+import { fatalError } from "@/utils";
+import { getCurrentYear } from "@/urls";
+
+intro(color.inverse(" Welcome to Major Scraper "));
 
 let args = process.argv.slice(2);
 if (args.length === 0) {
   args = ["current"];
 }
 
+const currentYear = await getCurrentYear();
+
+log.info(`The current catalog year is ${currentYear}`);
+
 const years: number[] = args.map((arg: string) => {
   if (arg === "current") {
-    return CURRENT_CATALOG_YEAR;
-  } else if (arg.match(/\d{4}/)) {
+    return currentYear;
+  }
+
+  if (arg.match(/\d{4}/)) {
     let year = Number(arg);
+
     if (year < EARLIEST_CATALOG_YEAR) {
-      return fatalError(
+      fatalError(
         `Year "${year}" is earlier than the earliest catalog available as HTML (2016)!`,
       );
-    } else if (year > CURRENT_CATALOG_YEAR) {
-      return fatalError(
-        "Either you're attempting to scrape a year in the future (which won't work unless time travel has been invented since this message was written), or you need to update CURRENT_CATALOG_YEAR in constants.ts.",
+    }
+
+    if (year > currentYear) {
+      fatalError(
+        `Get the Delorean Doc, we are going to the future :). Year ${year} is later than current year ${currentYear}`,
       );
     }
+
     return year;
-  } else {
-    return fatalError(
-      `Unrecognized catalog year "${arg}"! Enter one or more valid catalog years or "current"`,
-    );
   }
+
+  fatalError(
+    `Unrecognized catalog year "${arg}"! Enter one or more valid catalog years or "current"`,
+  );
 });
 
-async function runPipelines(years: number[]) {
-  for (const year of years) {
-    console.log(`Started scraping catalog year: ${year}...`);
-    await runPipeline(year);
-    console.log(`Finished scraping catalog year: ${year}!`);
-  }
+for (const year of years) {
+  await scrape(year, currentYear);
 }
 
-console.log(`Scraping the following years: ${years.join(", ")}...`);
-
-runPipelines(years).then(() => {
-  console.log(`All years scraped!`);
-});
+outro("Finished scraping! Have fun validating them ;)");

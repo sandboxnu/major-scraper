@@ -1,14 +1,14 @@
-import { College } from "../urls";
+import type { MandatoryPipelineEntry } from "@/runtime/types";
+import { College } from "@/urls";
 
 export enum CatalogEntryType {
-  Major = "Major",
-  Minor = "Minor",
-  Concentration = "Concentration",
-  Unknown = "Unknown",
+  Major = "major",
+  Minor = "minor",
+  Concentration = "concentration",
+  Unknown = "unknown",
 }
 
-export type TypedCatalogEntry = {
-  url: URL;
+export type TypedCatalogEntry = MandatoryPipelineEntry & {
   degreeType: CatalogEntryType;
   yearVersion: number;
   college: College;
@@ -30,12 +30,6 @@ export enum FileName {
   PARSED = "parsed",
 }
 
-export class FilterError {
-  actual;
-  allowed;
-
-  constructor(actual: CatalogEntryType, allowed: CatalogEntryType[]) {
-    this.actual = actual;
-    this.allowed = allowed;
-  }
+export class ConcentrationError {
+  constructor(public savePath: string) {}
 }

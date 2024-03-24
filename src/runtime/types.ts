@@ -1,22 +1,20 @@
-import type { Result } from "../graduate-types/common";
-
 /** Represents the label for a stage in the scraper pipeline */
-export enum StageLabel {
+export enum PhaseLabel {
+  ScrapeMajorLinks = "Scrape Major Links",
   Classify = "Classify",
-  Filter = "Filter",
   Tokenize = "Tokenize",
-  SaveComment = "Save Comment",
   Parse = "Parse",
-  Save = "Save",
 }
 
-/**
- * Represents a pipeline value, at some point in the scraper pipeline. Contains
- * a trace of the stages that have been run, as well as the resulting value
- * (either an error, or OK), and the URL the pipeline was run on.
- */
-export type Pipeline<T> = {
-  id: URL;
-  trace: StageLabel[];
-  result: Result<T, unknown[]>;
+export type ErrorLog = {
+  message: string;
+  entryInfo: string;
+};
+
+// Represent the required field in an entry for logging
+// Save path is a nice quality of life since you can
+// navigate to the folder by cmd + click on the path in the terminal
+export type MandatoryPipelineEntry = {
+  url: URL;
+  savePath?: string;
 };

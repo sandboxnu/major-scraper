@@ -1,3 +1,5 @@
+@preprocessor typescript
+
 @{%
 // define custom tokens
 // basically just check against the HRowType enum value
@@ -23,9 +25,9 @@ const X_OF_MANY = { test: x => x.type === "X_OF_MANY" };
 
 @{%
 // import postprocessors
+import postprocess from "./postprocess";
 const mt = () => [];
-const cons = ([first, rest]) => [first, ...rest];
-const postprocess = require("./postprocess");
+const cons = ([first, rest]: [unknown, unknown[]]) => [first, ...rest];
 %}
 
 # main entrypoint
