@@ -1,11 +1,9 @@
 import { intro, outro } from "@clack/prompts";
-import { compareMajors } from "./compareMajor";
 import { readFileSync, readdirSync, accessSync, constants } from "fs";
-
-// import * as parsedJSON from "degrees/Major/2022/computer-information-science/computer_science_bacs/parsed.initial.json"
-// import * as prodJSON from "degrees/Major/2022/computer-information-science/computer_science_bacs/parsed.commit.json"
 import type { Major2 } from "@/types";
-import { logError, logMsg, logSuccess } from "./util";
+
+import { compareMajors } from "./compareMajor";
+import { logError, logSuccess } from "./util";
 
 
 intro('Hello!')
