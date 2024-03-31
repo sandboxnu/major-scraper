@@ -14,7 +14,7 @@ export const logMsg = (msg: string) => {
 
 export const andMap = (field: string, arr1: any[], arr2: any[], fn: (a: any, b: any) => boolean) => {
     if (arr1.length !== arr2.length) {
-        logError(`not the same length: (parsed major) ${arr1.length} !== (prod major) ${arr2.length}`)
+        logError(`'${field}' not the same length: (parsed major) ${arr1.length} !== (prod major) ${arr2.length}`)
         return false
     }
 

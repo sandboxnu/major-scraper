@@ -1,6 +1,6 @@
 import type { Major2 } from "@/types";
 import { compareFields, compareRequirement } from "./compare";
-import { andMap, compare, logError, logSuccess } from "./util";
+import { andMap, compare, logMsg } from "./util";
 import { compareConcentrations } from "./compareConcentration";
 
 /**
@@ -17,6 +17,8 @@ export const compareMajors = (m1: Major2, m2: Major2) : boolean => {
     // yearVersion must be defined and be the same
     // concentrations (an array of Concentrations2) must be defined and be the same
 
+    logMsg(m1.name)
+
     const ret = (
         compare('name', m1.name, m2.name, compareFields) &&
         // ((!m1.metadata && !m2.metadata) || compare('metadata', m1.metadata, m2.metadata, compareFields)) &&
@@ -25,12 +27,6 @@ export const compareMajors = (m1: Major2, m2: Major2) : boolean => {
         compare('yearVersion', m1.yearVersion, m2.yearVersion, compareFields) &&
         compare('concentrations', m1.concentrations, m2.concentrations, compareConcentrations)
     )
-
-    if (ret) {
-        logSuccess(`${m1.name} - Success! Majors are the same`)
-    } else {
-        logError(`${m1.name} - Error! Majors are not the same :(`)
-    }
 
     return ret;
 }

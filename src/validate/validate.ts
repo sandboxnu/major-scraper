@@ -3,7 +3,7 @@ import { readFileSync, readdirSync, accessSync, constants } from "fs";
 import type { Major2 } from "@/types";
 
 import { compareMajors } from "./compareMajor";
-import { logError, logMsg } from "./util";
+import { logMsg, logError } from "./util";
 
 
 intro('Hello!')
@@ -30,7 +30,7 @@ for (let year of years) {
                 const prodJSON = readFileSync(prodFile, { encoding: 'utf8', flag: 'r' })
                 compareMajors(JSON.parse(parsedJSON) as Major2 , JSON.parse(prodJSON) as Major2)
             } catch (err) {
-                logError(`Unable to compare JSONs in ${major}.`)
+                // logError(`Unable to compare JSONs in ${major}.`)
             }
         }
     }
