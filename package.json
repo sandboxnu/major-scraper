@@ -12,6 +12,7 @@
   "dependencies": {
     "@clack/prompts": "^0.7.0",
     "cheerio": "1.0.0-rc.12",
+    "fs": "0.0.1-security",
     "nearley": "^2.20.1",
     "picocolors": "^1.0.0"
   },
