@@ -1,0 +1,471 @@
+{
+  "sections": [
+    {
+      "description": "Physics Major Requirements",
+      "entries": [
+        {
+          "hour": 0,
+          "description": "Introductory Physics",
+          "type": "HEADER"
+        },
+        {
+          "hour": 0,
+          "description": "Physics 1",
+          "type": "SUBHEADER"
+        },
+        {
+          "hour": 5,
+          "description": "Complete one of the following:",
+          "type": "SECTION_INFO",
+          "parsedCount": 1
+        },
+        {
+          "hour": 0,
+          "type": "AND_COURSE",
+          "description": "Physics 1 and Lab for PHYS 1161",
+          "courses": [
+            {
+              "subject": "PHYS",
+              "classId": 1161,
+              "description": "Physics 1"
+            },
+            {
+              "subject": "PHYS",
+              "classId": 1162,
+              "description": "Lab for PHYS 1161"
+            }
+          ]
+        },
+        {
+          "hour": 0,
+          "type": "AND_COURSE",
+          "description": "Physics for Engineering 1 and Lab for PHYS 1151 and Interactive Learning Seminar for PHYS 1151",
+          "courses": [
+            {
+              "subject": "PHYS",
+              "classId": 1151,
+              "description": "Physics for Engineering 1"
+            },
+            {
+              "subject": "PHYS",
+              "classId": 1152,
+              "description": "Lab for PHYS 1151"
+            },
+            {
+              "subject": "PHYS",
+              "classId": 1153,
+              "description": "Interactive Learning Seminar for PHYS 1151"
+            }
+          ]
+        },
+        {
+          "hour": 0,
+          "description": "Physics 2",
+          "type": "SUBHEADER"
+        },
+        {
+          "hour": 5,
+          "description": "Complete one of the following:",
+          "type": "SECTION_INFO",
+          "parsedCount": 1
+        },
+        {
+          "hour": 0,
+          "type": "AND_COURSE",
+          "description": "Physics 2 and Lab for PHYS 1165",
+          "courses": [
+            {
+              "subject": "PHYS",
+              "classId": 1165,
+              "description": "Physics 2"
+            },
+            {
+              "subject": "PHYS",
+              "classId": 1166,
+              "description": "Lab for PHYS 1165"
+            }
+          ]
+        },
+        {
+          "hour": 0,
+          "type": "AND_COURSE",
+          "description": "Physics for Engineering 2 and Lab for PHYS 1155 and Interactive Learning Seminar for PHYS 1155",
+          "courses": [
+            {
+              "subject": "PHYS",
+              "classId": 1155,
+              "description": "Physics for Engineering 2"
+            },
+            {
+              "subject": "PHYS",
+              "classId": 1156,
+              "description": "Lab for PHYS 1155"
+            },
+            {
+              "subject": "PHYS",
+              "classId": 1157,
+              "description": "Interactive Learning Seminar for PHYS 1155"
+            }
+          ]
+        },
+        {
+          "hour": 0,
+          "description": "Intermediate Physics",
+          "type": "HEADER"
+        },
+        {
+          "hour": 4,
+          "description": "Modern Physics",
+          "type": "PLAIN_COURSE",
+          "subject": "PHYS",
+          "classId": 2303
+        },
+        {
+          "hour": 4,
+          "type": "AND_COURSE",
+          "description": "Electronics and Lab for PHYS 2371",
+          "courses": [
+            {
+              "subject": "PHYS",
+              "classId": 2371,
+              "description": "Electronics"
+            },
+            {
+              "subject": "PHYS",
+              "classId": 2372,
+              "description": "Lab for PHYS 2371"
+            }
+          ]
+        },
+        {
+          "hour": 0,
+          "description": "Advanced Physics",
+          "type": "HEADER"
+        },
+        {
+          "hour": 4,
+          "description": "Advanced Physics Laboratory",
+          "type": "PLAIN_COURSE",
+          "subject": "PHYS",
+          "classId": 3600
+        },
+        {
+          "hour": 4,
+          "description": "Classical Dynamics",
+          "type": "PLAIN_COURSE",
+          "subject": "PHYS",
+          "classId": 3601
+        },
+        {
+          "hour": 4,
+          "description": "Electricity and Magnetism 1",
+          "type": "PLAIN_COURSE",
+          "subject": "PHYS",
+          "classId": 3602
+        },
+        {
+          "hour": 4,
+          "description": "Electricity and Magnetism 2",
+          "type": "PLAIN_COURSE",
+          "subject": "PHYS",
+          "classId": 3603
+        },
+        {
+          "hour": 4,
+          "description": "Quantum Mechanics",
+          "type": "PLAIN_COURSE",
+          "subject": "PHYS",
+          "classId": 4115
+        },
+        {
+          "hour": 4,
+          "description": "Thermodynamics and Statistical Mechanics",
+          "type": "PLAIN_COURSE",
+          "subject": "PHYS",
+          "classId": 4305
+        },
+        {
+          "hour": 0,
+          "description": "Elective Course",
+          "type": "HEADER"
+        },
+        {
+          "hour": 4,
+          "description": "Complete one of the following:",
+          "type": "SECTION_INFO",
+          "parsedCount": 1
+        },
+        {
+          "hour": 0,
+          "description": "Mathematical and Computational Methods for Physics",
+          "type": "PLAIN_COURSE",
+          "subject": "MATH",
+          "classId": 4606
+        },
+        {
+          "hour": 0,
+          "subject": "PHYS",
+          "classIdStart": 3500,
+          "classIdEnd": 7999,
+          "type": "RANGE_BOUNDED"
+        },
+        {
+          "hour": 0,
+          "description": "Experiential Learning",
+          "type": "HEADER"
+        },
+        {
+          "hour": 0,
+          "description": "Complete one course in experiential learning. See\n                        department for approved courses. Note: The experiential\n                        learning requirement is waived following a student\n                        presentation connected with a co-op and/or research\n                        experience. The requirement is often fulfilled by a talk\n                        at a Society of Physics Students meeting but can be\n                        fulfilled by an adequately documented presentation at a\n                        professional meeting or at an appropriate campus event.\n                        Contact your faculty advisor for additional\n                        information.",
+          "type": "COMMENT"
+        },
+        {
+          "hour": 0,
+          "description": "Senior Capstone",
+          "type": "HEADER"
+        },
+        {
+          "hour": 4,
+          "description": "Principles of Experimental Physics",
+          "type": "PLAIN_COURSE",
+          "subject": "PHYS",
+          "classId": 5318
+        }
+      ],
+      "type": "PRIMARY"
+    },
+    {
+      "description": "Supporting Courses",
+      "entries": [
+        {
+          "hour": 0,
+          "description": "Mathematics",
+          "type": "HEADER"
+        },
+        {
+          "hour": 4,
+          "description": "Calculus 1 for Science and Engineering",
+          "type": "PLAIN_COURSE",
+          "subject": "MATH",
+          "classId": 1341
+        },
+        {
+          "hour": 4,
+          "description": "Calculus 2 for Science and Engineering",
+          "type": "PLAIN_COURSE",
+          "subject": "MATH",
+          "classId": 1342
+        },
+        {
+          "hour": 4,
+          "description": "Calculus 3 for Science and Engineering",
+          "type": "PLAIN_COURSE",
+          "subject": "MATH",
+          "classId": 2321
+        },
+        {
+          "hour": 4,
+          "description": "Differential Equations and Linear Algebra for Engineering",
+          "type": "PLAIN_COURSE",
+          "subject": "MATH",
+          "classId": 2341
+        },
+        {
+          "hour": 4,
+          "description": "Linear Algebra",
+          "type": "PLAIN_COURSE",
+          "subject": "MATH",
+          "classId": 2331
+        },
+        {
+          "hour": 4,
+          "description": "Probability and Statistics",
+          "type": "PLAIN_COURSE",
+          "subject": "MATH",
+          "classId": 3081
+        },
+        {
+          "hour": 0,
+          "description": "Computational Methods",
+          "type": "HEADER"
+        },
+        {
+          "hour": 4,
+          "description": "Computational Problem Solving in Physics",
+          "type": "PLAIN_COURSE",
+          "subject": "PHYS",
+          "classId": 1211
+        },
+        {
+          "hour": 0,
+          "description": "Computing, Data, and Science",
+          "type": "OR_COURSE",
+          "subject": "PHYS",
+          "classId": 1130
+        },
+        {
+          "hour": 0,
+          "description": "Engineering Problem Solving and Computation",
+          "type": "OR_COURSE",
+          "subject": "GE",
+          "classId": 1111
+        },
+        {
+          "hour": 0,
+          "description": "Chemistry",
+          "type": "HEADER"
+        },
+        {
+          "hour": 5,
+          "type": "AND_COURSE",
+          "description": "General Chemistry 1 and Lab for CHEM 1211",
+          "courses": [
+            {
+              "subject": "CHEM",
+              "classId": 1211,
+              "description": "General Chemistry 1"
+            },
+            {
+              "subject": "CHEM",
+              "classId": 1212,
+              "description": "Lab for CHEM 1211"
+            }
+          ]
+        },
+        {
+          "hour": 0,
+          "description": "Technical Electives",
+          "type": "HEADER"
+        },
+        {
+          "hour": 8,
+          "description": "Complete 8 semester hours from the following:",
+          "type": "COMMENT"
+        },
+        {
+          "hour": 0,
+          "description": "Statistics and Software",
+          "type": "PLAIN_COURSE",
+          "subject": "MATH",
+          "classId": 2280
+        },
+        {
+          "hour": 0,
+          "description": "MATH 2321\n                          to MATH 5999",
+          "type": "COMMENT"
+        },
+        {
+          "hour": 0,
+          "description": "PHYS 2303\n                          to PHYS 7999",
+          "type": "COMMENT"
+        },
+        {
+          "hour": 0,
+          "description": "CHEM 2311\n                          to CHEM 5999",
+          "type": "COMMENT"
+        },
+        {
+          "hour": 0,
+          "description": "BIOL 2301\n                          to BIOL 5999",
+          "type": "COMMENT"
+        },
+        {
+          "hour": 0,
+          "subject": "ENVR",
+          "classIdStart": 2300,
+          "classIdEnd": 5999,
+          "type": "RANGE_BOUNDED"
+        },
+        {
+          "hour": 0,
+          "description": "CS 2990\n                          to CS 4900",
+          "type": "COMMENT"
+        },
+        {
+          "hour": 0,
+          "subject": "CHME",
+          "classIdStart": 2001,
+          "classIdEnd": 4699,
+          "type": "RANGE_BOUNDED"
+        },
+        {
+          "hour": 0,
+          "subject": "CIVE",
+          "classIdStart": 2001,
+          "classIdEnd": 4699,
+          "type": "RANGE_BOUNDED"
+        },
+        {
+          "hour": 0,
+          "subject": "EECE",
+          "classIdStart": 2001,
+          "classIdEnd": 5999,
+          "type": "RANGE_BOUNDED"
+        },
+        {
+          "hour": 0,
+          "description": "ME 2001 to\n                          ME 4699",
+          "type": "COMMENT"
+        },
+        {
+          "hour": 0,
+          "description": "IE 2001 to\n                          IE 4699",
+          "type": "COMMENT"
+        }
+      ],
+      "type": "PRIMARY"
+    },
+    {
+      "description": "Astrophysics Concentration (Optional)",
+      "entries": [
+        {
+          "hour": 0,
+          "description": "Astrophysics Core",
+          "type": "HEADER"
+        },
+        {
+          "hour": 4,
+          "description": "Astronomy",
+          "type": "PLAIN_COURSE",
+          "subject": "PHYS",
+          "classId": 1111
+        },
+        {
+          "hour": 0,
+          "description": "The following courses may be counted toward major\n                            electives, if they are listed as applicable options\n                            in the approved curriculum:",
+          "type": "SUBHEADER"
+        },
+        {
+          "hour": 4,
+          "description": "Astrophysical Processes: Decoding the Universe",
+          "type": "PLAIN_COURSE",
+          "subject": "PHYS",
+          "classId": 3111
+        },
+        {
+          "hour": 4,
+          "description": "Multimessenger Astrophysics",
+          "type": "PLAIN_COURSE",
+          "subject": "PHYS",
+          "classId": 4111
+        },
+        {
+          "hour": 4,
+          "description": "Advanced Astrophysics Topics",
+          "type": "PLAIN_COURSE",
+          "subject": "PHYS",
+          "classId": 5117
+        },
+        {
+          "hour": 0,
+          "description": "General Relativity and Cosmology",
+          "type": "OR_COURSE",
+          "subject": "PHYS",
+          "classId": 5118
+        }
+      ],
+      "type": "CONCENTRATION"
+    }
+  ],
+  "programRequiredHours": 133
+}

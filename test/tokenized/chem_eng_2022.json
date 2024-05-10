@@ -1,0 +1,721 @@
+{
+  "sections": [
+    {
+      "description": "Engineering",
+      "entries": [
+        {
+          "hour": 4,
+          "description": "Conservation Principles in Chemical Engineering",
+          "type": "PLAIN_COURSE",
+          "subject": "CHME",
+          "classId": 2308
+        },
+        {
+          "hour": 4,
+          "description": "Transport Processes 1",
+          "type": "PLAIN_COURSE",
+          "subject": "CHME",
+          "classId": 2310
+        },
+        {
+          "hour": 4,
+          "description": "Chemical Engineering Thermodynamics 1",
+          "type": "PLAIN_COURSE",
+          "subject": "CHME",
+          "classId": 2320
+        },
+        {
+          "hour": 4,
+          "description": "Transport Processes 2",
+          "type": "PLAIN_COURSE",
+          "subject": "CHME",
+          "classId": 3312
+        },
+        {
+          "hour": 4,
+          "type": "AND_COURSE",
+          "description": "Chemical Engineering Experimental Design 1 and Recitation for CHME 3315",
+          "courses": [
+            {
+              "subject": "CHME",
+              "classId": 3315,
+              "description": "Chemical Engineering Experimental Design 1"
+            },
+            {
+              "subject": "CHME",
+              "classId": 3316,
+              "description": "Recitation for CHME 3315"
+            }
+          ]
+        },
+        {
+          "hour": 4,
+          "description": "Chemical Engineering Thermodynamics 2",
+          "type": "PLAIN_COURSE",
+          "subject": "CHME",
+          "classId": 3322
+        },
+        {
+          "hour": 4,
+          "type": "AND_COURSE",
+          "description": "Chemical Engineering Experimental Design 2 and Recitation for CHME 4315",
+          "courses": [
+            {
+              "subject": "CHME",
+              "classId": 4315,
+              "description": "Chemical Engineering Experimental Design 2"
+            },
+            {
+              "subject": "CHME",
+              "classId": 4316,
+              "description": "Recitation for CHME 4315"
+            }
+          ]
+        },
+        {
+          "hour": 4,
+          "description": "Chemical Engineering Kinetics",
+          "type": "PLAIN_COURSE",
+          "subject": "CHME",
+          "classId": 4510
+        },
+        {
+          "hour": 4,
+          "description": "Chemical Engineering Process Control",
+          "type": "PLAIN_COURSE",
+          "subject": "CHME",
+          "classId": 4512
+        },
+        {
+          "hour": 0,
+          "description": "Chemical Engineering Capstone",
+          "type": "HEADER"
+        },
+        {
+          "hour": 4,
+          "description": "Separations and Process Analysis",
+          "type": "PLAIN_COURSE",
+          "subject": "CHME",
+          "classId": 4701
+        },
+        {
+          "hour": 4,
+          "type": "AND_COURSE",
+          "description": "Chemical Process Design Capstone and Recitation for CHME 4703",
+          "courses": [
+            {
+              "subject": "CHME",
+              "classId": 4703,
+              "description": "Chemical Process Design Capstone"
+            },
+            {
+              "subject": "CHME",
+              "classId": 4705,
+              "description": "Recitation for CHME 4703"
+            }
+          ]
+        },
+        {
+          "hour": 0,
+          "description": "Advanced Engineering Elective",
+          "type": "HEADER"
+        },
+        {
+          "hour": 4,
+          "description": "Complete one course numbered between 4000 and 5999 in\n                        any of the following subject areas:",
+          "type": "COMMENT"
+        },
+        {
+          "type": "RANGE_UNBOUNDED",
+          "hour": 0,
+          "subjects": [
+            "BIOE",
+            "CHME",
+            "CIVE",
+            "EECE",
+            "ME",
+            "IE",
+            "MEIE",
+            "ENGR"
+          ]
+        },
+        {
+          "hour": 0,
+          "description": "Supplemental Credit",
+          "type": "HEADER"
+        },
+        {
+          "hour": 2,
+          "description": "2 semester hours from the following course count toward\n                        the engineering requirement:",
+          "type": "COMMENT"
+        },
+        {
+          "hour": 0,
+          "description": "Cornerstone of Engineering 1 1",
+          "type": "PLAIN_COURSE",
+          "subject": "GE",
+          "classId": 1501
+        },
+        {
+          "hour": 3,
+          "description": "3 semester hours from the following course count toward\n                        the engineering requirement:",
+          "type": "COMMENT"
+        },
+        {
+          "hour": 0,
+          "description": "Cornerstone of Engineering 2 1",
+          "type": "PLAIN_COURSE",
+          "subject": "GE",
+          "classId": 1502
+        }
+      ],
+      "type": "PRIMARY"
+    },
+    {
+      "description": "Supporting Courses: Mathematics/Science",
+      "entries": [
+        {
+          "hour": 0,
+          "description": "Required Mathematics/Science",
+          "type": "HEADER"
+        },
+        {
+          "hour": 4,
+          "type": "AND_COURSE",
+          "description": "General Chemistry for Engineers and Recitation for CHEM 1151",
+          "courses": [
+            {
+              "subject": "CHEM",
+              "classId": 1151,
+              "description": "General Chemistry for Engineers"
+            },
+            {
+              "subject": "CHEM",
+              "classId": 1153,
+              "description": "Recitation for CHEM 1151"
+            }
+          ]
+        },
+        {
+          "hour": 4,
+          "description": "Calculus 1 for Science and Engineering",
+          "type": "PLAIN_COURSE",
+          "subject": "MATH",
+          "classId": 1341
+        },
+        {
+          "hour": 4,
+          "description": "Calculus 2 for Science and Engineering",
+          "type": "PLAIN_COURSE",
+          "subject": "MATH",
+          "classId": 1342
+        },
+        {
+          "hour": 4,
+          "description": "Calculus 3 for Science and Engineering",
+          "type": "PLAIN_COURSE",
+          "subject": "MATH",
+          "classId": 2321
+        },
+        {
+          "hour": 4,
+          "description": "Differential Equations and Linear Algebra for Engineering",
+          "type": "PLAIN_COURSE",
+          "subject": "MATH",
+          "classId": 2341
+        },
+        {
+          "hour": 5,
+          "type": "AND_COURSE",
+          "description": "Physics for Engineering 1 and Lab for PHYS 1151 and Interactive Learning Seminar for PHYS 1151",
+          "courses": [
+            {
+              "subject": "PHYS",
+              "classId": 1151,
+              "description": "Physics for Engineering 1"
+            },
+            {
+              "subject": "PHYS",
+              "classId": 1152,
+              "description": "Lab for PHYS 1151"
+            },
+            {
+              "subject": "PHYS",
+              "classId": 1153,
+              "description": "Interactive Learning Seminar for PHYS 1151"
+            }
+          ]
+        },
+        {
+          "hour": 4,
+          "description": "Complete one of the following:",
+          "type": "SECTION_INFO",
+          "parsedCount": 1
+        },
+        {
+          "hour": 0,
+          "description": "General Biology 1",
+          "type": "PLAIN_COURSE",
+          "subject": "BIOL",
+          "classId": 1111
+        },
+        {
+          "hour": 0,
+          "description": "General Biology 1 for Engineers",
+          "type": "PLAIN_COURSE",
+          "subject": "BIOL",
+          "classId": 1115
+        },
+        {
+          "hour": 0,
+          "type": "AND_COURSE",
+          "description": "Physics for Engineering 2 and Lab for PHYS 1155 and Interactive Learning Seminar for PHYS 1155",
+          "courses": [
+            {
+              "subject": "PHYS",
+              "classId": 1155,
+              "description": "Physics for Engineering 2"
+            },
+            {
+              "subject": "PHYS",
+              "classId": 1156,
+              "description": "Lab for PHYS 1155"
+            },
+            {
+              "subject": "PHYS",
+              "classId": 1157,
+              "description": "Interactive Learning Seminar for PHYS 1155"
+            }
+          ]
+        },
+        {
+          "hour": 0,
+          "description": "Supplemental Credit",
+          "type": "HEADER"
+        },
+        {
+          "hour": 1,
+          "description": "1 semester hour from the following course counts toward\n                        the mathematics/science requirement:",
+          "type": "COMMENT"
+        },
+        {
+          "hour": 0,
+          "description": "Cornerstone of Engineering 1 1",
+          "type": "PLAIN_COURSE",
+          "subject": "GE",
+          "classId": 1501
+        }
+      ],
+      "type": "PRIMARY"
+    },
+    {
+      "description": "Supporting Courses: Advanced Science",
+      "entries": [
+        {
+          "hour": 5,
+          "description": "Complete one of the following pairs:",
+          "type": "COMMENT"
+        },
+        {
+          "hour": 0,
+          "type": "AND_COURSE",
+          "description": "Organic Chemistry 1 and Lab for CHEM 2311",
+          "courses": [
+            {
+              "subject": "CHEM",
+              "classId": 2311,
+              "description": "Organic Chemistry 1"
+            },
+            {
+              "subject": "CHEM",
+              "classId": 2312,
+              "description": "Lab for CHEM 2311"
+            }
+          ]
+        },
+        {
+          "hour": 0,
+          "type": "AND_COURSE",
+          "description": "Organic Chemistry 1 for Chemistry Majors and Lab for CHEM 2315",
+          "courses": [
+            {
+              "subject": "CHEM",
+              "classId": 2315,
+              "description": "Organic Chemistry 1 for Chemistry Majors"
+            },
+            {
+              "subject": "CHEM",
+              "classId": 2316,
+              "description": "Lab for CHEM 2315"
+            }
+          ]
+        },
+        {
+          "hour": 5,
+          "description": "Complete one of the following pairs:",
+          "type": "COMMENT"
+        },
+        {
+          "hour": 0,
+          "type": "AND_COURSE",
+          "description": "Organic Chemistry 2 and Lab for CHEM 2313",
+          "courses": [
+            {
+              "subject": "CHEM",
+              "classId": 2313,
+              "description": "Organic Chemistry 2"
+            },
+            {
+              "subject": "CHEM",
+              "classId": 2314,
+              "description": "Lab for CHEM 2313"
+            }
+          ]
+        },
+        {
+          "hour": 0,
+          "type": "AND_COURSE",
+          "description": "Organic Chemistry 2 for Chemistry Majors and Lab for CHEM 2317",
+          "courses": [
+            {
+              "subject": "CHEM",
+              "classId": 2317,
+              "description": "Organic Chemistry 2 for Chemistry Majors"
+            },
+            {
+              "subject": "CHEM",
+              "classId": 2318,
+              "description": "Lab for CHEM 2317"
+            }
+          ]
+        },
+        {
+          "hour": 4,
+          "description": "Complete one of the following:",
+          "type": "SECTION_INFO",
+          "parsedCount": 1
+        },
+        {
+          "hour": 0,
+          "description": "Genetics and Molecular Biology",
+          "type": "PLAIN_COURSE",
+          "subject": "BIOL",
+          "classId": 2301
+        },
+        {
+          "hour": 0,
+          "description": "Human Parasitology",
+          "type": "PLAIN_COURSE",
+          "subject": "BIOL",
+          "classId": 2327
+        },
+        {
+          "hour": 0,
+          "type": "AND_COURSE",
+          "description": "Microbiology and Lab for BIOL 3421",
+          "courses": [
+            {
+              "subject": "BIOL",
+              "classId": 3421,
+              "description": "Microbiology"
+            },
+            {
+              "subject": "BIOL",
+              "classId": 3422,
+              "description": "Lab for BIOL 3421"
+            }
+          ]
+        },
+        {
+          "hour": 0,
+          "description": "Mammalian Systems Physiology",
+          "type": "PLAIN_COURSE",
+          "subject": "BIOL",
+          "classId": 3603
+        },
+        {
+          "hour": 0,
+          "type": "AND_COURSE",
+          "description": "Biochemistry and Lab for BIOL 3611",
+          "courses": [
+            {
+              "subject": "BIOL",
+              "classId": 3611,
+              "description": "Biochemistry"
+            },
+            {
+              "subject": "BIOL",
+              "classId": 3612,
+              "description": "Lab for BIOL 3611"
+            }
+          ]
+        },
+        {
+          "hour": 0,
+          "type": "AND_COURSE",
+          "description": "Analytical Chemistry and Lab for CHEM 2321",
+          "courses": [
+            {
+              "subject": "CHEM",
+              "classId": 2321,
+              "description": "Analytical Chemistry"
+            },
+            {
+              "subject": "CHEM",
+              "classId": 2322,
+              "description": "Lab for CHEM 2321"
+            }
+          ]
+        },
+        {
+          "hour": 0,
+          "type": "AND_COURSE",
+          "description": "Quantum Chemistry and Spectroscopy and Lab for CHEM 3403",
+          "courses": [
+            {
+              "subject": "CHEM",
+              "classId": 3403,
+              "description": "Quantum Chemistry and Spectroscopy"
+            },
+            {
+              "subject": "CHEM",
+              "classId": 3404,
+              "description": "Lab for CHEM 3403"
+            }
+          ]
+        },
+        {
+          "hour": 0,
+          "type": "AND_COURSE",
+          "description": "Physical Chemistry and Lab for CHEM 3431",
+          "courses": [
+            {
+              "subject": "CHEM",
+              "classId": 3431,
+              "description": "Physical Chemistry"
+            },
+            {
+              "subject": "CHEM",
+              "classId": 3432,
+              "description": "Lab for CHEM 3431"
+            }
+          ]
+        },
+        {
+          "hour": 0,
+          "type": "AND_COURSE",
+          "description": "Inorganic Chemistry and Lab for CHEM 3501 and Recitation for CHEM 3501",
+          "courses": [
+            {
+              "subject": "CHEM",
+              "classId": 3501,
+              "description": "Inorganic Chemistry"
+            },
+            {
+              "subject": "CHEM",
+              "classId": 3502,
+              "description": "Lab for CHEM 3501"
+            },
+            {
+              "subject": "CHEM",
+              "classId": 3503,
+              "description": "Recitation for CHEM 3501"
+            }
+          ]
+        },
+        {
+          "hour": 0,
+          "type": "AND_COURSE",
+          "description": "Introduction to Spectroscopy of Organic Compounds and Identification of Organic Compounds",
+          "courses": [
+            {
+              "subject": "CHEM",
+              "classId": 4628,
+              "description": "Introduction to Spectroscopy of Organic Compounds"
+            },
+            {
+              "subject": "CHEM",
+              "classId": 4629,
+              "description": "Identification of Organic Compounds"
+            }
+          ]
+        },
+        {
+          "hour": 0,
+          "type": "AND_COURSE",
+          "description": "Ecology and Lab for EEMB 2302",
+          "courses": [
+            {
+              "subject": "EEMB",
+              "classId": 2302,
+              "description": "Ecology"
+            },
+            {
+              "subject": "EEMB",
+              "classId": 2303,
+              "description": "Lab for EEMB 2302"
+            }
+          ]
+        },
+        {
+          "hour": 0,
+          "description": "Conservation Biology",
+          "type": "PLAIN_COURSE",
+          "subject": "EEMB",
+          "classId": 3460
+        },
+        {
+          "hour": 0,
+          "description": "Computational Problem Solving in Physics",
+          "type": "PLAIN_COURSE",
+          "subject": "PHYS",
+          "classId": 1211
+        },
+        {
+          "hour": 0,
+          "description": "Modern Physics",
+          "type": "PLAIN_COURSE",
+          "subject": "PHYS",
+          "classId": 2303
+        },
+        {
+          "hour": 0,
+          "type": "AND_COURSE",
+          "description": "Electronics and Lab for PHYS 2371",
+          "courses": [
+            {
+              "subject": "PHYS",
+              "classId": 2371,
+              "description": "Electronics"
+            },
+            {
+              "subject": "PHYS",
+              "classId": 2372,
+              "description": "Lab for PHYS 2371"
+            }
+          ]
+        },
+        {
+          "hour": 0,
+          "description": "Classical Dynamics",
+          "type": "PLAIN_COURSE",
+          "subject": "PHYS",
+          "classId": 3601
+        },
+        {
+          "hour": 0,
+          "description": "Electricity and Magnetism 1",
+          "type": "PLAIN_COURSE",
+          "subject": "PHYS",
+          "classId": 3602
+        }
+      ],
+      "type": "PRIMARY"
+    },
+    {
+      "description": "Professional Development",
+      "entries": [
+        {
+          "hour": 0,
+          "description": "Professional Development",
+          "type": "HEADER"
+        },
+        {
+          "hour": 1,
+          "description": "First-Year Seminar",
+          "type": "PLAIN_COURSE",
+          "subject": "GE",
+          "classId": 1000
+        },
+        {
+          "hour": 1,
+          "description": "Introduction to Engineering Co-op Education",
+          "type": "PLAIN_COURSE",
+          "subject": "ENCP",
+          "classId": 2000
+        },
+        {
+          "hour": 1,
+          "description": "Professional Issues in Engineering",
+          "type": "PLAIN_COURSE",
+          "subject": "ENCP",
+          "classId": 3000
+        },
+        {
+          "hour": 0,
+          "description": "Additional Required Courses",
+          "type": "HEADER"
+        },
+        {
+          "hour": 1,
+          "description": "1 semester hour from the following course counts toward\n                        the professional development requirement:",
+          "type": "COMMENT"
+        },
+        {
+          "hour": 0,
+          "description": "Cornerstone of Engineering 1 1",
+          "type": "PLAIN_COURSE",
+          "subject": "GE",
+          "classId": 1501
+        },
+        {
+          "hour": 1,
+          "description": "1 semester hour from the following course counts toward\n                        the professional development requirement:",
+          "type": "COMMENT"
+        },
+        {
+          "hour": 0,
+          "description": "Cornerstone of Engineering 2 1",
+          "type": "PLAIN_COURSE",
+          "subject": "GE",
+          "classId": 1502
+        }
+      ],
+      "type": "PRIMARY"
+    },
+    {
+      "description": "Writing Requirements",
+      "entries": [
+        {
+          "hour": 0,
+          "description": "A grade of C or higher is required:",
+          "type": "COMMENT"
+        },
+        {
+          "hour": 4,
+          "description": "First-Year Writing",
+          "type": "PLAIN_COURSE",
+          "subject": "ENGW",
+          "classId": 1111
+        },
+        {
+          "hour": 4,
+          "description": "Advanced Writing in the Technical Professions",
+          "type": "PLAIN_COURSE",
+          "subject": "ENGW",
+          "classId": 3302
+        },
+        {
+          "hour": 0,
+          "description": "Interdisciplinary Advanced Writing in the Disciplines",
+          "type": "OR_COURSE",
+          "subject": "ENGW",
+          "classId": 3315
+        }
+      ],
+      "type": "PRIMARY"
+    },
+    {
+      "description": "Required General Electives",
+      "entries": [
+        {
+          "hour": 24,
+          "description": "Complete 24 semester hours of academic, nonremedial,\n                        nonrepetitive courses.",
+          "type": "COMMENT"
+        }
+      ],
+      "type": "PRIMARY"
+    }
+  ],
+  "programRequiredHours": 134
+}

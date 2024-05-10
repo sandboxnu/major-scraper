@@ -1,0 +1,445 @@
+{
+  "sections": [
+    {
+      "description": "Computer Science Courses",
+      "entries": [
+        {
+          "hour": 0,
+          "description": "Computer Science Overview",
+          "type": "HEADER"
+        },
+        {
+          "hour": 1,
+          "description": "First Year Seminar",
+          "type": "PLAIN_COURSE",
+          "subject": "CS",
+          "classId": 1200
+        },
+        {
+          "hour": 1,
+          "description": "Professional Development for Khoury Co-op",
+          "type": "PLAIN_COURSE",
+          "subject": "CS",
+          "classId": 1210
+        },
+        {
+          "hour": 0,
+          "description": "Computer Science Fundamental Courses",
+          "type": "HEADER"
+        },
+        {
+          "hour": 5,
+          "type": "AND_COURSE",
+          "description": "Discrete Structures and Seminar for CS 1800",
+          "courses": [
+            {
+              "subject": "CS",
+              "classId": 1800,
+              "description": "Discrete Structures"
+            },
+            {
+              "subject": "CS",
+              "classId": 1802,
+              "description": "Seminar for CS 1800"
+            }
+          ]
+        },
+        {
+          "hour": 5,
+          "type": "AND_COURSE",
+          "description": "Fundamentals of Computer Science 1 and Lab for CS 2500",
+          "courses": [
+            {
+              "subject": "CS",
+              "classId": 2500,
+              "description": "Fundamentals of Computer Science 1"
+            },
+            {
+              "subject": "CS",
+              "classId": 2501,
+              "description": "Lab for CS 2500"
+            }
+          ]
+        },
+        {
+          "hour": 5,
+          "type": "AND_COURSE",
+          "description": "Fundamentals of Computer Science 2 and Lab for CS 2510",
+          "courses": [
+            {
+              "subject": "CS",
+              "classId": 2510,
+              "description": "Fundamentals of Computer Science 2"
+            },
+            {
+              "subject": "CS",
+              "classId": 2511,
+              "description": "Lab for CS 2510"
+            }
+          ]
+        },
+        {
+          "hour": 4,
+          "description": "Logic and Computation",
+          "type": "PLAIN_COURSE",
+          "subject": "CS",
+          "classId": 2800
+        },
+        {
+          "hour": 0,
+          "description": "Computer Science Required Courses",
+          "type": "HEADER"
+        },
+        {
+          "hour": 4,
+          "description": "Algorithms and Data",
+          "type": "PLAIN_COURSE",
+          "subject": "CS",
+          "classId": 3000
+        },
+        {
+          "hour": 5,
+          "type": "AND_COURSE",
+          "description": "Object-Oriented Design and Lab for CS 3500",
+          "courses": [
+            {
+              "subject": "CS",
+              "classId": 3500,
+              "description": "Object-Oriented Design"
+            },
+            {
+              "subject": "CS",
+              "classId": 3501,
+              "description": "Lab for CS 3500"
+            }
+          ]
+        },
+        {
+          "hour": 4,
+          "description": "Theory of Computation",
+          "type": "PLAIN_COURSE",
+          "subject": "CS",
+          "classId": 3800
+        },
+        {
+          "hour": 4,
+          "description": "Computer Graphics",
+          "type": "PLAIN_COURSE",
+          "subject": "CS",
+          "classId": 4300
+        },
+        {
+          "hour": 0,
+          "description": "Artificial Intelligence",
+          "type": "OR_COURSE",
+          "subject": "CS",
+          "classId": 4100
+        },
+        {
+          "hour": 4,
+          "description": "Software Development",
+          "type": "PLAIN_COURSE",
+          "subject": "CS",
+          "classId": 4500
+        },
+        {
+          "hour": 0,
+          "description": "Fundamentals of Software Engineering",
+          "type": "OR_COURSE",
+          "subject": "CS",
+          "classId": 4530
+        },
+        {
+          "hour": 0,
+          "description": "Khoury Elective Courses",
+          "type": "HEADER"
+        },
+        {
+          "hour": 0,
+          "description": "With adviser approval, a directed study, research,\n                        project study, or appropriate graduate-level course may\n                        also be taken as a computer science elective.",
+          "type": "COMMENT"
+        },
+        {
+          "hour": 8,
+          "description": "Complete eight semester hours of CS, CY, DS, or IS\n                        classes that are not already required. Choose courses\n                        within the following ranges:",
+          "type": "COMMENT"
+        },
+        {
+          "hour": 0,
+          "description": "CS 2500\n                          or higher, except\n                          CS 5010",
+          "type": "COMMENT"
+        },
+        {
+          "type": "RANGE_LOWER_BOUNDED_WITH_EXCEPTIONS",
+          "hour": 0,
+          "subject": "CY",
+          "classIdStart": 2000,
+          "exceptions": [
+            {
+              "subject": "CY",
+              "classId": 4930
+            }
+          ]
+        },
+        {
+          "hour": 0,
+          "description": "DS 2500\n                          or higher, except DS 4900",
+          "type": "COMMENT"
+        },
+        {
+          "hour": 0,
+          "description": "IS 2000\n                          or higher, except\n                          IS 4900",
+          "type": "COMMENT"
+        }
+      ],
+      "type": "PRIMARY"
+    },
+    {
+      "description": "Mathematics Courses",
+      "entries": [
+        {
+          "hour": 0,
+          "description": "Calculus Courses",
+          "type": "HEADER"
+        },
+        {
+          "hour": 4,
+          "description": "Calculus 1 for Science and Engineering",
+          "type": "PLAIN_COURSE",
+          "subject": "MATH",
+          "classId": 1341
+        },
+        {
+          "hour": 4,
+          "description": "Calculus 2 for Science and Engineering",
+          "type": "PLAIN_COURSE",
+          "subject": "MATH",
+          "classId": 1342
+        },
+        {
+          "hour": 4,
+          "description": "Calculus 3 for Science and Engineering",
+          "type": "PLAIN_COURSE",
+          "subject": "MATH",
+          "classId": 2321
+        },
+        {
+          "hour": 0,
+          "description": "Mathematics Courses",
+          "type": "HEADER"
+        },
+        {
+          "hour": 4,
+          "description": "Linear Algebra",
+          "type": "PLAIN_COURSE",
+          "subject": "MATH",
+          "classId": 2331
+        },
+        {
+          "hour": 4,
+          "description": "Differential Equations and Linear Algebra for Engineering",
+          "type": "PLAIN_COURSE",
+          "subject": "MATH",
+          "classId": 2341
+        },
+        {
+          "hour": 4,
+          "description": "Probability and Statistics",
+          "type": "PLAIN_COURSE",
+          "subject": "MATH",
+          "classId": 3081
+        },
+        {
+          "hour": 4,
+          "description": "Group Theory",
+          "type": "PLAIN_COURSE",
+          "subject": "MATH",
+          "classId": 3175
+        },
+        {
+          "hour": 4,
+          "description": "Number Theory 1",
+          "type": "PLAIN_COURSE",
+          "subject": "MATH",
+          "classId": 3527
+        },
+        {
+          "hour": 0,
+          "description": "Mathematics Electives",
+          "type": "HEADER"
+        },
+        {
+          "type": "X_OF_MANY",
+          "description": "Complete three courses in the following range:",
+          "hour": 12
+        },
+        {
+          "hour": 0,
+          "subject": "MATH",
+          "classIdStart": 3001,
+          "classIdEnd": 4999,
+          "type": "RANGE_BOUNDED_WITH_EXCEPTIONS",
+          "exceptions": [
+            {
+              "subject": "MATH",
+              "classId": 4000
+            }
+          ]
+        }
+      ],
+      "type": "PRIMARY"
+    },
+    {
+      "description": "Supporting Course",
+      "entries": [
+        {
+          "hour": 4,
+          "description": "Complete one of the following:",
+          "type": "SECTION_INFO",
+          "parsedCount": 1
+        },
+        {
+          "hour": 0,
+          "description": "Issues in Race, Science, and Technology",
+          "type": "PLAIN_COURSE",
+          "subject": "AFAM",
+          "classId": 2600
+        },
+        {
+          "hour": 0,
+          "description": "The Law, Ethics, and Policy of Data and Digital\n                      Technologies",
+          "type": "PLAIN_COURSE",
+          "subject": "CY",
+          "classId": 4170
+        },
+        {
+          "hour": 0,
+          "description": "Cyberlaw: Privacy, Ethics, and Digital Rights",
+          "type": "PLAIN_COURSE",
+          "subject": "CY",
+          "classId": 5240
+        },
+        {
+          "hour": 0,
+          "description": "Literature and Digital Diversity",
+          "type": "PLAIN_COURSE",
+          "subject": "ENGL",
+          "classId": 2150
+        },
+        {
+          "hour": 0,
+          "description": "History of Technology",
+          "type": "PLAIN_COURSE",
+          "subject": "HIST",
+          "classId": 2220
+        },
+        {
+          "hour": 0,
+          "description": "Bostonography: The City through Data, Texts, Maps, and\n                      Networks",
+          "type": "PLAIN_COURSE",
+          "subject": "INSH",
+          "classId": 2102
+        },
+        {
+          "hour": 0,
+          "description": "Knowledge in a Digital World",
+          "type": "PLAIN_COURSE",
+          "subject": "IS",
+          "classId": 1300
+        },
+        {
+          "hour": 0,
+          "description": "Knowledge in a Digital World",
+          "type": "OR_COURSE",
+          "subject": "PHIL",
+          "classId": 1300
+        },
+        {
+          "hour": 0,
+          "description": "Technology and Human Values",
+          "type": "PLAIN_COURSE",
+          "subject": "PHIL",
+          "classId": 1145
+        },
+        {
+          "hour": 0,
+          "description": "The Twenty-First-Century Workplace",
+          "type": "PLAIN_COURSE",
+          "subject": "SOCL",
+          "classId": 1280
+        },
+        {
+          "hour": 0,
+          "description": "Environment, Technology, and Society",
+          "type": "PLAIN_COURSE",
+          "subject": "SOCL",
+          "classId": 2485
+        },
+        {
+          "hour": 0,
+          "description": "Computers and Society",
+          "type": "PLAIN_COURSE",
+          "subject": "SOCL",
+          "classId": 4528
+        }
+      ],
+      "type": "PRIMARY"
+    },
+    {
+      "description": "Computer Science Writing Requirement",
+      "entries": [
+        {
+          "hour": 0,
+          "description": "College Writing",
+          "type": "HEADER"
+        },
+        {
+          "hour": 4,
+          "description": "First-Year Writing",
+          "type": "PLAIN_COURSE",
+          "subject": "ENGW",
+          "classId": 1111
+        },
+        {
+          "hour": 0,
+          "description": "Advanced Writing in the Disciplines",
+          "type": "HEADER"
+        },
+        {
+          "hour": 4,
+          "description": "Advanced Writing in the Technical Professions",
+          "type": "PLAIN_COURSE",
+          "subject": "ENGW",
+          "classId": 3302
+        },
+        {
+          "hour": 0,
+          "description": "Advanced Writing in the Sciences",
+          "type": "OR_COURSE",
+          "subject": "ENGW",
+          "classId": 3307
+        },
+        {
+          "hour": 0,
+          "description": "Interdisciplinary Advanced Writing in the Disciplines",
+          "type": "OR_COURSE",
+          "subject": "ENGW",
+          "classId": 3315
+        }
+      ],
+      "type": "PRIMARY"
+    },
+    {
+      "description": "Required General Electives",
+      "entries": [
+        {
+          "hour": 28,
+          "description": "Complete 28 semester hours of general electives.",
+          "type": "COMMENT"
+        }
+      ],
+      "type": "PRIMARY"
+    }
+  ],
+  "programRequiredHours": 132
+}

@@ -1,0 +1,406 @@
+{
+  "sections": [
+    {
+      "description": "Media and Screen Studies Requirements",
+      "entries": [
+        {
+          "hour": 0,
+          "description": "Media and Screen Studies Common Requirements",
+          "type": "HEADER"
+        },
+        {
+          "hour": 4,
+          "description": "Media, Culture, and Society",
+          "type": "PLAIN_COURSE",
+          "subject": "MSCR",
+          "classId": 1220
+        },
+        {
+          "hour": 4,
+          "description": "Media and Social Change",
+          "type": "PLAIN_COURSE",
+          "subject": "MSCR",
+          "classId": 1320
+        },
+        {
+          "hour": 0,
+          "description": "Media History",
+          "type": "OR_COURSE",
+          "subject": "MSCR",
+          "classId": 1420
+        },
+        {
+          "hour": 0,
+          "description": "Foundation Course",
+          "type": "HEADER"
+        },
+        {
+          "hour": 4,
+          "description": "Complete one of the following:",
+          "type": "SECTION_INFO",
+          "parsedCount": 1
+        },
+        {
+          "hour": 0,
+          "description": "Introduction to Film Production",
+          "type": "PLAIN_COURSE",
+          "subject": "MSCR",
+          "classId": 1230
+        },
+        {
+          "hour": 0,
+          "description": "Understanding Media",
+          "type": "PLAIN_COURSE",
+          "subject": "MSCR",
+          "classId": 2220
+        },
+        {
+          "hour": 0,
+          "description": "Diversity or Globalization Course",
+          "type": "HEADER"
+        },
+        {
+          "hour": 4,
+          "description": "Complete one of the following:",
+          "type": "SECTION_INFO",
+          "parsedCount": 1
+        },
+        {
+          "hour": 0,
+          "description": "Gender and Film",
+          "type": "PLAIN_COURSE",
+          "subject": "MSCR",
+          "classId": 3392
+        },
+        {
+          "hour": 0,
+          "description": "Global Media",
+          "type": "PLAIN_COURSE",
+          "subject": "MSCR",
+          "classId": 2325
+        },
+        {
+          "hour": 0,
+          "description": "Digital Feminisms",
+          "type": "PLAIN_COURSE",
+          "subject": "MSCR",
+          "classId": 2505
+        },
+        {
+          "hour": 0,
+          "description": "Media and Identity",
+          "type": "PLAIN_COURSE",
+          "subject": "MSCR",
+          "classId": 3437
+        },
+        {
+          "hour": 0,
+          "description": "Writing-Intensive",
+          "type": "HEADER"
+        },
+        {
+          "type": "X_OF_MANY",
+          "description": "Complete two of the following:",
+          "hour": 8
+        },
+        {
+          "hour": 0,
+          "description": "Digital Feminisms",
+          "type": "PLAIN_COURSE",
+          "subject": "MSCR",
+          "classId": 2505
+        },
+        {
+          "hour": 0,
+          "description": "Film Theory",
+          "type": "PLAIN_COURSE",
+          "subject": "MSCR",
+          "classId": 3600
+        },
+        {
+          "hour": 0,
+          "description": "Digital Media Culture",
+          "type": "PLAIN_COURSE",
+          "subject": "MSCR",
+          "classId": 3420
+        },
+        {
+          "hour": 0,
+          "description": "Media Audiences",
+          "type": "PLAIN_COURSE",
+          "subject": "MSCR",
+          "classId": 3422
+        },
+        {
+          "hour": 0,
+          "description": "Queer Media",
+          "type": "PLAIN_COURSE",
+          "subject": "MSCR",
+          "classId": 3700
+        },
+        {
+          "hour": 0,
+          "description": "TV History",
+          "type": "PLAIN_COURSE",
+          "subject": "MSCR",
+          "classId": 4208
+        }
+      ],
+      "type": "PRIMARY"
+    },
+    {
+      "description": "Media and Screen Studies Electives",
+      "entries": [
+        {
+          "hour": 12,
+          "description": "Complete three courses from MSCR or from the\n                        following:",
+          "type": "COMMENT"
+        },
+        {
+          "hour": 0,
+          "description": "Video Basics",
+          "type": "PLAIN_COURSE",
+          "subject": "ARTD",
+          "classId": 2380
+        },
+        {
+          "hour": 0,
+          "description": "Video: Sound and Image",
+          "type": "PLAIN_COURSE",
+          "subject": "ARTD",
+          "classId": 3480
+        },
+        {
+          "hour": 0,
+          "description": "Experimental Video",
+          "type": "PLAIN_COURSE",
+          "subject": "ARTD",
+          "classId": 3485
+        },
+        {
+          "hour": 0,
+          "description": "Sound Production for Digital Media",
+          "type": "PLAIN_COURSE",
+          "subject": "COMM",
+          "classId": 1450
+        },
+        {
+          "hour": 0,
+          "description": "Television Field Production",
+          "type": "PLAIN_COURSE",
+          "subject": "COMM",
+          "classId": 2550
+        },
+        {
+          "hour": 0,
+          "description": "Television Studio Production",
+          "type": "PLAIN_COURSE",
+          "subject": "COMM",
+          "classId": 2655
+        },
+        {
+          "hour": 0,
+          "description": "Digital Editing for TV",
+          "type": "PLAIN_COURSE",
+          "subject": "COMM",
+          "classId": 3655
+        },
+        {
+          "hour": 0,
+          "description": "Special Effects and Postproduction for Television",
+          "type": "PLAIN_COURSE",
+          "subject": "COMM",
+          "classId": 3750
+        },
+        {
+          "hour": 0,
+          "description": "Production Capstone",
+          "type": "PLAIN_COURSE",
+          "subject": "COMM",
+          "classId": 4755
+        }
+      ],
+      "type": "PRIMARY"
+    },
+    {
+      "description": "History Requirements",
+      "entries": [
+        {
+          "hour": 0,
+          "description": "History Colloquium",
+          "type": "HEADER"
+        },
+        {
+          "hour": 1,
+          "description": "Historical Research and Writing",
+          "type": "PLAIN_COURSE",
+          "subject": "HIST",
+          "classId": 1200
+        },
+        {
+          "hour": 4,
+          "description": "First-Year Seminar",
+          "type": "PLAIN_COURSE",
+          "subject": "HIST",
+          "classId": 1201
+        },
+        {
+          "hour": 0,
+          "description": "Introductory-Level Course",
+          "type": "HEADER"
+        },
+        {
+          "hour": 4,
+          "description": "Complete one course in the following range, not used to\n                        fulfill another requirement:",
+          "type": "COMMENT"
+        },
+        {
+          "hour": 0,
+          "subject": "HIST",
+          "classIdStart": 1001,
+          "classIdEnd": 1999,
+          "type": "RANGE_BOUNDED"
+        },
+        {
+          "hour": 0,
+          "description": "History Seminar and Historical Writing",
+          "type": "HEADER"
+        },
+        {
+          "hour": 4,
+          "description": "The History Seminar",
+          "type": "PLAIN_COURSE",
+          "subject": "HIST",
+          "classId": 2301
+        },
+        {
+          "hour": 1,
+          "description": "Historical Writing",
+          "type": "PLAIN_COURSE",
+          "subject": "HIST",
+          "classId": 2302
+        },
+        {
+          "hour": 0,
+          "description": "Pre-1800 History Elective",
+          "type": "HEADER"
+        },
+        {
+          "type": "X_OF_MANY",
+          "description": "Complete one course from the following:",
+          "hour": 4
+        },
+        {
+          "hour": 0,
+          "description": "Introduction to Latin American History",
+          "type": "PLAIN_COURSE",
+          "subject": "HIST",
+          "classId": 1187
+        },
+        {
+          "hour": 0,
+          "description": "Pirates, Planters, and Patriots: Making the Americas,\n                      1492–1804",
+          "type": "PLAIN_COURSE",
+          "subject": "HIST",
+          "classId": 1218
+        },
+        {
+          "hour": 0,
+          "description": "Japanese Literature and Culture",
+          "type": "PLAIN_COURSE",
+          "subject": "HIST",
+          "classId": 1252
+        },
+        {
+          "hour": 0,
+          "description": "Europe in the Middle Ages, 500–1500",
+          "type": "PLAIN_COURSE",
+          "subject": "HIST",
+          "classId": 1272
+        },
+        {
+          "hour": 0,
+          "description": "Introduction to Russian Civilization",
+          "type": "PLAIN_COURSE",
+          "subject": "HIST",
+          "classId": 1285
+        },
+        {
+          "hour": 0,
+          "description": "Colonial and Revolutionary America",
+          "type": "PLAIN_COURSE",
+          "subject": "HIST",
+          "classId": 2330
+        },
+        {
+          "hour": 0,
+          "description": "Renaissance to Enlightenment",
+          "type": "PLAIN_COURSE",
+          "subject": "HIST",
+          "classId": 2370
+        },
+        {
+          "hour": 0,
+          "description": "Intermediate/Advanced History Cluster",
+          "type": "HEADER"
+        },
+        {
+          "type": "X_OF_MANY",
+          "description": "Complete three courses in the following range:",
+          "hour": 12
+        },
+        {
+          "hour": 0,
+          "subject": "HIST",
+          "classIdStart": 2303,
+          "classIdEnd": 5999,
+          "type": "RANGE_BOUNDED"
+        },
+        {
+          "hour": 0,
+          "description": "Advanced History",
+          "type": "HEADER"
+        },
+        {
+          "type": "X_OF_MANY",
+          "description": "Complete one course in the following range:",
+          "hour": 4
+        },
+        {
+          "hour": 0,
+          "subject": "HIST",
+          "classIdStart": 3000,
+          "classIdEnd": 5999,
+          "type": "RANGE_BOUNDED"
+        },
+        {
+          "hour": 0,
+          "description": "Capstone",
+          "type": "HEADER"
+        },
+        {
+          "hour": 0,
+          "description": "Capstone Seminar",
+          "type": "PLAIN_COURSE",
+          "subject": "HIST",
+          "classId": 4701
+        }
+      ],
+      "type": "PRIMARY"
+    },
+    {
+      "description": "Integrative Requirement",
+      "entries": [
+        {
+          "hour": 4,
+          "description": "History of Information in the United States: Media,\n                      Technology, Law",
+          "type": "PLAIN_COURSE",
+          "subject": "HIST",
+          "classId": 1357
+        }
+      ],
+      "type": "PRIMARY"
+    }
+  ],
+  "programRequiredHours": 130
+}

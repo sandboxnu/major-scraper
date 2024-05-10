@@ -224,9 +224,6 @@ const tokenizeSections = async (
       parseText($(element).prev()).includes("concentration")
     ) {
       const links = constructNestedLinks($, element);
-      if (links.length === 0) {
-        return courseList;
-      }
 
       // get all the concentration locally instead of fetching
       // them from the catalog by mapping the url path (in this case called link)
@@ -378,6 +375,14 @@ const getRowType = ($: CheerioStatic, tr: CheerioElement, tds: Cheerio[]) => {
 
   return HRowType.COMMENT;
 };
+
+export function isXOM(text: string): boolean {
+  const match =
+    text.toLowerCase().match(XOM_REGEX_CREDITS) ||
+    text.toLowerCase().match(XOM_REGEX_NUMBER);
+
+  return match !== null && match.length > 0;
+}
 
 /**
  * Converts a single row based on the passed-in type (determined by {@link getRowType}
