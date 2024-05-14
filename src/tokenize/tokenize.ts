@@ -345,6 +345,10 @@ const getRowType = (
   }
 
   if (trClasses.has("subheader")) {
+    const isSubSubHeader = $(tr).find("span").hasClass("commentindent");
+    if (isSubSubHeader) {
+      return HRowType.SUBSUBHEADER;
+    }
     return HRowType.SUBHEADER;
   } else if (trClasses.has("areaheader")) {
     return HRowType.HEADER;
@@ -405,6 +409,7 @@ const constructRow = (
   switch (type) {
     case HRowType.HEADER:
     case HRowType.SUBHEADER:
+    case HRowType.SUBSUBHEADER:
     case HRowType.COMMENT:
       return constructTextRow($, tds, type);
     case HRowType.OR_COURSE:
