@@ -6,8 +6,11 @@ import {
   CHEMICAL_ENG_2022,
   CS_BSCS_2022,
   CS_BUSINESS_ADMIN_2022,
+  CS_ENGLISH_2023,
   CS_HISTORY_2022,
   CS_MATH_2022,
+  CS_MUSIC_2023,
+  HUMAN_SERVICE_INTER_AFFAIRS_2023,
   MEDIA_SCREEN_STUDIES_HISTORY_2022,
   PHARM_SCI_2022,
   PHYSICS_2022,
@@ -77,6 +80,23 @@ describe("Tokenize Phase: 2022 snapshots", () => {
       expect(await get(formatRawPath(PHARM_SCI_2022))).toBeGreaterThan(0);
     });
   });
+});
+
+describe("Tokenize Phase: 2023 snapshots", () => {
+  testTokenize(
+    "CS and Music (section info phrasing in middle of a section)",
+    CS_MUSIC_2023,
+  );
+
+  testTokenize(
+    "CS and English (subsubsection aka subsection with indentation)",
+    CS_ENGLISH_2023,
+  );
+
+  testTokenize(
+    "Human Service and International Affairs (separated section info and course tables)",
+    HUMAN_SERVICE_INTER_AFFAIRS_2023,
+  );
 });
 
 describe("Tokenize Phase: utils", () => {

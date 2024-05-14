@@ -247,10 +247,9 @@
           ]
         },
         {
-          "hour": 4,
+          "type": "X_OF_MANY",
           "description": "Complete one of the following:",
-          "type": "SECTION_INFO",
-          "parsedCount": 1
+          "hour": 4
         },
         {
           "hour": 0,
@@ -390,10 +389,9 @@
           ]
         },
         {
-          "hour": 4,
+          "type": "X_OF_MANY",
           "description": "Complete one of the following:",
-          "type": "SECTION_INFO",
-          "parsedCount": 1
+          "hour": 4
         },
         {
           "hour": 0,

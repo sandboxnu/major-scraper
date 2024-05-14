@@ -201,7 +201,7 @@ const tokenizeSections = async (
   for (const element of requirementsContainer.children().toArray()) {
     if (element.name === "h2" || element.name === "h3") {
       // element is h2 or h3 means it's a header text
-      descriptions.push(parseText($(element)));
+        descriptions.push(parseText($(element)));
     } else if (
       element.name === "table" &&
       element.attribs["class"] === "sc_courselist"
@@ -279,7 +279,6 @@ const tokenizeSections = async (
  * @param element
  */
 const constructNestedLinks = ($: CheerioStatic, element: CheerioElement) => {
-  // TODO: add support to non-current catalogs
   return (
     $(element)
       .find("li > a")
@@ -301,10 +300,10 @@ const constructNestedLinks = ($: CheerioStatic, element: CheerioElement) => {
 const tokenizeRows = ($: CheerioStatic, table: CheerioElement): HRow[] => {
   const courseTable: HRow[] = [];
 
-  for (const tr of $(table).find("tbody > tr").toArray()) {
+  for (const [index, tr] of $(table).find("tbody > tr").toArray().entries()) {
     // different row type
     const tds = $(tr).find("td").toArray().map($);
-    const type = getRowType($, tr, tds);
+    const type = getRowType($, tr, tds, index, courseTable);
     const row = constructRow($, tds, type);
     courseTable.push(row);
   }
@@ -314,12 +313,14 @@ const tokenizeRows = ($: CheerioStatic, table: CheerioElement): HRow[] => {
 
 /**
  * Pre-parses the row to determine its type
- *
- * @param $
- * @param tr
- * @param tds
  */
-const getRowType = ($: CheerioStatic, tr: CheerioElement, tds: Cheerio[]) => {
+const getRowType = (
+  $: CheerioStatic,
+  tr: CheerioElement,
+  tds: Cheerio[],
+  rowIndex: number,
+  courseTable: HRow[],
+) => {
   const trClasses = new Set(tr.attribs["class"]?.split(" "));
   const td = ensureAtLeastLength(tds, 1)[0];
   const tdClasses = new Set(td.attr("class")?.split(" "));
@@ -362,14 +363,19 @@ const getRowType = ($: CheerioStatic, tr: CheerioElement, tds: Cheerio[]) => {
     return HRowType.RANGE_UNBOUNDED;
   }
 
-  if (sectionInfoAll.includes(tdText.toLowerCase())) {
+  // section info should always be after the header
+  // or be the first token in the list of entries
+  const isSectionInfoPosition =
+    rowIndex == 0 ||
+    courseTable[rowIndex - 1]!.type === HRowType.HEADER ||
+    courseTable[rowIndex - 1]!.type === HRowType.SUBHEADER ||
+    courseTable[rowIndex - 1]!.type === HRowType.SUBSUBHEADER;
+
+  if (isSectionInfoPosition && sectionInfoAll.includes(tdText.toLowerCase())) {
     return HRowType.SECTION_INFO;
   }
 
-  if (
-    tdText.toLowerCase().match(XOM_REGEX_CREDITS) ||
-    tdText.toLowerCase().match(XOM_REGEX_NUMBER)
-  ) {
+  if (isXOM(tdText)) {
     return HRowType.X_OF_MANY;
   }
 

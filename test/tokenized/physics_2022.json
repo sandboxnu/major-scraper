@@ -433,7 +433,7 @@
         {
           "hour": 0,
           "description": "The following courses may be counted toward major\n                            electives, if they are listed as applicable options\n                            in the approved curriculum:",
-          "type": "SUBHEADER"
+          "type": "SUBSUBHEADER"
         },
         {
           "hour": 4,

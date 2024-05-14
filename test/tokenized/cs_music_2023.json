@@ -1,0 +1,691 @@
+{
+  "sections": [
+    {
+      "description": "Computer Science Courses",
+      "entries": [
+        {
+          "hour": 0,
+          "description": "Computer Science Overview",
+          "type": "HEADER"
+        },
+        {
+          "hour": 0,
+          "description": "Must be taken in alignment with your home\n                        college:",
+          "type": "COMMENT"
+        },
+        {
+          "hour": 1,
+          "description": "First Year Seminar",
+          "type": "PLAIN_COURSE",
+          "subject": "CS",
+          "classId": 1200
+        },
+        {
+          "hour": 0,
+          "description": "Music at Northeastern",
+          "type": "OR_COURSE",
+          "subject": "MUSC",
+          "classId": 1000
+        },
+        {
+          "hour": 1,
+          "description": "Professional Development for Khoury Co-op",
+          "type": "PLAIN_COURSE",
+          "subject": "CS",
+          "classId": 1210
+        },
+        {
+          "hour": 0,
+          "description": "Professional Development for Co-op",
+          "type": "OR_COURSE",
+          "subject": "EEAM",
+          "classId": 2000
+        },
+        {
+          "hour": 0,
+          "description": "Computer Science Fundamental Courses",
+          "type": "HEADER"
+        },
+        {
+          "hour": 5,
+          "type": "AND_COURSE",
+          "description": "Discrete Structures and Seminar for CS 1800",
+          "courses": [
+            {
+              "subject": "CS",
+              "classId": 1800,
+              "description": "Discrete Structures"
+            },
+            {
+              "subject": "CS",
+              "classId": 1802,
+              "description": "Seminar for CS 1800"
+            }
+          ]
+        },
+        {
+          "hour": 5,
+          "type": "AND_COURSE",
+          "description": "Fundamentals of Computer Science 1 and Lab for CS 2500",
+          "courses": [
+            {
+              "subject": "CS",
+              "classId": 2500,
+              "description": "Fundamentals of Computer Science 1"
+            },
+            {
+              "subject": "CS",
+              "classId": 2501,
+              "description": "Lab for CS 2500"
+            }
+          ]
+        },
+        {
+          "hour": 5,
+          "type": "AND_COURSE",
+          "description": "Fundamentals of Computer Science 2 and Lab for CS 2510",
+          "courses": [
+            {
+              "subject": "CS",
+              "classId": 2510,
+              "description": "Fundamentals of Computer Science 2"
+            },
+            {
+              "subject": "CS",
+              "classId": 2511,
+              "description": "Lab for CS 2510"
+            }
+          ]
+        },
+        {
+          "hour": 0,
+          "description": "Computer Science Required Courses",
+          "type": "HEADER"
+        },
+        {
+          "hour": 4,
+          "description": "Algorithms and Data",
+          "type": "PLAIN_COURSE",
+          "subject": "CS",
+          "classId": 3000
+        },
+        {
+          "hour": 4,
+          "description": "Database Design",
+          "type": "PLAIN_COURSE",
+          "subject": "CS",
+          "classId": 3200
+        },
+        {
+          "hour": 5,
+          "type": "AND_COURSE",
+          "description": "Object-Oriented Design and Lab for CS 3500",
+          "courses": [
+            {
+              "subject": "CS",
+              "classId": 3500,
+              "description": "Object-Oriented Design"
+            },
+            {
+              "subject": "CS",
+              "classId": 3501,
+              "description": "Lab for CS 3500"
+            }
+          ]
+        },
+        {
+          "hour": 4,
+          "description": "Software Development",
+          "type": "PLAIN_COURSE",
+          "subject": "CS",
+          "classId": 4500
+        },
+        {
+          "hour": 0,
+          "description": "Fundamentals of Software Engineering",
+          "type": "OR_COURSE",
+          "subject": "CS",
+          "classId": 4530
+        },
+        {
+          "hour": 4,
+          "description": "Human Computer Interaction (Integrative)",
+          "type": "PLAIN_COURSE",
+          "subject": "IS",
+          "classId": 4300
+        },
+        {
+          "hour": 0,
+          "description": "Khoury Elective",
+          "type": "HEADER"
+        },
+        {
+          "hour": 0,
+          "description": "With advisor approval, directed study, research,\n                        project study, and appropriate graduate-level courses\n                        may also be taken as upper-division electives.",
+          "type": "COMMENT"
+        },
+        {
+          "hour": 8,
+          "description": "Complete 8 semester hours of CS, CY, DS or IS classes\n                        that are not already required. Choose courses within the\n                        following ranges:",
+          "type": "COMMENT"
+        },
+        {
+          "hour": 0,
+          "description": "CS 2500\n                          or higher, except\n                          CS 5010",
+          "type": "COMMENT"
+        },
+        {
+          "type": "RANGE_LOWER_BOUNDED_WITH_EXCEPTIONS",
+          "hour": 0,
+          "subject": "CY",
+          "classIdStart": 2000,
+          "exceptions": [
+            {
+              "subject": "CY",
+              "classId": 4930
+            }
+          ]
+        },
+        {
+          "hour": 0,
+          "description": "DS 2500\n                          or higher, except DS 4900",
+          "type": "COMMENT"
+        },
+        {
+          "hour": 0,
+          "description": "IS 2000\n                          or higher, except IS 4900",
+          "type": "COMMENT"
+        }
+      ],
+      "type": "PRIMARY"
+    },
+    {
+      "description": "Music Courses",
+      "entries": [
+        {
+          "hour": 0,
+          "description": "Music Theory and Composition",
+          "type": "HEADER"
+        },
+        {
+          "hour": 4,
+          "description": "Music Theory 1",
+          "type": "PLAIN_COURSE",
+          "subject": "MUSC",
+          "classId": 1201
+        },
+        {
+          "hour": 4,
+          "description": "Music Theory 2",
+          "type": "PLAIN_COURSE",
+          "subject": "MUSC",
+          "classId": 1202
+        },
+        {
+          "type": "X_OF_MANY",
+          "description": "Complete one of the following:",
+          "hour": 4
+        },
+        {
+          "hour": 0,
+          "description": "Algebra and Geometry of Music",
+          "type": "PLAIN_COURSE",
+          "subject": "MUSC",
+          "classId": 2111
+        },
+        {
+          "hour": 0,
+          "description": "Music Perception and Cognition (Music Perception and\n                      Cognition)",
+          "type": "PLAIN_COURSE",
+          "subject": "MUSC",
+          "classId": 3300
+        },
+        {
+          "hour": 0,
+          "description": "Music Analysis Seminar",
+          "type": "PLAIN_COURSE",
+          "subject": "MUSC",
+          "classId": 3541
+        },
+        {
+          "hour": 0,
+          "description": "Music in Context",
+          "type": "HEADER"
+        },
+        {
+          "hour": 4,
+          "description": "Select one of the following for four semester\n                        hours:",
+          "type": "COMMENT"
+        },
+        {
+          "hour": 0,
+          "description": "Music in Everyday Life",
+          "type": "PLAIN_COURSE",
+          "subject": "MUSC",
+          "classId": 1001
+        },
+        {
+          "hour": 0,
+          "type": "AND_COURSE",
+          "description": "Music in Everyday Life and Lab for MUSC 1002",
+          "courses": [
+            {
+              "subject": "MUSC",
+              "classId": 1002,
+              "description": "Music in Everyday Life"
+            },
+            {
+              "subject": "MUSC",
+              "classId": 1003,
+              "description": "Lab for MUSC 1002"
+            }
+          ]
+        },
+        {
+          "hour": 0,
+          "description": "Contemporary / Popular Music",
+          "type": "HEADER"
+        },
+        {
+          "hour": 4,
+          "description": "Complete one of the following:",
+          "type": "SECTION_INFO",
+          "parsedCount": 1
+        },
+        {
+          "hour": 0,
+          "description": "Black Popular Music",
+          "type": "PLAIN_COURSE",
+          "subject": "MUSC",
+          "classId": 2101
+        },
+        {
+          "hour": 0,
+          "description": "Making a Musical: Analysis, Craft, and Creation",
+          "type": "PLAIN_COURSE",
+          "subject": "MUSC",
+          "classId": 2150
+        },
+        {
+          "hour": 0,
+          "description": "Popular Music Since 1945",
+          "type": "PLAIN_COURSE",
+          "subject": "MUSC",
+          "classId": 2310
+        },
+        {
+          "hour": 0,
+          "description": "Topics in American Music",
+          "type": "PLAIN_COURSE",
+          "subject": "MUSC",
+          "classId": 2311
+        },
+        {
+          "hour": 0,
+          "description": "Punk Rock",
+          "type": "PLAIN_COURSE",
+          "subject": "MUSC",
+          "classId": 2317
+        },
+        {
+          "hour": 0,
+          "description": "40,000 Years of Music Technology",
+          "type": "PLAIN_COURSE",
+          "subject": "MUSC",
+          "classId": 2320
+        },
+        {
+          "hour": 0,
+          "description": "The Festival Experience",
+          "type": "PLAIN_COURSE",
+          "subject": "MUSC",
+          "classId": 2336
+        },
+        {
+          "hour": 0,
+          "description": "Divas, DJs, and Double Standards",
+          "type": "PLAIN_COURSE",
+          "subject": "MUSC",
+          "classId": 2340
+        },
+        {
+          "hour": 0,
+          "description": "Music, Sound, and the Screen",
+          "type": "PLAIN_COURSE",
+          "subject": "MUSC",
+          "classId": 2351
+        },
+        {
+          "hour": 0,
+          "description": "The World of Choral Music",
+          "type": "PLAIN_COURSE",
+          "subject": "MUSC",
+          "classId": 2380
+        },
+        {
+          "hour": 0,
+          "description": "Sounding Human",
+          "type": "PLAIN_COURSE",
+          "subject": "MUSC",
+          "classId": 3352
+        },
+        {
+          "hour": 0,
+          "description": "Music and the Racial Imagination",
+          "type": "PLAIN_COURSE",
+          "subject": "MUSC",
+          "classId": 3353
+        },
+        {
+          "hour": 0,
+          "description": "Sound and the Sacred",
+          "type": "PLAIN_COURSE",
+          "subject": "MUSC",
+          "classId": 3354
+        },
+        {
+          "hour": 0,
+          "description": "Global Music Industries in Context",
+          "type": "PLAIN_COURSE",
+          "subject": "MUSI",
+          "classId": 3360
+        },
+        {
+          "hour": 0,
+          "description": "Hip Hop in the Music Industry",
+          "type": "PLAIN_COURSE",
+          "subject": "MUSI",
+          "classId": 3401
+        },
+        {
+          "hour": 0,
+          "description": "Music Technology",
+          "type": "HEADER"
+        },
+        {
+          "hour": 4,
+          "description": "Acoustics and Psychoacoustics of Music",
+          "type": "PLAIN_COURSE",
+          "subject": "MUSC",
+          "classId": 2350
+        },
+        {
+          "hour": 4,
+          "description": "Introduction to Music Technology",
+          "type": "PLAIN_COURSE",
+          "subject": "MUST",
+          "classId": 1220
+        },
+        {
+          "hour": 4,
+          "description": "Composing with Digital Technologies",
+          "type": "PLAIN_COURSE",
+          "subject": "MUST",
+          "classId": 2102
+        },
+        {
+          "hour": 4,
+          "description": "Computer Music Fundamentals",
+          "type": "PLAIN_COURSE",
+          "subject": "MUST",
+          "classId": 2431
+        },
+        {
+          "hour": 0,
+          "description": "Music Industry",
+          "type": "HEADER"
+        },
+        {
+          "hour": 4,
+          "description": "Complete one of the following:",
+          "type": "SECTION_INFO",
+          "parsedCount": 1
+        },
+        {
+          "hour": 0,
+          "description": "Introduction to Music Industry",
+          "type": "PLAIN_COURSE",
+          "subject": "MUSI",
+          "classId": 1230
+        },
+        {
+          "hour": 0,
+          "description": "Music Recording 2",
+          "type": "PLAIN_COURSE",
+          "subject": "MUSI",
+          "classId": 2331
+        },
+        {
+          "hour": 0,
+          "description": "Music Technology Electives",
+          "type": "HEADER"
+        },
+        {
+          "type": "X_OF_MANY",
+          "description": "Complete two of the following:",
+          "hour": 8
+        },
+        {
+          "hour": 0,
+          "description": "Music and the Brain Research",
+          "type": "PLAIN_COURSE",
+          "subject": "MUSC",
+          "classId": 4510
+        },
+        {
+          "hour": 0,
+          "description": "Special Topics in Music Technology",
+          "type": "PLAIN_COURSE",
+          "subject": "MUST",
+          "classId": 3540
+        },
+        {
+          "hour": 0,
+          "description": "Digital Audio Signal Processing",
+          "type": "PLAIN_COURSE",
+          "subject": "MUST",
+          "classId": 3601
+        },
+        {
+          "hour": 0,
+          "description": "Electronics for Music",
+          "type": "PLAIN_COURSE",
+          "subject": "MUST",
+          "classId": 3602
+        },
+        {
+          "hour": 0,
+          "description": "Embedded Audio Programming",
+          "type": "PLAIN_COURSE",
+          "subject": "MUST",
+          "classId": 3603
+        },
+        {
+          "hour": 0,
+          "description": "Composition for Electronic Instruments",
+          "type": "PLAIN_COURSE",
+          "subject": "MUST",
+          "classId": 4610
+        },
+        {
+          "hour": 0,
+          "description": "Music Technology Capstone",
+          "type": "HEADER"
+        },
+        {
+          "hour": 4,
+          "description": "Music Technology Capstone/Senior Recital",
+          "type": "PLAIN_COURSE",
+          "subject": "MUST",
+          "classId": 4611
+        }
+      ],
+      "type": "PRIMARY"
+    },
+    {
+      "description": "Foundations of Psychology",
+      "entries": [
+        {
+          "hour": 4,
+          "description": "Foundations of Psychology",
+          "type": "PLAIN_COURSE",
+          "subject": "PSYC",
+          "classId": 1101
+        }
+      ],
+      "type": "PRIMARY"
+    },
+    {
+      "description": "Computing and Social Issues",
+      "entries": [
+        {
+          "hour": 4,
+          "description": "Complete one of the following:",
+          "type": "SECTION_INFO",
+          "parsedCount": 1
+        },
+        {
+          "hour": 0,
+          "description": "Issues in Race, Science, and Technology",
+          "type": "PLAIN_COURSE",
+          "subject": "AFAM",
+          "classId": 2600
+        },
+        {
+          "hour": 0,
+          "description": "The Law, Ethics, and Policy of Data and Digital\n                      Technologies",
+          "type": "PLAIN_COURSE",
+          "subject": "CY",
+          "classId": 4170
+        },
+        {
+          "hour": 0,
+          "description": "Cyberlaw: Privacy, Ethics, and Digital Rights",
+          "type": "PLAIN_COURSE",
+          "subject": "CY",
+          "classId": 5240
+        },
+        {
+          "hour": 0,
+          "description": "Literature and Digital Diversity",
+          "type": "PLAIN_COURSE",
+          "subject": "ENGL",
+          "classId": 2150
+        },
+        {
+          "hour": 0,
+          "description": "History of Technology",
+          "type": "PLAIN_COURSE",
+          "subject": "HIST",
+          "classId": 2220
+        },
+        {
+          "hour": 0,
+          "description": "Bostonography: The City through Data, Texts, Maps, and\n                      Networks",
+          "type": "PLAIN_COURSE",
+          "subject": "INSH",
+          "classId": 2102
+        },
+        {
+          "hour": 0,
+          "description": "Knowledge in a Digital World",
+          "type": "PLAIN_COURSE",
+          "subject": "IS",
+          "classId": 1300
+        },
+        {
+          "hour": 0,
+          "description": "Knowledge in a Digital World",
+          "type": "OR_COURSE",
+          "subject": "PHIL",
+          "classId": 1300
+        },
+        {
+          "hour": 0,
+          "description": "Technology and Human Values",
+          "type": "PLAIN_COURSE",
+          "subject": "PHIL",
+          "classId": 1145
+        },
+        {
+          "hour": 0,
+          "description": "The Twenty-First-Century Workplace",
+          "type": "PLAIN_COURSE",
+          "subject": "SOCL",
+          "classId": 1280
+        },
+        {
+          "hour": 0,
+          "description": "Environment, Technology, and Society",
+          "type": "PLAIN_COURSE",
+          "subject": "SOCL",
+          "classId": 2485
+        },
+        {
+          "hour": 0,
+          "description": "Computers and Society",
+          "type": "PLAIN_COURSE",
+          "subject": "SOCL",
+          "classId": 4528
+        }
+      ],
+      "type": "PRIMARY"
+    },
+    {
+      "description": "Computer Science Writing Requirement",
+      "entries": [
+        {
+          "hour": 0,
+          "description": "College Writing",
+          "type": "HEADER"
+        },
+        {
+          "hour": 4,
+          "description": "First-Year Writing",
+          "type": "PLAIN_COURSE",
+          "subject": "ENGW",
+          "classId": 1111
+        },
+        {
+          "hour": 0,
+          "description": "Advanced Writing in the Disciplines",
+          "type": "HEADER"
+        },
+        {
+          "hour": 4,
+          "description": "Advanced Writing in the Technical Professions",
+          "type": "PLAIN_COURSE",
+          "subject": "ENGW",
+          "classId": 3302
+        },
+        {
+          "hour": 0,
+          "description": "Advanced Writing in the Arts, Media, and Design",
+          "type": "OR_COURSE",
+          "subject": "ENGW",
+          "classId": 3314
+        },
+        {
+          "hour": 0,
+          "description": "Interdisciplinary Advanced Writing in the Disciplines",
+          "type": "OR_COURSE",
+          "subject": "ENGW",
+          "classId": 3315
+        }
+      ],
+      "type": "PRIMARY"
+    },
+    {
+      "description": "Required General Electives",
+      "entries": [
+        {
+          "hour": 20,
+          "description": "Complete 20 semester hours of general electives.",
+          "type": "COMMENT"
+        }
+      ],
+      "type": "PRIMARY"
+    }
+  ],
+  "programRequiredHours": 133
+}

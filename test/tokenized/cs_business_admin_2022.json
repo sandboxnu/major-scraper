@@ -378,13 +378,7 @@
           "type": "PLAIN_COURSE",
           "subject": "ACCT",
           "classId": 5220
-        }
-      ],
-      "type": "CONCENTRATION"
-    },
-    {
-      "description": "",
-      "entries": [
+        },
         {
           "hour": 0,
           "description": "Elective",
@@ -411,7 +405,7 @@
           "classId": 4414
         }
       ],
-      "type": "PRIMARY"
+      "type": "CONCENTRATION"
     },
     {
       "description": "Concentration in Brand Management",
@@ -662,7 +656,7 @@
         {
           "hour": 0,
           "description": "Additional Electives",
-          "type": "SUBHEADER"
+          "type": "SUBSUBHEADER"
         },
         {
           "hour": 0,
@@ -791,7 +785,7 @@
         {
           "hour": 0,
           "description": "Additional Electives",
-          "type": "SUBHEADER"
+          "type": "SUBSUBHEADER"
         },
         {
           "hour": 0,
@@ -906,7 +900,7 @@
         {
           "hour": 0,
           "description": "Additional Electives",
-          "type": "SUBHEADER"
+          "type": "SUBSUBHEADER"
         },
         {
           "hour": 0,
@@ -1498,7 +1492,7 @@
         {
           "hour": 0,
           "description": "Managing Internationally",
-          "type": "SUBHEADER"
+          "type": "SUBSUBHEADER"
         },
         {
           "hour": 0,
@@ -1531,7 +1525,7 @@
         {
           "hour": 0,
           "description": "International Functional Knowledge",
-          "type": "SUBHEADER"
+          "type": "SUBSUBHEADER"
         },
         {
           "hour": 0,

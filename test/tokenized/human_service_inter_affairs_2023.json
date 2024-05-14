@@ -1,0 +1,1408 @@
+{
+  "sections": [
+    {
+      "description": "Human Services Requirements",
+      "entries": [
+        {
+          "hour": 0,
+          "description": "Required Courses",
+          "type": "HEADER"
+        },
+        {
+          "hour": 4,
+          "description": "Social Change and Human Services",
+          "type": "PLAIN_COURSE",
+          "subject": "HUSV",
+          "classId": 1101
+        },
+        {
+          "hour": 4,
+          "description": "Counseling in Human Services",
+          "type": "PLAIN_COURSE",
+          "subject": "HUSV",
+          "classId": 2300
+        },
+        {
+          "hour": 4,
+          "description": "Research Methods for Human Services",
+          "type": "PLAIN_COURSE",
+          "subject": "HUSV",
+          "classId": 2970
+        },
+        {
+          "hour": 0,
+          "description": "Research Methods in International Affairs",
+          "type": "OR_COURSE",
+          "subject": "INTL",
+          "classId": 2718
+        },
+        {
+          "hour": 0,
+          "description": "Research Methods in the Social Sciences",
+          "type": "OR_COURSE",
+          "subject": "INSH",
+          "classId": 3101
+        },
+        {
+          "hour": 4,
+          "description": "The Nonprofit Sector, Philanthropy, and Social Change",
+          "type": "PLAIN_COURSE",
+          "subject": "HUSV",
+          "classId": 3570
+        },
+        {
+          "hour": 4,
+          "description": "Social Policy",
+          "type": "PLAIN_COURSE",
+          "subject": "HUSV",
+          "classId": 3900
+        },
+        {
+          "hour": 6,
+          "description": "Human Services Internship",
+          "type": "PLAIN_COURSE",
+          "subject": "HUSV",
+          "classId": 4994
+        },
+        {
+          "hour": 0,
+          "description": "Human Services Electives",
+          "type": "HEADER"
+        },
+        {
+          "hour": 12,
+          "description": "Complete three HUSV courses.",
+          "type": "COMMENT"
+        }
+      ],
+      "type": "PRIMARY"
+    },
+    {
+      "description": "International Affairs Requirements",
+      "entries": [
+        {
+          "hour": 0,
+          "description": "Required Courses",
+          "type": "HEADER"
+        },
+        {
+          "hour": 4,
+          "description": "Principles of Macroeconomics",
+          "type": "PLAIN_COURSE",
+          "subject": "ECON",
+          "classId": 1115
+        },
+        {
+          "hour": 0,
+          "description": "Principles of Microeconomics",
+          "type": "OR_COURSE",
+          "subject": "ECON",
+          "classId": 1116
+        },
+        {
+          "hour": 0,
+          "description": "The World Since 1945",
+          "type": "OR_COURSE",
+          "subject": "HIST",
+          "classId": 2211
+        },
+        {
+          "hour": 0,
+          "description": "Colonialism/Imperialism",
+          "type": "OR_COURSE",
+          "subject": "HIST",
+          "classId": 2311
+        },
+        {
+          "hour": 4,
+          "description": "Globalization and International Affairs",
+          "type": "PLAIN_COURSE",
+          "subject": "INTL",
+          "classId": 1101
+        },
+        {
+          "hour": 4,
+          "description": "International Conflict and Negotiation",
+          "type": "PLAIN_COURSE",
+          "subject": "INTL",
+          "classId": 3400
+        },
+        {
+          "hour": 4,
+          "description": "International Relations",
+          "type": "PLAIN_COURSE",
+          "subject": "POLS",
+          "classId": 1160
+        },
+        {
+          "hour": 0,
+          "description": "International Experiential Learning",
+          "type": "HEADER"
+        },
+        {
+          "hour": 0,
+          "description": "Complete at least one international semester via study\n                        abroad, international internship, international co-op,\n                        or two short-term programs.",
+          "type": "COMMENT"
+        }
+      ],
+      "type": "PRIMARY"
+    },
+    {
+      "description": "International Affairs Elective",
+      "entries": [
+        {
+          "hour": 4,
+          "description": "Complete one of the following:",
+          "type": "SECTION_INFO",
+          "parsedCount": 1
+        },
+        {
+          "hour": 0,
+          "description": "Women and World Politics",
+          "type": "PLAIN_COURSE",
+          "subject": "INTL",
+          "classId": 2480
+        },
+        {
+          "hour": 0,
+          "description": "Race and Global Human Mobility",
+          "type": "PLAIN_COURSE",
+          "subject": "INTL",
+          "classId": 2500
+        },
+        {
+          "hour": 0,
+          "description": "Global Philanthropy",
+          "type": "PLAIN_COURSE",
+          "subject": "INTL",
+          "classId": 3150
+        },
+        {
+          "hour": 0,
+          "description": "Cities in a Global Context",
+          "type": "PLAIN_COURSE",
+          "subject": "INTL",
+          "classId": 3200
+        },
+        {
+          "hour": 0,
+          "description": "International Law",
+          "type": "PLAIN_COURSE",
+          "subject": "INTL",
+          "classId": 3406
+        },
+        {
+          "hour": 0,
+          "description": "Revolution, Civil War, and Insurrection",
+          "type": "PLAIN_COURSE",
+          "subject": "INTL",
+          "classId": 3430
+        },
+        {
+          "hour": 0,
+          "description": "Security, Culture, Power",
+          "type": "PLAIN_COURSE",
+          "subject": "INTL",
+          "classId": 3450
+        },
+        {
+          "hour": 0,
+          "description": "Global Political Economy",
+          "type": "PLAIN_COURSE",
+          "subject": "INTL",
+          "classId": 3520
+        },
+        {
+          "hour": 0,
+          "description": "Forced Migration: Refugees, Exiles, and Displaced Persons",
+          "type": "PLAIN_COURSE",
+          "subject": "INTL",
+          "classId": 4100
+        },
+        {
+          "hour": 0,
+          "description": "International Human Rights Law and Policy",
+          "type": "PLAIN_COURSE",
+          "subject": "INTL",
+          "classId": 5010
+        },
+        {
+          "hour": 0,
+          "description": "Climate and Development",
+          "type": "PLAIN_COURSE",
+          "subject": "INTL",
+          "classId": 5100
+        }
+      ],
+      "type": "PRIMARY"
+    },
+    {
+      "description": "Global Dynamics",
+      "entries": [
+        {
+          "hour": 4,
+          "description": "Complete one of the following (courses are divided into\n                        thematic groups to aid students in deciding which\n                        courses to take and have no bearing on major\n                        requirements):",
+          "type": "COMMENT"
+        },
+        {
+          "hour": 0,
+          "description": "Environment",
+          "type": "SUBHEADER"
+        },
+        {
+          "hour": 0,
+          "description": "Global Climate Change",
+          "type": "PLAIN_COURSE",
+          "subject": "ENVR",
+          "classId": 1110
+        },
+        {
+          "hour": 0,
+          "description": "Sustainable Development",
+          "type": "PLAIN_COURSE",
+          "subject": "ENVR",
+          "classId": 2515
+        },
+        {
+          "hour": 0,
+          "description": "Food Security and Sustainability",
+          "type": "PLAIN_COURSE",
+          "subject": "ENVR",
+          "classId": 3150
+        },
+        {
+          "hour": 0,
+          "description": "Climate and Development",
+          "type": "PLAIN_COURSE",
+          "subject": "INTL",
+          "classId": 5100
+        },
+        {
+          "hour": 0,
+          "description": "International Environmental Policy",
+          "type": "PLAIN_COURSE",
+          "subject": "INTL",
+          "classId": 5268
+        },
+        {
+          "hour": 0,
+          "description": "International Environmental Policy",
+          "type": "OR_COURSE",
+          "subject": "PPUA",
+          "classId": 5268
+        },
+        {
+          "hour": 0,
+          "description": "Environment and Society",
+          "type": "PLAIN_COURSE",
+          "subject": "SOCL",
+          "classId": 1246
+        },
+        {
+          "hour": 0,
+          "description": "Law, Diplomacy, and Global Governance",
+          "type": "SUBHEADER"
+        },
+        {
+          "hour": 0,
+          "description": "Global and Intercultural Communication",
+          "type": "PLAIN_COURSE",
+          "subject": "COMM",
+          "classId": 2303
+        },
+        {
+          "hour": 0,
+          "description": "Women and World Politics",
+          "type": "PLAIN_COURSE",
+          "subject": "INTL",
+          "classId": 2480
+        },
+        {
+          "hour": 0,
+          "description": "Women and World Politics",
+          "type": "OR_COURSE",
+          "subject": "WMNS",
+          "classId": 2480
+        },
+        {
+          "hour": 0,
+          "description": "Global Political Economy",
+          "type": "PLAIN_COURSE",
+          "subject": "INTL",
+          "classId": 3520
+        },
+        {
+          "hour": 0,
+          "description": "International Human Rights Law and Policy",
+          "type": "PLAIN_COURSE",
+          "subject": "INTL",
+          "classId": 5010
+        },
+        {
+          "hour": 0,
+          "description": "Comparative Politics",
+          "type": "PLAIN_COURSE",
+          "subject": "POLS",
+          "classId": 1155
+        },
+        {
+          "hour": 0,
+          "description": "International Relations",
+          "type": "PLAIN_COURSE",
+          "subject": "POLS",
+          "classId": 1160
+        },
+        {
+          "hour": 0,
+          "description": "Religion and Politics",
+          "type": "PLAIN_COURSE",
+          "subject": "POLS",
+          "classId": 2370
+        },
+        {
+          "hour": 0,
+          "description": "International Political Economy",
+          "type": "PLAIN_COURSE",
+          "subject": "POLS",
+          "classId": 3405
+        },
+        {
+          "hour": 0,
+          "description": "International Law",
+          "type": "PLAIN_COURSE",
+          "subject": "POLS",
+          "classId": 3406
+        },
+        {
+          "hour": 0,
+          "description": "Model United Nations",
+          "type": "PLAIN_COURSE",
+          "subject": "POLS",
+          "classId": 4910
+        },
+        {
+          "hour": 0,
+          "description": "Human Rights and Social Justice",
+          "type": "SUBHEADER"
+        },
+        {
+          "hour": 0,
+          "description": "Gender and Reproductive Justice",
+          "type": "PLAIN_COURSE",
+          "subject": "HIST",
+          "classId": 2303
+        },
+        {
+          "hour": 0,
+          "description": "Gender and Sexuality in World History",
+          "type": "PLAIN_COURSE",
+          "subject": "HIST",
+          "classId": 2373
+        },
+        {
+          "hour": 0,
+          "description": "Women and World Politics",
+          "type": "PLAIN_COURSE",
+          "subject": "INTL",
+          "classId": 2480
+        },
+        {
+          "hour": 0,
+          "description": "Women and World Politics",
+          "type": "OR_COURSE",
+          "subject": "WMNS",
+          "classId": 2480
+        },
+        {
+          "hour": 0,
+          "description": "International Human Rights Law and Policy",
+          "type": "PLAIN_COURSE",
+          "subject": "INTL",
+          "classId": 5010
+        },
+        {
+          "hour": 0,
+          "description": "Global Justice",
+          "type": "PLAIN_COURSE",
+          "subject": "PHIL",
+          "classId": 5001
+        },
+        {
+          "hour": 0,
+          "description": "Conflict and Security",
+          "type": "SUBHEADER"
+        },
+        {
+          "hour": 0,
+          "description": "Global Criminology",
+          "type": "PLAIN_COURSE",
+          "subject": "CRIM",
+          "classId": 3030
+        },
+        {
+          "hour": 0,
+          "description": "Political Crime and Terrorism",
+          "type": "PLAIN_COURSE",
+          "subject": "CRIM",
+          "classId": 3060
+        },
+        {
+          "hour": 0,
+          "description": "Security in the 21st Century",
+          "type": "PLAIN_COURSE",
+          "subject": "CRIM",
+          "classId": 5203
+        },
+        {
+          "hour": 0,
+          "description": "Drug Trade and Drug War: History, Security, Culture",
+          "type": "PLAIN_COURSE",
+          "subject": "HIST",
+          "classId": 1206
+        },
+        {
+          "hour": 0,
+          "description": "History of Espionage 1: Antiquity to World War II",
+          "type": "PLAIN_COURSE",
+          "subject": "HIST",
+          "classId": 1389
+        },
+        {
+          "hour": 0,
+          "description": "History of Espionage 2: Cold War Spies",
+          "type": "PLAIN_COURSE",
+          "subject": "HIST",
+          "classId": 1390
+        },
+        {
+          "hour": 0,
+          "description": "The Global Far-Right since 1945: Politics, Culture,\n                      Violence",
+          "type": "PLAIN_COURSE",
+          "subject": "HIST",
+          "classId": 2217
+        },
+        {
+          "hour": 0,
+          "description": "The Global Cold War",
+          "type": "PLAIN_COURSE",
+          "subject": "HIST",
+          "classId": 3330
+        },
+        {
+          "hour": 0,
+          "description": "Assassinations in World History",
+          "type": "PLAIN_COURSE",
+          "subject": "HIST",
+          "classId": 3334
+        },
+        {
+          "hour": 0,
+          "description": "History of Modern Terrorism",
+          "type": "PLAIN_COURSE",
+          "subject": "HIST",
+          "classId": 3335
+        },
+        {
+          "hour": 0,
+          "description": "Revolution, Civil War, and Insurrection",
+          "type": "PLAIN_COURSE",
+          "subject": "INTL",
+          "classId": 3430
+        },
+        {
+          "hour": 0,
+          "description": "Security, Culture, Power",
+          "type": "PLAIN_COURSE",
+          "subject": "INTL",
+          "classId": 3450
+        },
+        {
+          "hour": 0,
+          "description": "Covering Conflicts: Peace, War, and the Media",
+          "type": "PLAIN_COURSE",
+          "subject": "JRNL",
+          "classId": 3300
+        },
+        {
+          "hour": 0,
+          "description": "Covering Conflicts: Peace, War, and the Media",
+          "type": "OR_COURSE",
+          "subject": "INTL",
+          "classId": 3300
+        },
+        {
+          "hour": 0,
+          "description": "Global Justice",
+          "type": "PLAIN_COURSE",
+          "subject": "PHIL",
+          "classId": 5001
+        },
+        {
+          "hour": 0,
+          "description": "The Holocaust and Comparative Genocide",
+          "type": "PLAIN_COURSE",
+          "subject": "POLS",
+          "classId": 2282
+        },
+        {
+          "hour": 0,
+          "description": "Nationalism",
+          "type": "PLAIN_COURSE",
+          "subject": "POLS",
+          "classId": 3418
+        },
+        {
+          "hour": 0,
+          "description": "U.S. National Security Policy",
+          "type": "PLAIN_COURSE",
+          "subject": "POLS",
+          "classId": 3420
+        },
+        {
+          "hour": 0,
+          "description": "Terrorism and Counterterrorism",
+          "type": "PLAIN_COURSE",
+          "subject": "POLS",
+          "classId": 3423
+        },
+        {
+          "hour": 0,
+          "description": "Revolution, Civil War, and Insurrection",
+          "type": "PLAIN_COURSE",
+          "subject": "POLS",
+          "classId": 3430
+        },
+        {
+          "hour": 0,
+          "description": "Revolution, Civil War, and Insurrection",
+          "type": "OR_COURSE",
+          "subject": "INTL",
+          "classId": 3430
+        },
+        {
+          "hour": 0,
+          "description": "Model NATO",
+          "type": "PLAIN_COURSE",
+          "subject": "POLS",
+          "classId": 4918
+        },
+        {
+          "hour": 0,
+          "description": "Globalization",
+          "type": "SUBHEADER"
+        },
+        {
+          "hour": 0,
+          "description": "Issues in Race, Science, and Technology",
+          "type": "PLAIN_COURSE",
+          "subject": "AFAM",
+          "classId": 2600
+        },
+        {
+          "hour": 0,
+          "description": "Global Markets and Local Culture",
+          "type": "PLAIN_COURSE",
+          "subject": "ANTH",
+          "classId": 2305
+        },
+        {
+          "hour": 0,
+          "description": "Religion and Modernity",
+          "type": "PLAIN_COURSE",
+          "subject": "ANTH",
+          "classId": 2315
+        },
+        {
+          "hour": 0,
+          "description": "History of the Global Economy",
+          "type": "PLAIN_COURSE",
+          "subject": "ECON",
+          "classId": 3290
+        },
+        {
+          "hour": 0,
+          "description": "International Economics",
+          "type": "PLAIN_COURSE",
+          "subject": "ECON",
+          "classId": 3635
+        },
+        {
+          "hour": 0,
+          "description": "Origins of Today: Historical Roots of Contemporary Issues",
+          "type": "PLAIN_COURSE",
+          "subject": "HIST",
+          "classId": 1215
+        },
+        {
+          "hour": 0,
+          "description": "The World Since 1945",
+          "type": "PLAIN_COURSE",
+          "subject": "HIST",
+          "classId": 2211
+        },
+        {
+          "hour": 0,
+          "description": "Colonialism/Imperialism",
+          "type": "PLAIN_COURSE",
+          "subject": "HIST",
+          "classId": 2311
+        },
+        {
+          "hour": 0,
+          "description": "Cultural Aspects of International Business",
+          "type": "PLAIN_COURSE",
+          "subject": "INTB",
+          "classId": 3310
+        },
+        {
+          "hour": 0,
+          "description": "Women and World Politics",
+          "type": "PLAIN_COURSE",
+          "subject": "INTL",
+          "classId": 2480
+        },
+        {
+          "hour": 0,
+          "description": "Women and World Politics",
+          "type": "OR_COURSE",
+          "subject": "WMNS",
+          "classId": 2480
+        },
+        {
+          "hour": 0,
+          "description": "Cities in a Global Context",
+          "type": "PLAIN_COURSE",
+          "subject": "INTL",
+          "classId": 3200
+        },
+        {
+          "hour": 0,
+          "description": "Global Political Economy",
+          "type": "PLAIN_COURSE",
+          "subject": "INTL",
+          "classId": 3520
+        },
+        {
+          "hour": 0,
+          "description": "International Relations",
+          "type": "PLAIN_COURSE",
+          "subject": "POLS",
+          "classId": 1160
+        },
+        {
+          "hour": 0,
+          "description": "Religion and Politics",
+          "type": "PLAIN_COURSE",
+          "subject": "POLS",
+          "classId": 2370
+        },
+        {
+          "hour": 0,
+          "description": "International Political Economy",
+          "type": "PLAIN_COURSE",
+          "subject": "POLS",
+          "classId": 3405
+        },
+        {
+          "hour": 0,
+          "description": "International Law",
+          "type": "PLAIN_COURSE",
+          "subject": "POLS",
+          "classId": 3406
+        },
+        {
+          "hour": 0,
+          "description": "Population, Migration, and Diaspora",
+          "type": "SUBHEADER"
+        },
+        {
+          "hour": 0,
+          "description": "Introduction to Global Health",
+          "type": "PLAIN_COURSE",
+          "subject": "AFRS",
+          "classId": 1270
+        },
+        {
+          "hour": 0,
+          "description": "Introduction to Global Health",
+          "type": "OR_COURSE",
+          "subject": "PHTH",
+          "classId": 1270
+        },
+        {
+          "hour": 0,
+          "description": "Epidemiology of Pandemic Diseases and Health Disparities\n                      in the African Diaspora",
+          "type": "PLAIN_COURSE",
+          "subject": "AFRS",
+          "classId": 3424
+        },
+        {
+          "hour": 0,
+          "description": "Peoples and Cultures",
+          "type": "PLAIN_COURSE",
+          "subject": "ANTH",
+          "classId": 1101
+        },
+        {
+          "hour": 0,
+          "description": "Pirates, Planters, and Patriots: Making the Americas,\n                      1492–1804",
+          "type": "PLAIN_COURSE",
+          "subject": "HIST",
+          "classId": 1218
+        },
+        {
+          "hour": 0,
+          "description": "History of Global Pandemics",
+          "type": "PLAIN_COURSE",
+          "subject": "HIST",
+          "classId": 1219
+        },
+        {
+          "hour": 0,
+          "description": "Race and Global Human Mobility",
+          "type": "PLAIN_COURSE",
+          "subject": "INTL",
+          "classId": 2500
+        },
+        {
+          "hour": 0,
+          "description": "Cities in a Global Context",
+          "type": "PLAIN_COURSE",
+          "subject": "INTL",
+          "classId": 3200
+        },
+        {
+          "hour": 0,
+          "description": "Forced Migration: Refugees, Exiles, and Displaced Persons",
+          "type": "PLAIN_COURSE",
+          "subject": "INTL",
+          "classId": 4100
+        },
+        {
+          "hour": 0,
+          "description": "Introduction to World Religions",
+          "type": "PLAIN_COURSE",
+          "subject": "PHIL",
+          "classId": 1111
+        },
+        {
+          "hour": 0,
+          "description": "Sex in Judaism, Christianity, and Islam",
+          "type": "PLAIN_COURSE",
+          "subject": "PHIL",
+          "classId": 1271
+        },
+        {
+          "hour": 0,
+          "description": "Development",
+          "type": "SUBHEADER"
+        },
+        {
+          "hour": 0,
+          "description": "Global Markets and Local Culture",
+          "type": "PLAIN_COURSE",
+          "subject": "ANTH",
+          "classId": 2305
+        },
+        {
+          "hour": 0,
+          "description": "Development Economics",
+          "type": "PLAIN_COURSE",
+          "subject": "ECON",
+          "classId": 1291
+        },
+        {
+          "hour": 0,
+          "description": "International Food Policy",
+          "type": "PLAIN_COURSE",
+          "subject": "ECON",
+          "classId": 3404
+        },
+        {
+          "hour": 0,
+          "description": "A Critique of Capitalism",
+          "type": "PLAIN_COURSE",
+          "subject": "ECON",
+          "classId": 3405
+        },
+        {
+          "hour": 0,
+          "description": "Sustainable Development",
+          "type": "PLAIN_COURSE",
+          "subject": "ENVR",
+          "classId": 2515
+        },
+        {
+          "hour": 0,
+          "description": "Capitalism and Business: A Global History",
+          "type": "PLAIN_COURSE",
+          "subject": "HIST",
+          "classId": 2011
+        },
+        {
+          "hour": 0,
+          "description": "Global Social Enterprise",
+          "type": "PLAIN_COURSE",
+          "subject": "INNO",
+          "classId": 2206
+        },
+        {
+          "hour": 0,
+          "description": "International Business and Global Social Responsibility",
+          "type": "PLAIN_COURSE",
+          "subject": "INTB",
+          "classId": 1203
+        },
+        {
+          "hour": 0,
+          "description": "International Business and Global Social Responsibility",
+          "type": "OR_COURSE",
+          "subject": "INTB",
+          "classId": 1209
+        },
+        {
+          "hour": 0,
+          "description": "Global Philanthropy",
+          "type": "PLAIN_COURSE",
+          "subject": "INTL",
+          "classId": 3150
+        },
+        {
+          "hour": 0,
+          "description": "Global Political Economy",
+          "type": "PLAIN_COURSE",
+          "subject": "INTL",
+          "classId": 3520
+        },
+        {
+          "hour": 0,
+          "description": "Climate and Development",
+          "type": "PLAIN_COURSE",
+          "subject": "INTL",
+          "classId": 5100
+        },
+        {
+          "hour": 0,
+          "description": "Global Health",
+          "type": "PLAIN_COURSE",
+          "subject": "PHTH",
+          "classId": 5230
+        },
+        {
+          "hour": 0,
+          "description": "Politics of Developing Nations",
+          "type": "PLAIN_COURSE",
+          "subject": "POLS",
+          "classId": 3487
+        },
+        {
+          "hour": 0,
+          "description": "Communication and Media",
+          "type": "SUBHEADER"
+        },
+        {
+          "hour": 0,
+          "description": "Global and Intercultural Communication",
+          "type": "PLAIN_COURSE",
+          "subject": "COMM",
+          "classId": 2303
+        },
+        {
+          "hour": 0,
+          "description": "Cultural Aspects of International Business",
+          "type": "PLAIN_COURSE",
+          "subject": "INTB",
+          "classId": 3310
+        },
+        {
+          "hour": 0,
+          "description": "Covering Conflicts: Peace, War, and the Media",
+          "type": "PLAIN_COURSE",
+          "subject": "JRNL",
+          "classId": 3300
+        },
+        {
+          "hour": 0,
+          "description": "Covering Conflicts: Peace, War, and the Media",
+          "type": "OR_COURSE",
+          "subject": "INTL",
+          "classId": 3300
+        },
+        {
+          "hour": 0,
+          "description": "Global Reporting",
+          "type": "PLAIN_COURSE",
+          "subject": "JRNL",
+          "classId": 5360
+        },
+        {
+          "hour": 0,
+          "description": "Global Media",
+          "type": "PLAIN_COURSE",
+          "subject": "MSCR",
+          "classId": 2325
+        }
+      ],
+      "type": "PRIMARY"
+    },
+    {
+      "description": "Regional Analysis Requirement",
+      "entries": [
+        {
+          "hour": 12,
+          "description": "Complete three of the following, two of which must be\n                        in one region. Select courses taken during a semester\n                        study abroad or specific Dialogue of Civilizations\n                        courses may count as regional analysis courses pending\n                        approval of the international affairs head faculty\n                        advisor. See department for additional courses.",
+          "type": "COMMENT"
+        },
+        {
+          "hour": 0,
+          "description": "Africa",
+          "type": "SUBHEADER"
+        },
+        {
+          "hour": 0,
+          "description": "Introduction to African Studies",
+          "type": "PLAIN_COURSE",
+          "subject": "AFRS",
+          "classId": 1101
+        },
+        {
+          "hour": 0,
+          "description": "Africa Today",
+          "type": "PLAIN_COURSE",
+          "subject": "AFRS",
+          "classId": 2307
+        },
+        {
+          "hour": 0,
+          "description": "Swahili, Culture, and Politics in Kenya",
+          "type": "PLAIN_COURSE",
+          "subject": "AFRS",
+          "classId": 2900
+        },
+        {
+          "hour": 0,
+          "description": "Contemporary Government and Politics in Africa",
+          "type": "PLAIN_COURSE",
+          "subject": "AFRS",
+          "classId": 3460
+        },
+        {
+          "hour": 0,
+          "description": "Community Health, Culture, and Development in Kenya",
+          "type": "PLAIN_COURSE",
+          "subject": "AFRS",
+          "classId": 4939
+        },
+        {
+          "hour": 0,
+          "description": "Ethnography of Southeast Asia",
+          "type": "PLAIN_COURSE",
+          "subject": "ANTH",
+          "classId": 4350
+        },
+        {
+          "hour": 0,
+          "description": "Anthropology of Africa",
+          "type": "PLAIN_COURSE",
+          "subject": "ANTH",
+          "classId": 4510
+        },
+        {
+          "hour": 0,
+          "description": "African History",
+          "type": "PLAIN_COURSE",
+          "subject": "HIST",
+          "classId": 1180
+        },
+        {
+          "hour": 0,
+          "description": "Business Economic History of South Africa",
+          "type": "PLAIN_COURSE",
+          "subject": "INNO",
+          "classId": 3308
+        },
+        {
+          "hour": 0,
+          "description": "Natural Resources and Sustainable Development",
+          "type": "PLAIN_COURSE",
+          "subject": "INTL",
+          "classId": 2464
+        },
+        {
+          "hour": 0,
+          "description": "Natural Resources and Sustainable Development",
+          "type": "OR_COURSE",
+          "subject": "AFRS",
+          "classId": 2464
+        },
+        {
+          "hour": 0,
+          "description": "Asia",
+          "type": "SUBHEADER"
+        },
+        {
+          "hour": 0,
+          "description": "Culture and Politics in Modern India",
+          "type": "PLAIN_COURSE",
+          "subject": "ANTH",
+          "classId": 4515
+        },
+        {
+          "hour": 0,
+          "description": "East Asian Studies",
+          "type": "PLAIN_COURSE",
+          "subject": "ASNS",
+          "classId": 1150
+        },
+        {
+          "hour": 0,
+          "description": "East Asian Studies",
+          "type": "OR_COURSE",
+          "subject": "HIST",
+          "classId": 1150
+        },
+        {
+          "hour": 0,
+          "description": "Modern Chinese History and Culture",
+          "type": "PLAIN_COURSE",
+          "subject": "CLTR",
+          "classId": 1500
+        },
+        {
+          "hour": 0,
+          "description": "Introduction to Chinese Popular Culture",
+          "type": "PLAIN_COURSE",
+          "subject": "CLTR",
+          "classId": 1506
+        },
+        {
+          "hour": 0,
+          "description": "Introduction to Japanese Pop Culture",
+          "type": "PLAIN_COURSE",
+          "subject": "CLTR",
+          "classId": 1700
+        },
+        {
+          "hour": 0,
+          "description": "World War II in the Pacific",
+          "type": "PLAIN_COURSE",
+          "subject": "HIST",
+          "classId": 1246
+        },
+        {
+          "hour": 0,
+          "description": "Japanese Literature and Culture",
+          "type": "PLAIN_COURSE",
+          "subject": "HIST",
+          "classId": 1252
+        },
+        {
+          "hour": 0,
+          "description": "Modern Chinese History and Culture",
+          "type": "PLAIN_COURSE",
+          "subject": "HIST",
+          "classId": 1500
+        },
+        {
+          "hour": 0,
+          "description": "Modern Japan",
+          "type": "PLAIN_COURSE",
+          "subject": "HIST",
+          "classId": 2351
+        },
+        {
+          "hour": 0,
+          "description": "Hinduism, Buddhism, and Beyond",
+          "type": "PLAIN_COURSE",
+          "subject": "PHIL",
+          "classId": 1275
+        },
+        {
+          "hour": 0,
+          "description": "Chinese Philosophy and Religion",
+          "type": "PLAIN_COURSE",
+          "subject": "PHIL",
+          "classId": 1290
+        },
+        {
+          "hour": 0,
+          "description": "Japanese Buddhism",
+          "type": "PLAIN_COURSE",
+          "subject": "PHIL",
+          "classId": 2395
+        },
+        {
+          "hour": 0,
+          "description": "East Asian Politics",
+          "type": "PLAIN_COURSE",
+          "subject": "POLS",
+          "classId": 3482
+        },
+        {
+          "hour": 0,
+          "description": "China: Governance and Foreign Policy",
+          "type": "PLAIN_COURSE",
+          "subject": "POLS",
+          "classId": 3485
+        },
+        {
+          "hour": 0,
+          "description": "Europe",
+          "type": "SUBHEADER"
+        },
+        {
+          "hour": 0,
+          "description": "Introduction to French Culture",
+          "type": "PLAIN_COURSE",
+          "subject": "CLTR",
+          "classId": 1501
+        },
+        {
+          "hour": 0,
+          "description": "Introduction to Italian Culture",
+          "type": "PLAIN_COURSE",
+          "subject": "CLTR",
+          "classId": 1503
+        },
+        {
+          "hour": 0,
+          "description": "Cultural History of Spain",
+          "type": "PLAIN_COURSE",
+          "subject": "CLTR",
+          "classId": 1504
+        },
+        {
+          "hour": 0,
+          "description": "Europe: Empires, Revolutions, Wars, and Their Aftermath",
+          "type": "PLAIN_COURSE",
+          "subject": "HIST",
+          "classId": 1170
+        },
+        {
+          "hour": 0,
+          "description": "Europe in the Middle Ages, 500–1500",
+          "type": "PLAIN_COURSE",
+          "subject": "HIST",
+          "classId": 1272
+        },
+        {
+          "hour": 0,
+          "description": "History of the Soviet Union",
+          "type": "PLAIN_COURSE",
+          "subject": "HIST",
+          "classId": 1286
+        },
+        {
+          "hour": 0,
+          "description": "Renaissance to Enlightenment",
+          "type": "PLAIN_COURSE",
+          "subject": "HIST",
+          "classId": 2370
+        },
+        {
+          "hour": 0,
+          "description": "The Tudors, the Stuarts, and the Birth of Modern Britain",
+          "type": "PLAIN_COURSE",
+          "subject": "HIST",
+          "classId": 2375
+        },
+        {
+          "hour": 0,
+          "description": "Russian Foreign Policy",
+          "type": "PLAIN_COURSE",
+          "subject": "INTL",
+          "classId": 3455
+        },
+        {
+          "hour": 0,
+          "description": "Russian Foreign Policy",
+          "type": "OR_COURSE",
+          "subject": "POLS",
+          "classId": 3455
+        },
+        {
+          "hour": 0,
+          "description": "Politics and Governance of Europe and the European Union",
+          "type": "PLAIN_COURSE",
+          "subject": "POLS",
+          "classId": 3435
+        },
+        {
+          "hour": 0,
+          "description": "Latin America",
+          "type": "SUBHEADER"
+        },
+        {
+          "hour": 0,
+          "description": "Latin American Society and Development",
+          "type": "PLAIN_COURSE",
+          "subject": "ANTH",
+          "classId": 4500
+        },
+        {
+          "hour": 0,
+          "description": "Latin American Film",
+          "type": "PLAIN_COURSE",
+          "subject": "CLTR",
+          "classId": 1240
+        },
+        {
+          "hour": 0,
+          "description": "Introduction to Arabic Culture",
+          "type": "PLAIN_COURSE",
+          "subject": "CLTR",
+          "classId": 1502
+        },
+        {
+          "hour": 0,
+          "description": "Latin American Culture, History, and Politics",
+          "type": "PLAIN_COURSE",
+          "subject": "CLTR",
+          "classId": 1505
+        },
+        {
+          "hour": 0,
+          "description": "New Narratives: Latin America after 1989",
+          "type": "PLAIN_COURSE",
+          "subject": "CLTR",
+          "classId": 3715
+        },
+        {
+          "hour": 0,
+          "description": "Literature, Arts, and Poverty in Latin America",
+          "type": "PLAIN_COURSE",
+          "subject": "CLTR",
+          "classId": 3720
+        },
+        {
+          "hour": 0,
+          "description": "Latin American Literature",
+          "type": "PLAIN_COURSE",
+          "subject": "CLTR",
+          "classId": 4655
+        },
+        {
+          "hour": 0,
+          "description": "Economic History of the Middle East",
+          "type": "PLAIN_COURSE",
+          "subject": "ECON",
+          "classId": 1292
+        },
+        {
+          "hour": 0,
+          "description": "Introduction to Middle Eastern History",
+          "type": "PLAIN_COURSE",
+          "subject": "HIST",
+          "classId": 1185
+        },
+        {
+          "hour": 0,
+          "description": "Introduction to Latin American History",
+          "type": "PLAIN_COURSE",
+          "subject": "HIST",
+          "classId": 1187
+        },
+        {
+          "hour": 0,
+          "description": "Latin American History through Film",
+          "type": "PLAIN_COURSE",
+          "subject": "HIST",
+          "classId": 2025
+        },
+        {
+          "hour": 0,
+          "description": "Latino, Latin American, and Caribbean Studies",
+          "type": "PLAIN_COURSE",
+          "subject": "LACS",
+          "classId": 1220
+        },
+        {
+          "hour": 0,
+          "description": "Middle East",
+          "type": "SUBHEADER"
+        },
+        {
+          "hour": 0,
+          "description": "The Mediterranean World: An Overview",
+          "type": "PLAIN_COURSE",
+          "subject": "INTL",
+          "classId": 1150
+        },
+        {
+          "hour": 0,
+          "description": "Middle East Studies",
+          "type": "PLAIN_COURSE",
+          "subject": "INTL",
+          "classId": 1160
+        },
+        {
+          "hour": 0,
+          "description": "America and the Middle East",
+          "type": "PLAIN_COURSE",
+          "subject": "INTL",
+          "classId": 2200
+        },
+        {
+          "hour": 0,
+          "description": "Democracy and Development in North Africa and the\n                      Mediterranean",
+          "type": "PLAIN_COURSE",
+          "subject": "INTL",
+          "classId": 3250
+        },
+        {
+          "hour": 0,
+          "description": "Islam: Rituals, Traditions, and Debates",
+          "type": "PLAIN_COURSE",
+          "subject": "PHIL",
+          "classId": 1280
+        },
+        {
+          "hour": 0,
+          "description": "Jewish Religion and Culture",
+          "type": "PLAIN_COURSE",
+          "subject": "PHIL",
+          "classId": 1285
+        },
+        {
+          "hour": 0,
+          "description": "Government and Politics in the Middle East",
+          "type": "PLAIN_COURSE",
+          "subject": "POLS",
+          "classId": 3465
+        }
+      ],
+      "type": "PRIMARY"
+    },
+    {
+      "description": "Human Services/International Affairs Integrative Courses",
+      "entries": [
+        {
+          "hour": 0,
+          "description": "Human Services",
+          "type": "HEADER"
+        },
+        {
+          "hour": 4,
+          "description": "Senior Seminar in Human Services",
+          "type": "PLAIN_COURSE",
+          "subject": "HUSV",
+          "classId": 4700
+        },
+        {
+          "hour": 0,
+          "description": "International Affairs",
+          "type": "HEADER"
+        },
+        {
+          "hour": 4,
+          "description": "Senior Capstone Seminar in International Affairs",
+          "type": "PLAIN_COURSE",
+          "subject": "INTL",
+          "classId": 4700
+        }
+      ],
+      "type": "PRIMARY"
+    }
+  ],
+  "programRequiredHours": 128
+}
