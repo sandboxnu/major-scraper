@@ -197,32 +197,46 @@ const tokenizeSections = async (
   // use a stack to keep track of the course list title and description
   const descriptions: string[] = [];
   const courseList: HSection[] = [];
+  let courseListQueue: CheerioElement[] = [];
 
   for (const element of requirementsContainer.children().toArray()) {
-    if (element.name === "h2" || element.name === "h3") {
-      // element is h2 or h3 means it's a header text
+    const isHeaderText = element.name === "h2" || element.name === "h3";
+    if (isHeaderText) {
+      if (courseListQueue.length === 0) {
         descriptions.push(parseText($(element)));
-    } else if (
-      element.name === "table" &&
-      element.attribs["class"] === "sc_courselist"
-    ) {
-      // class "sc_courselist" signifies that this table is a list of courses
-      // => parse the table's rows
+        continue;
+      }
       const tableDesc = descriptions.pop() || "";
+
+      const entries = courseListQueue
+        .map(courseListElement => tokenizeRows($, courseListElement))
+        .flat();
+
       const courseTable: HSection = {
         description: tableDesc,
-        entries: tokenizeRows($, element),
+        entries: entries,
         type: tableDesc.toLowerCase().includes("concentration")
           ? HSectionType.CONCENTRATION
           : HSectionType.PRIMARY,
       };
       courseList.push(courseTable);
-    } else if (
-      // if we encounter an unordered list and preceding element contains text "concentration",
-      // assume the list is of links for business concentrations.
+      courseListQueue = [];
+
+      descriptions.push(parseText($(element)));
+    }
+
+    const isCourseList =
+      element.name === "table" && element.attribs["class"] === "sc_courselist";
+    if (isCourseList) {
+      courseListQueue.push(element);
+    }
+
+    // some concentrations are in a separate html instead of
+    // in the same html as the main major (see CS and Business for example)
+    const isConcentrationList =
       element.name === "ul" &&
-      parseText($(element).prev()).includes("concentration")
-    ) {
+      parseText($(element).prev()).includes("concentration");
+    if (isConcentrationList) {
       const links = constructNestedLinks($, element);
 
       // get all the concentration locally instead of fetching
@@ -266,6 +280,23 @@ const tokenizeSections = async (
       );
       courseList.push(...concentrations.flat());
     }
+  }
+
+  if (courseListQueue.length > 0) {
+    const tableDesc = descriptions.pop() || "";
+
+    const entries = courseListQueue
+      .map(courseListElement => tokenizeRows($, courseListElement))
+      .flat();
+
+    const courseTable: HSection = {
+      description: tableDesc,
+      entries: entries,
+      type: tableDesc.toLowerCase().includes("concentration")
+        ? HSectionType.CONCENTRATION
+        : HSectionType.PRIMARY,
+    };
+    courseList.push(courseTable);
   }
 
   return courseList;
