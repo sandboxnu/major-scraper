@@ -27,7 +27,7 @@ export const processSection = ([header, requirements]: [
   TextRow<HRowType.HEADER>,
   Requirement2[],
 ]): Section => {
-  let reqs = requirements.flat();
+  const reqs = requirements.flat();
   return {
     type: "SECTION",
     title: header.description,
@@ -41,9 +41,59 @@ export const processSectionWithInfo = ([header, info, requirements]: [
   CountAndHoursRow<HRowType.SECTION_INFO>,
   Requirement2[],
 ]): Section => {
+  const reqs = requirements.flat();
   return {
-    ...processSection([header, requirements]),
+    type: "SECTION",
+    title: header.description,
+    requirements: reqs,
     minRequirementCount: info.parsedCount,
+  };
+};
+
+export const processSubsections = ([header, subsections]: [
+  TextRow<HRowType.HEADER>,
+  Section[],
+]): Section => {
+  return {
+    type: "SECTION",
+    title: header.description,
+    requirements: subsections,
+    minRequirementCount: subsections.length,
+  };
+};
+
+export const processSubsectionsWithInfo = ([header, info, subsections]: [
+  TextRow<HRowType.HEADER>,
+  CountAndHoursRow<HRowType.SECTION_INFO>,
+  Section[],
+]): Section => {
+  return {
+    type: "SECTION",
+    title: header.description,
+    requirements: subsections,
+    minRequirementCount: info.parsedCount,
+  };
+};
+
+export const processSectionWithSubsections = ([header, reqs, subsections]: [
+  TextRow<HRowType.HEADER>,
+  Requirement2[],
+  Section[],
+]) => {
+  return {
+    type: "SECTION",
+    title: header.description,
+    requirements: [...reqs, ...subsections],
+    minRequirementCount: reqs.length + subsections.length,
+  };
+};
+
+export const processEmptySection = ([header]: [TextRow<HRowType.HEADER>]) => {
+  return {
+    type: "SECTION",
+    title: header.description,
+    requirements: [],
+    minRequirementCount: 0,
   };
 };
 
@@ -118,14 +168,10 @@ export const processRangeU: Processor<HRowType.RANGE_UNBOUNDED> = tokens => {
 };
 
 export const processOr = (
-  tokens: [Requirement2 | Requirement2[], Requirement2[]],
+  tokens: [Requirement2, Requirement2[]],
 ): IOrCourse2 => {
   const [req, ors] = tokens;
-  if (Array.isArray(req)) {
-    return { type: "OR", courses: [...req, ...ors] };
-  } else {
-    return { type: "OR", courses: [req, ...ors] };
-  }
+  return { type: "OR", courses: [req, ...ors] };
 };
 
 export const processOrOfAnd: Processor<
@@ -137,14 +183,6 @@ export const processOrOfAnd: Processor<
     type: "AND",
     courses,
   };
-};
-
-export const processAnd = (tokens: [IAndCourse2[]]): IAndCourse2[] => {
-  // const courses = [];
-  // for (const { courses: cs } of tokens[0]) {
-  //   courses.push(...cs);
-  // }
-  return tokens[0];
 };
 
 export const processXOM = ([xom, reqs]: [
@@ -163,6 +201,10 @@ export const processXOM = ([xom, reqs]: [
 export default {
   processSection,
   processSectionWithInfo,
+  processSubsections,
+  processSubsectionsWithInfo,
+  processSectionWithSubsections,
+  processEmptySection,
   processCourse,
   processRangeLB,
   processRangeLBE,
@@ -171,6 +213,5 @@ export default {
   processRangeU,
   processOr,
   processOrOfAnd,
-  processAnd,
   processXOM,
 };
