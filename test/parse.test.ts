@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import { parseRows, parseSections } from "@/parse";
+import { parseRows, parseTokens } from "@/parse";
 import { type HRow, type HSection } from "@/tokenize";
 import {
   AND_COURSE_PARSED,
@@ -71,7 +71,7 @@ async function testParseSnapshot(testName: string, fileName: string) {
 
   test(testName, async () => {
     await expect(
-      JSON.stringify(parseSections(json.sections), null, 2),
+      JSON.stringify(parseTokens(json.sections), null, 2),
     ).toMatchFileSnapshot(formatParsePath(fileName));
   });
 }

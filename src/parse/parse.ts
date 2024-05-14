@@ -64,7 +64,7 @@ export const parseRows = (errorMessage: string, rows: HRow[]) => {
 export const parse = async (
   entry: TokenizedCatalogEntry,
 ): Promise<ParsedCatalogEntry> => {
-  const { mainReqs, concentrations } = parseSections(entry.sections);
+  const { mainReqs, concentrations } = parseTokens(entry.sections);
 
   const major: Major2 = {
     name: entry.majorName,
@@ -93,90 +93,56 @@ export const parse = async (
   };
 };
 
-export const parseSections = (sections: HSection[]) => {
-  const nonConcentrations = sections.filter(metaSection => {
-    return metaSection.type === HSectionType.PRIMARY;
-  });
-
-  const entries: HRow[][] = nonConcentrations.map(metaSection => {
-    if (
-      metaSection.entries.length >= 1 &&
-      metaSection.entries[0]?.type != HRowType.HEADER
-    ) {
-      const newHeader: TextRow<HRowType.HEADER> = {
-        type: HRowType.HEADER,
-        description: metaSection.description,
-        hour: 0,
-      };
-      metaSection.entries = [newHeader, ...metaSection.entries];
-    }
-    return metaSection.entries;
-  });
-
-  let allEntries = entries.reduce((prev: HRow[], current: HRow[]) => {
-    return prev.concat(current);
-  }, []);
-
-  allEntries = allEntries.filter(
-    row => row.type !== HRowType.COMMENT && row.type !== HRowType.SUBSUBHEADER,
-  );
-
-  // await writeFile(
-  //   `${entry.savePath}/tokens_shorten.json`,
-  //   JSON.stringify(
-  //     allEntries.map(entry => entry.type),
-  //     null,
-  //     2,
-  //   ),
-  // );
-
-  // await writeFile(
-  //   `${entry.savePath}/tokens.json`,
-  //   JSON.stringify(allEntries, null, 2),
-  // );
-
-  const mainReqs =
-    allEntries.length === 0 ? [] : parseRows("[Primary Entries]", allEntries);
-
-  const concentrations = sections
-    .filter(metaSection => {
-      return metaSection.type === HSectionType.CONCENTRATION;
-    })
-    .map((concentration): Section => {
-      // Add in header based on section name if one isn't already present.
-      concentration.entries = concentration.entries.filter(
-        row =>
-          row.type !== HRowType.COMMENT && row.type !== HRowType.SUBSUBHEADER,
-      );
+export const parseTokens = (sections: HSection[]) => {
+  const primarySections = sections
+    .filter(metaSection => metaSection.type === HSectionType.PRIMARY)
+    .map(metaSection => {
       if (
-        concentration.entries.length >= 1 &&
-        concentration.entries[0]?.type != HRowType.HEADER
+        metaSection.entries.length >= 1 &&
+        metaSection.entries[0]?.type != HRowType.HEADER
       ) {
         const newHeader: TextRow<HRowType.HEADER> = {
           type: HRowType.HEADER,
-          description: concentration.description,
+          description: metaSection.description,
           hour: 0,
         };
-        concentration.entries = [newHeader, ...concentration.entries];
+        metaSection.entries = [newHeader, ...metaSection.entries];
       }
-      const parsed = parseRows(
-        "[Concentration Entries]",
-        concentration.entries,
-      );
-      // Change this when we allow concentrations to have multiple sections:
-      if (parsed.length >= 1 && parsed[0].type == "SECTION") {
-        return parsed;
-      } else {
-        if (parsed.length > 1) {
-          throw new Error(
-            `Concentration "${concentration.description}" has multiple sections which is not supported right now!`,
-          );
-        }
-        throw new Error(
-          `Concentration "${concentration.description}" cannot be parsed!`,
-        );
-      }
+      return metaSection.entries;
     })
+    .flat()
+    .filter(
+      row =>
+        row.type !== HRowType.COMMENT && row.type !== HRowType.SUBSUBHEADER,
+    );
+
+  const mainReqs =
+    primarySections.length === 0
+      ? []
+      : parseRows("[Primary Section]", primarySections);
+
+  const concentrations = sections
+    .filter(metaSection => metaSection.type === HSectionType.CONCENTRATION)
+    .map(metaSection => {
+      metaSection.entries = metaSection.entries.filter(
+        row =>
+          row.type !== HRowType.COMMENT && row.type !== HRowType.SUBSUBHEADER,
+      );
+
+      if (
+        metaSection.entries.length >= 1 &&
+        metaSection.entries[0]?.type != HRowType.HEADER
+      ) {
+        const newHeader: TextRow<HRowType.HEADER> = {
+          type: HRowType.HEADER,
+          description: metaSection.description,
+          hour: 0,
+        };
+        metaSection.entries = [newHeader, ...metaSection.entries];
+      }
+      return metaSection.entries;
+    })
+    .map(rows => parseRows("[Concentration Entries]", rows))
     .flat();
 
   return {
