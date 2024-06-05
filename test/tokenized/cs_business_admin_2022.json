@@ -1,0 +1,2363 @@
+{
+  "sections": [
+    {
+      "description": "Computer Science Courses",
+      "entries": [
+        {
+          "hour": 0,
+          "description": "Computer Science Overview",
+          "type": "HEADER"
+        },
+        {
+          "hour": 1,
+          "description": "First Year Seminar",
+          "type": "PLAIN_COURSE",
+          "subject": "CS",
+          "classId": 1200
+        },
+        {
+          "hour": 0,
+          "description": "Personal Skill Development for Business",
+          "type": "OR_COURSE",
+          "subject": "BUSN",
+          "classId": 1102
+        },
+        {
+          "hour": 1,
+          "description": "Professional Development for Khoury Co-op",
+          "type": "PLAIN_COURSE",
+          "subject": "CS",
+          "classId": 1210
+        },
+        {
+          "hour": 0,
+          "description": "Professional Development for Business Co-op",
+          "type": "OR_COURSE",
+          "subject": "BUSN",
+          "classId": 1103
+        },
+        {
+          "hour": 0,
+          "description": "Computer Science Fundamental Courses",
+          "type": "HEADER"
+        },
+        {
+          "hour": 5,
+          "type": "AND_COURSE",
+          "description": "Discrete Structures and Seminar for CS 1800",
+          "courses": [
+            {
+              "subject": "CS",
+              "classId": 1800,
+              "description": "Discrete Structures"
+            },
+            {
+              "subject": "CS",
+              "classId": 1802,
+              "description": "Seminar for CS 1800"
+            }
+          ]
+        },
+        {
+          "hour": 5,
+          "type": "AND_COURSE",
+          "description": "Fundamentals of Computer Science 1 and Lab for CS 2500",
+          "courses": [
+            {
+              "subject": "CS",
+              "classId": 2500,
+              "description": "Fundamentals of Computer Science 1"
+            },
+            {
+              "subject": "CS",
+              "classId": 2501,
+              "description": "Lab for CS 2500"
+            }
+          ]
+        },
+        {
+          "hour": 5,
+          "type": "AND_COURSE",
+          "description": "Fundamentals of Computer Science 2 and Lab for CS 2510",
+          "courses": [
+            {
+              "subject": "CS",
+              "classId": 2510,
+              "description": "Fundamentals of Computer Science 2"
+            },
+            {
+              "subject": "CS",
+              "classId": 2511,
+              "description": "Lab for CS 2510"
+            }
+          ]
+        },
+        {
+          "hour": 0,
+          "description": "Computer Science Required Courses",
+          "type": "HEADER"
+        },
+        {
+          "hour": 4,
+          "description": "Algorithms and Data",
+          "type": "PLAIN_COURSE",
+          "subject": "CS",
+          "classId": 3000
+        },
+        {
+          "hour": 4,
+          "description": "Database Design",
+          "type": "PLAIN_COURSE",
+          "subject": "CS",
+          "classId": 3200
+        },
+        {
+          "hour": 5,
+          "type": "AND_COURSE",
+          "description": "Object-Oriented Design and Lab for CS 3500",
+          "courses": [
+            {
+              "subject": "CS",
+              "classId": 3500,
+              "description": "Object-Oriented Design"
+            },
+            {
+              "subject": "CS",
+              "classId": 3501,
+              "description": "Lab for CS 3500"
+            }
+          ]
+        },
+        {
+          "hour": 4,
+          "description": "Software Development",
+          "type": "PLAIN_COURSE",
+          "subject": "CS",
+          "classId": 4500
+        },
+        {
+          "hour": 0,
+          "description": "Fundamentals of Software Engineering",
+          "type": "OR_COURSE",
+          "subject": "CS",
+          "classId": 4530
+        },
+        {
+          "type": "X_OF_MANY",
+          "description": "Complete two of the following:",
+          "hour": 8
+        },
+        {
+          "hour": 0,
+          "description": "Computer Systems",
+          "type": "PLAIN_COURSE",
+          "subject": "CS",
+          "classId": 3650
+        },
+        {
+          "hour": 0,
+          "description": "Networks and Distributed Systems",
+          "type": "PLAIN_COURSE",
+          "subject": "CS",
+          "classId": 3700
+        },
+        {
+          "hour": 0,
+          "description": "Foundations of Data Science",
+          "type": "PLAIN_COURSE",
+          "subject": "DS",
+          "classId": 3000
+        },
+        {
+          "hour": 0,
+          "description": "Information Presentation and Visualization",
+          "type": "PLAIN_COURSE",
+          "subject": "DS",
+          "classId": 4200
+        },
+        {
+          "hour": 0,
+          "description": "Large-Scale Information Storage and Retrieval",
+          "type": "PLAIN_COURSE",
+          "subject": "DS",
+          "classId": 4300
+        },
+        {
+          "hour": 0,
+          "description": "Khoury Elective",
+          "type": "HEADER"
+        },
+        {
+          "hour": 0,
+          "description": "With advisor approval, directed study, research,\n                        project study, and appropriate graduate-level courses\n                        may also be taken as upper-division electives.",
+          "type": "COMMENT"
+        },
+        {
+          "hour": 4,
+          "description": "Complete four credits of CS, CY, DS, or IS classes that\n                        are not already required. Choose courses within the\n                        following ranges:",
+          "type": "COMMENT"
+        },
+        {
+          "hour": 0,
+          "description": "CS 2500\n                          or higher, except\n                          CS 5010",
+          "type": "COMMENT"
+        },
+        {
+          "type": "RANGE_LOWER_BOUNDED_WITH_EXCEPTIONS",
+          "hour": 0,
+          "subject": "CY",
+          "classIdStart": 2000,
+          "exceptions": [
+            {
+              "subject": "CY",
+              "classId": 4930
+            }
+          ]
+        },
+        {
+          "hour": 0,
+          "description": "DS 2500\n                          or higher, except DS 4900",
+          "type": "COMMENT"
+        },
+        {
+          "hour": 0,
+          "description": "IS 2000\n                          or higher, except\n                          IS 4900",
+          "type": "COMMENT"
+        }
+      ],
+      "type": "PRIMARY"
+    },
+    {
+      "description": "Business Courses",
+      "entries": [
+        {
+          "hour": 0,
+          "description": "Required Business Courses",
+          "type": "HEADER"
+        },
+        {
+          "hour": 4,
+          "description": "Financial Accounting and Reporting",
+          "type": "PLAIN_COURSE",
+          "subject": "ACCT",
+          "classId": 1201
+        },
+        {
+          "hour": 4,
+          "description": "Managerial Accounting",
+          "type": "PLAIN_COURSE",
+          "subject": "ACCT",
+          "classId": 2301
+        },
+        {
+          "hour": 4,
+          "description": "Financial Management",
+          "type": "PLAIN_COURSE",
+          "subject": "FINA",
+          "classId": 2201
+        },
+        {
+          "hour": 4,
+          "description": "Organizational Behavior",
+          "type": "PLAIN_COURSE",
+          "subject": "ORGB",
+          "classId": 3201
+        },
+        {
+          "hour": 4,
+          "description": "Introduction to Marketing",
+          "type": "PLAIN_COURSE",
+          "subject": "MKTG",
+          "classId": 2201
+        },
+        {
+          "hour": 4,
+          "description": "Business Statistics",
+          "type": "PLAIN_COURSE",
+          "subject": "MGSC",
+          "classId": 2301
+        },
+        {
+          "hour": 4,
+          "description": "Strategy in Action",
+          "type": "PLAIN_COURSE",
+          "subject": "STRT",
+          "classId": 4501
+        }
+      ],
+      "type": "PRIMARY"
+    },
+    {
+      "description": "Concentration in Accounting",
+      "entries": [
+        {
+          "hour": 0,
+          "description": "Required Courses",
+          "type": "HEADER"
+        },
+        {
+          "hour": 4,
+          "description": "Financial Reporting and Analysis 1",
+          "type": "PLAIN_COURSE",
+          "subject": "ACCT",
+          "classId": 3401
+        },
+        {
+          "hour": 4,
+          "description": "Financial Reporting and Analysis 2",
+          "type": "PLAIN_COURSE",
+          "subject": "ACCT",
+          "classId": 4501
+        },
+        {
+          "hour": 0,
+          "description": "Electives",
+          "type": "HEADER"
+        },
+        {
+          "type": "X_OF_MANY",
+          "description": "Complete two of the following:",
+          "hour": 8
+        },
+        {
+          "hour": 0,
+          "description": "Advisory Services and Emerging Accounting Systems",
+          "type": "PLAIN_COURSE",
+          "subject": "ACCT",
+          "classId": 3403
+        },
+        {
+          "hour": 0,
+          "description": "Strategic Cost Analysis for Decision Making",
+          "type": "PLAIN_COURSE",
+          "subject": "ACCT",
+          "classId": 3416
+        },
+        {
+          "hour": 0,
+          "description": "Auditing and Other Assurance Services",
+          "type": "PLAIN_COURSE",
+          "subject": "ACCT",
+          "classId": 4412
+        },
+        {
+          "hour": 0,
+          "description": "Income Tax Determination and Planning",
+          "type": "PLAIN_COURSE",
+          "subject": "ACCT",
+          "classId": 4414
+        }
+      ],
+      "type": "CONCENTRATION"
+    },
+    {
+      "description": "Concentration in Accounting and Advisory Services",
+      "entries": [
+        {
+          "hour": 0,
+          "description": "Required Courses",
+          "type": "HEADER"
+        },
+        {
+          "hour": 4,
+          "description": "Financial Reporting and Financial Statement Analysis",
+          "type": "PLAIN_COURSE",
+          "subject": "ACCT",
+          "classId": 3402
+        },
+        {
+          "hour": 4,
+          "description": "Advisory Services and Emerging Accounting Systems",
+          "type": "PLAIN_COURSE",
+          "subject": "ACCT",
+          "classId": 3403
+        },
+        {
+          "hour": 4,
+          "description": "Data Analytics for Advisory Services",
+          "type": "PLAIN_COURSE",
+          "subject": "ACCT",
+          "classId": 5220
+        },
+        {
+          "hour": 0,
+          "description": "Elective",
+          "type": "HEADER"
+        },
+        {
+          "hour": 4,
+          "description": "Complete one of the following:",
+          "type": "SECTION_INFO",
+          "parsedCount": 1
+        },
+        {
+          "hour": 0,
+          "description": "Strategic Cost Analysis for Decision Making",
+          "type": "PLAIN_COURSE",
+          "subject": "ACCT",
+          "classId": 3416
+        },
+        {
+          "hour": 0,
+          "description": "Income Tax Determination and Planning",
+          "type": "PLAIN_COURSE",
+          "subject": "ACCT",
+          "classId": 4414
+        }
+      ],
+      "type": "CONCENTRATION"
+    },
+    {
+      "description": "Concentration in Brand Management",
+      "entries": [
+        {
+          "hour": 0,
+          "description": "Required Course",
+          "type": "HEADER"
+        },
+        {
+          "hour": 4,
+          "description": "Brand Management",
+          "type": "PLAIN_COURSE",
+          "subject": "MKTG",
+          "classId": 3720
+        },
+        {
+          "hour": 0,
+          "description": "Electives",
+          "type": "HEADER"
+        },
+        {
+          "hour": 12,
+          "description": "Complete three electives, with at least 8 credits from\n                        MKTG courses:",
+          "type": "COMMENT"
+        },
+        {
+          "hour": 0,
+          "description": "Innovation!",
+          "type": "PLAIN_COURSE",
+          "subject": "ENTR",
+          "classId": 2301
+        },
+        {
+          "hour": 0,
+          "description": "Project Management",
+          "type": "PLAIN_COURSE",
+          "subject": "MGMT",
+          "classId": 3530
+        },
+        {
+          "hour": 0,
+          "description": "Enabling Technologies for Consumer Engagement",
+          "type": "PLAIN_COURSE",
+          "subject": "MKTG",
+          "classId": 2720
+        },
+        {
+          "hour": 0,
+          "description": "Marketing Research",
+          "type": "PLAIN_COURSE",
+          "subject": "MKTG",
+          "classId": 3401
+        },
+        {
+          "hour": 0,
+          "description": "Gaining Insights from Consumer Data",
+          "type": "OR_COURSE",
+          "subject": "MKTG",
+          "classId": 3402
+        },
+        {
+          "hour": 0,
+          "description": "Managing Customer Engagement in a Service World",
+          "type": "PLAIN_COURSE",
+          "subject": "MKTG",
+          "classId": 4502
+        },
+        {
+          "hour": 0,
+          "description": "Advertising and Brand Promotion",
+          "type": "PLAIN_COURSE",
+          "subject": "MKTG",
+          "classId": 4504
+        },
+        {
+          "hour": 0,
+          "description": "Consumer Behavior",
+          "type": "PLAIN_COURSE",
+          "subject": "MKTG",
+          "classId": 4506
+        },
+        {
+          "hour": 0,
+          "description": "New Product Development",
+          "type": "PLAIN_COURSE",
+          "subject": "MKTG",
+          "classId": 4510
+        },
+        {
+          "hour": 0,
+          "description": "Design Thinking for Startups",
+          "type": "OR_COURSE",
+          "subject": "ENTR",
+          "classId": 3330
+        },
+        {
+          "hour": 0,
+          "description": "Product Innovation and Portfolio Management",
+          "type": "OR_COURSE",
+          "subject": "ENTR",
+          "classId": 3335
+        },
+        {
+          "hour": 0,
+          "description": "Understanding the Platform Economy",
+          "type": "PLAIN_COURSE",
+          "subject": "MKTG",
+          "classId": 4720
+        },
+        {
+          "hour": 0,
+          "description": "A maximum of one course may be applied to requirements\n                        of a second concentration.",
+          "type": "COMMENT"
+        }
+      ],
+      "type": "CONCENTRATION"
+    },
+    {
+      "description": "Concentration in Business Analytics",
+      "entries": [
+        {
+          "hour": 0,
+          "description": "Only one course may double count between another\n                        concentration or minor.",
+          "type": "COMMENT"
+        },
+        {
+          "hour": 0,
+          "description": "Required Courses",
+          "type": "HEADER"
+        },
+        {
+          "hour": 4,
+          "description": "Fundamentals of Information Analytics",
+          "type": "PLAIN_COURSE",
+          "subject": "MISM",
+          "classId": 2510
+        },
+        {
+          "hour": 4,
+          "description": "Data Management in the Enterprise",
+          "type": "PLAIN_COURSE",
+          "subject": "MISM",
+          "classId": 3403
+        },
+        {
+          "hour": 0,
+          "description": "Data Wrangling for Business Analytics",
+          "type": "OR_COURSE",
+          "subject": "MISM",
+          "classId": 3405
+        },
+        {
+          "hour": 4,
+          "description": "Information Visualization for Business",
+          "type": "PLAIN_COURSE",
+          "subject": "MISM",
+          "classId": 3501
+        },
+        {
+          "hour": 0,
+          "description": "Elective",
+          "type": "HEADER"
+        },
+        {
+          "hour": 4,
+          "description": "Complete one of the following:",
+          "type": "SECTION_INFO",
+          "parsedCount": 1
+        },
+        {
+          "hour": 0,
+          "description": "Data Mining for Business",
+          "type": "PLAIN_COURSE",
+          "subject": "MISM",
+          "classId": 3515
+        },
+        {
+          "hour": 0,
+          "description": "Modeling for Business Analytics",
+          "type": "PLAIN_COURSE",
+          "subject": "MISM",
+          "classId": 3525
+        },
+        {
+          "hour": 0,
+          "description": "Special Topics in Management Information Systems",
+          "type": "PLAIN_COURSE",
+          "subject": "MISM",
+          "classId": 4983
+        }
+      ],
+      "type": "CONCENTRATION"
+    },
+    {
+      "description": "Concentration in Corporate Innovation",
+      "entries": [
+        {
+          "hour": 0,
+          "description": "Required Courses",
+          "type": "HEADER"
+        },
+        {
+          "hour": 4,
+          "description": "Innovation!",
+          "type": "PLAIN_COURSE",
+          "subject": "ENTR",
+          "classId": 2301
+        },
+        {
+          "hour": 4,
+          "description": "Corporate Innovation Seminar",
+          "type": "PLAIN_COURSE",
+          "subject": "ENTR",
+          "classId": 4504
+        },
+        {
+          "hour": 0,
+          "description": "Electives",
+          "type": "HEADER"
+        },
+        {
+          "hour": 8,
+          "description": "Complete two electives, one of which may come from the\n                        additional electives list:",
+          "type": "COMMENT"
+        },
+        {
+          "hour": 0,
+          "description": "Industry Disruption and Corporate Transformation",
+          "type": "PLAIN_COURSE",
+          "subject": "ENTR",
+          "classId": 2304
+        },
+        {
+          "hour": 0,
+          "description": "Product Innovation and Portfolio Management",
+          "type": "PLAIN_COURSE",
+          "subject": "ENTR",
+          "classId": 3335
+        },
+        {
+          "hour": 0,
+          "description": "Growth, Acquisitions, and Alliances",
+          "type": "PLAIN_COURSE",
+          "subject": "ENTR",
+          "classId": 4225
+        },
+        {
+          "hour": 0,
+          "description": "Additional Electives",
+          "type": "SUBSUBHEADER"
+        },
+        {
+          "hour": 0,
+          "description": "Global Social Enterprise",
+          "type": "PLAIN_COURSE",
+          "subject": "ENTR",
+          "classId": 2206
+        },
+        {
+          "hour": 0,
+          "description": "Understanding Family Enterprise",
+          "type": "PLAIN_COURSE",
+          "subject": "ENTR",
+          "classId": 2215
+        },
+        {
+          "hour": 0,
+          "description": "Marketing Strategies for Startups",
+          "type": "PLAIN_COURSE",
+          "subject": "ENTR",
+          "classId": 2303
+        },
+        {
+          "hour": 0,
+          "description": "Special Topics in Entrepreneurship",
+          "type": "PLAIN_COURSE",
+          "subject": "ENTR",
+          "classId": 4983
+        },
+        {
+          "hour": 0,
+          "description": "Entrepreneurial Finance and Private Equity",
+          "type": "PLAIN_COURSE",
+          "subject": "FINA",
+          "classId": 4610
+        },
+        {
+          "hour": 0,
+          "description": "Negotiating in Business",
+          "type": "PLAIN_COURSE",
+          "subject": "MGMT",
+          "classId": 3302
+        },
+        {
+          "hour": 0,
+          "description": "Healthcare Management, Innovation, and Design",
+          "type": "PLAIN_COURSE",
+          "subject": "MGMT",
+          "classId": 3340
+        },
+        {
+          "hour": 0,
+          "description": "Project Management",
+          "type": "PLAIN_COURSE",
+          "subject": "MGMT",
+          "classId": 3530
+        },
+        {
+          "hour": 0,
+          "description": "Strategic Analysis and Decision Making",
+          "type": "PLAIN_COURSE",
+          "subject": "STRT",
+          "classId": 4301
+        },
+        {
+          "hour": 0,
+          "description": "One course from an approved Dialogue may count toward a\n                        concentration elective.",
+          "type": "COMMENT"
+        }
+      ],
+      "type": "CONCENTRATION"
+    },
+    {
+      "description": "Concentration in Entrepreneurial Startups",
+      "entries": [
+        {
+          "hour": 0,
+          "description": "Required Courses",
+          "type": "HEADER"
+        },
+        {
+          "hour": 4,
+          "description": "Innovation!",
+          "type": "PLAIN_COURSE",
+          "subject": "ENTR",
+          "classId": 2301
+        },
+        {
+          "hour": 4,
+          "description": "Entrepreneurship Seminar",
+          "type": "PLAIN_COURSE",
+          "subject": "ENTR",
+          "classId": 4501
+        },
+        {
+          "hour": 0,
+          "description": "Electives",
+          "type": "HEADER"
+        },
+        {
+          "hour": 8,
+          "description": "Complete two electives, one of which may come from the\n                        Additional Electives list:",
+          "type": "COMMENT"
+        },
+        {
+          "hour": 0,
+          "description": "Marketing Strategies for Startups",
+          "type": "PLAIN_COURSE",
+          "subject": "ENTR",
+          "classId": 2303
+        },
+        {
+          "hour": 0,
+          "description": "Business Model Innovation for Entrepreneurs",
+          "type": "PLAIN_COURSE",
+          "subject": "ENTR",
+          "classId": 3305
+        },
+        {
+          "hour": 0,
+          "description": "Design Thinking for Startups",
+          "type": "PLAIN_COURSE",
+          "subject": "ENTR",
+          "classId": 3330
+        },
+        {
+          "hour": 0,
+          "description": "Additional Electives",
+          "type": "SUBSUBHEADER"
+        },
+        {
+          "hour": 0,
+          "description": "Global Social Enterprise",
+          "type": "PLAIN_COURSE",
+          "subject": "ENTR",
+          "classId": 2206
+        },
+        {
+          "hour": 0,
+          "description": "Understanding Family Enterprise",
+          "type": "PLAIN_COURSE",
+          "subject": "ENTR",
+          "classId": 2215
+        },
+        {
+          "hour": 0,
+          "description": "Industry Disruption and Corporate Transformation",
+          "type": "PLAIN_COURSE",
+          "subject": "ENTR",
+          "classId": 2304
+        },
+        {
+          "hour": 0,
+          "description": "Entrepreneurial Venture Growth Strategies",
+          "type": "PLAIN_COURSE",
+          "subject": "ENTR",
+          "classId": 4505
+        },
+        {
+          "hour": 0,
+          "description": "Special Topics in Entrepreneurship",
+          "type": "PLAIN_COURSE",
+          "subject": "ENTR",
+          "classId": 4983
+        },
+        {
+          "hour": 0,
+          "description": "Entrepreneurial Finance and Private Equity",
+          "type": "PLAIN_COURSE",
+          "subject": "FINA",
+          "classId": 4610
+        },
+        {
+          "hour": 0,
+          "description": "Negotiating in Business",
+          "type": "PLAIN_COURSE",
+          "subject": "MGMT",
+          "classId": 3302
+        },
+        {
+          "hour": 0,
+          "description": "One course from an approved Dialogue may count toward\n                        an elective.",
+          "type": "COMMENT"
+        }
+      ],
+      "type": "CONCENTRATION"
+    },
+    {
+      "description": "Concentration in Family Business",
+      "entries": [
+        {
+          "hour": 0,
+          "description": "Required Courses",
+          "type": "HEADER"
+        },
+        {
+          "hour": 4,
+          "description": "Innovation!",
+          "type": "PLAIN_COURSE",
+          "subject": "ENTR",
+          "classId": 2301
+        },
+        {
+          "hour": 4,
+          "description": "Owner and Family Managed Business Seminar",
+          "type": "PLAIN_COURSE",
+          "subject": "ENTR",
+          "classId": 4503
+        },
+        {
+          "hour": 0,
+          "description": "Electives",
+          "type": "HEADER"
+        },
+        {
+          "hour": 8,
+          "description": "Complete two electives, one of which may come from the\n                        Additional Elective list:",
+          "type": "COMMENT"
+        },
+        {
+          "hour": 0,
+          "description": "Understanding Family Enterprise",
+          "type": "PLAIN_COURSE",
+          "subject": "ENTR",
+          "classId": 2215
+        },
+        {
+          "hour": 0,
+          "description": "Managing and Growing the Family Business",
+          "type": "PLAIN_COURSE",
+          "subject": "ENTR",
+          "classId": 3302
+        },
+        {
+          "hour": 0,
+          "description": "Consulting Operations Growth in SMEs",
+          "type": "PLAIN_COURSE",
+          "subject": "ENTR",
+          "classId": 3401
+        },
+        {
+          "hour": 0,
+          "description": "Additional Electives",
+          "type": "SUBSUBHEADER"
+        },
+        {
+          "hour": 0,
+          "description": "Global Social Enterprise",
+          "type": "PLAIN_COURSE",
+          "subject": "ENTR",
+          "classId": 2206
+        },
+        {
+          "hour": 0,
+          "description": "Marketing Strategies for Startups",
+          "type": "PLAIN_COURSE",
+          "subject": "ENTR",
+          "classId": 2303
+        },
+        {
+          "hour": 0,
+          "description": "Industry Disruption and Corporate Transformation",
+          "type": "PLAIN_COURSE",
+          "subject": "ENTR",
+          "classId": 2304
+        },
+        {
+          "hour": 0,
+          "description": "Special Topics in Entrepreneurship",
+          "type": "PLAIN_COURSE",
+          "subject": "ENTR",
+          "classId": 4983
+        },
+        {
+          "hour": 0,
+          "description": "Entrepreneurial Finance and Private Equity",
+          "type": "PLAIN_COURSE",
+          "subject": "FINA",
+          "classId": 4610
+        },
+        {
+          "hour": 0,
+          "description": "Negotiating in Business",
+          "type": "PLAIN_COURSE",
+          "subject": "MGMT",
+          "classId": 3302
+        },
+        {
+          "hour": 0,
+          "description": "Students may use one course from an approved Dialogue\n                        experience toward the elective area of the\n                        concentration.",
+          "type": "COMMENT"
+        }
+      ],
+      "type": "CONCENTRATION"
+    },
+    {
+      "description": "Concentration in Finance",
+      "entries": [
+        {
+          "hour": 0,
+          "description": "Required Course",
+          "type": "HEADER"
+        },
+        {
+          "hour": 4,
+          "description": "Corporate Finance",
+          "type": "PLAIN_COURSE",
+          "subject": "FINA",
+          "classId": 3301
+        },
+        {
+          "hour": 0,
+          "description": "Investments",
+          "type": "OR_COURSE",
+          "subject": "FINA",
+          "classId": 3303
+        },
+        {
+          "hour": 0,
+          "description": "Electives",
+          "type": "HEADER"
+        },
+        {
+          "type": "X_OF_MANY",
+          "description": "Complete three of the following:",
+          "hour": 12
+        },
+        {
+          "hour": 0,
+          "description": "Impact Investing and Social Finance",
+          "type": "PLAIN_COURSE",
+          "subject": "ENTR",
+          "classId": 3520
+        },
+        {
+          "hour": 0,
+          "description": "Sustainability in the Business Environment",
+          "type": "OR_COURSE",
+          "subject": "FINA",
+          "classId": 2720
+        },
+        {
+          "hour": 0,
+          "description": "Fintech and Financial Innovation",
+          "type": "PLAIN_COURSE",
+          "subject": "FINA",
+          "classId": 2730
+        },
+        {
+          "hour": 0,
+          "description": "Corporate Finance (if not selected as a required course)",
+          "type": "PLAIN_COURSE",
+          "subject": "FINA",
+          "classId": 3301
+        },
+        {
+          "hour": 0,
+          "description": "Investments (if not selected as a required course)",
+          "type": "PLAIN_COURSE",
+          "subject": "FINA",
+          "classId": 3303
+        },
+        {
+          "hour": 0,
+          "description": "Portfolio Management",
+          "type": "PLAIN_COURSE",
+          "subject": "FINA",
+          "classId": 4219
+        },
+        {
+          "hour": 0,
+          "description": "Behavioral Finance",
+          "type": "PLAIN_COURSE",
+          "subject": "FINA",
+          "classId": 4220
+        },
+        {
+          "hour": 0,
+          "description": "Working Capital Management",
+          "type": "PLAIN_COURSE",
+          "subject": "FINA",
+          "classId": 4310
+        },
+        {
+          "hour": 0,
+          "description": "Issues in Corporate Governance",
+          "type": "PLAIN_COURSE",
+          "subject": "FINA",
+          "classId": 4312
+        },
+        {
+          "hour": 0,
+          "description": "International Financial Management",
+          "type": "PLAIN_COURSE",
+          "subject": "FINA",
+          "classId": 4320
+        },
+        {
+          "hour": 0,
+          "description": "Emerging Financial Markets",
+          "type": "PLAIN_COURSE",
+          "subject": "FINA",
+          "classId": 4330
+        },
+        {
+          "hour": 0,
+          "description": "Blockchain Applications in Finance",
+          "type": "PLAIN_COURSE",
+          "subject": "FINA",
+          "classId": 4340
+        },
+        {
+          "hour": 0,
+          "description": "Applied Financial Econometrics",
+          "type": "PLAIN_COURSE",
+          "subject": "FINA",
+          "classId": 4350
+        },
+        {
+          "hour": 0,
+          "description": "Financial Modeling",
+          "type": "PLAIN_COURSE",
+          "subject": "FINA",
+          "classId": 4370
+        },
+        {
+          "hour": 0,
+          "description": "Financial Data Analytics",
+          "type": "PLAIN_COURSE",
+          "subject": "FINA",
+          "classId": 4380
+        },
+        {
+          "hour": 0,
+          "description": "Machine Learning in Finance",
+          "type": "PLAIN_COURSE",
+          "subject": "FINA",
+          "classId": 4390
+        },
+        {
+          "hour": 0,
+          "description": "Valuation and Value Creation",
+          "type": "PLAIN_COURSE",
+          "subject": "FINA",
+          "classId": 4410
+        },
+        {
+          "hour": 0,
+          "description": "Personal Financial Planning",
+          "type": "PLAIN_COURSE",
+          "subject": "FINA",
+          "classId": 4412
+        },
+        {
+          "hour": 0,
+          "description": "Mergers and Acquisitions",
+          "type": "PLAIN_COURSE",
+          "subject": "FINA",
+          "classId": 4420
+        },
+        {
+          "hour": 0,
+          "description": "Financial Risk Management",
+          "type": "PLAIN_COURSE",
+          "subject": "FINA",
+          "classId": 4512
+        },
+        {
+          "hour": 0,
+          "description": "Investment Banking",
+          "type": "PLAIN_COURSE",
+          "subject": "FINA",
+          "classId": 4514
+        },
+        {
+          "hour": 0,
+          "description": "Real Estate Finance",
+          "type": "PLAIN_COURSE",
+          "subject": "FINA",
+          "classId": 4516
+        },
+        {
+          "hour": 0,
+          "description": "Credit Analysis",
+          "type": "PLAIN_COURSE",
+          "subject": "FINA",
+          "classId": 4524
+        },
+        {
+          "hour": 0,
+          "description": "Core Topics in Alternative Investments",
+          "type": "PLAIN_COURSE",
+          "subject": "FINA",
+          "classId": 4526
+        },
+        {
+          "hour": 0,
+          "description": "Turnaround Management",
+          "type": "PLAIN_COURSE",
+          "subject": "FINA",
+          "classId": 4602
+        },
+        {
+          "hour": 0,
+          "description": "Fixed-Income Securities",
+          "type": "PLAIN_COURSE",
+          "subject": "FINA",
+          "classId": 4604
+        },
+        {
+          "hour": 0,
+          "description": "Advanced Financial Strategy",
+          "type": "PLAIN_COURSE",
+          "subject": "FINA",
+          "classId": 4608
+        },
+        {
+          "hour": 0,
+          "description": "Entrepreneurial Finance and Private Equity",
+          "type": "PLAIN_COURSE",
+          "subject": "FINA",
+          "classId": 4610
+        },
+        {
+          "hour": 0,
+          "description": "Special Topics in Finance",
+          "type": "PLAIN_COURSE",
+          "subject": "FINA",
+          "classId": 4983
+        }
+      ],
+      "type": "CONCENTRATION"
+    },
+    {
+      "description": "Concentration in Fintech",
+      "entries": [
+        {
+          "hour": 0,
+          "description": "Required Courses",
+          "type": "HEADER"
+        },
+        {
+          "hour": 4,
+          "description": "Investments",
+          "type": "PLAIN_COURSE",
+          "subject": "FINA",
+          "classId": 3303
+        },
+        {
+          "hour": 0,
+          "description": "Corporate Finance",
+          "type": "OR_COURSE",
+          "subject": "FINA",
+          "classId": 3301
+        },
+        {
+          "hour": 4,
+          "description": "Financial Data Analytics",
+          "type": "PLAIN_COURSE",
+          "subject": "FINA",
+          "classId": 4380
+        },
+        {
+          "hour": 0,
+          "description": "Electives",
+          "type": "HEADER"
+        },
+        {
+          "type": "X_OF_MANY",
+          "description": "Complete two of the following:",
+          "hour": 8
+        },
+        {
+          "hour": 0,
+          "description": "Fintech and Financial Innovation",
+          "type": "PLAIN_COURSE",
+          "subject": "FINA",
+          "classId": 2730
+        },
+        {
+          "hour": 0,
+          "description": "Blockchain Applications in Finance",
+          "type": "PLAIN_COURSE",
+          "subject": "FINA",
+          "classId": 4340
+        },
+        {
+          "hour": 0,
+          "description": "Applied Financial Econometrics",
+          "type": "PLAIN_COURSE",
+          "subject": "FINA",
+          "classId": 4350
+        },
+        {
+          "hour": 0,
+          "description": "Machine Learning in Finance",
+          "type": "PLAIN_COURSE",
+          "subject": "FINA",
+          "classId": 4390
+        }
+      ],
+      "type": "CONCENTRATION"
+    },
+    {
+      "description": "Concentration in Healthcare Management and Consulting",
+      "entries": [
+        {
+          "hour": 0,
+          "description": "Required Courses",
+          "type": "HEADER"
+        },
+        {
+          "hour": 4,
+          "description": "Healthcare Management, Innovation, and Design",
+          "type": "PLAIN_COURSE",
+          "subject": "MGMT",
+          "classId": 3340
+        },
+        {
+          "hour": 4,
+          "description": "Managing Healthcare Operations and Supply Chain",
+          "type": "PLAIN_COURSE",
+          "subject": "SCHM",
+          "classId": 3315
+        },
+        {
+          "hour": 0,
+          "description": "Implementation/Consulting Elective",
+          "type": "HEADER"
+        },
+        {
+          "hour": 4,
+          "description": "Complete one of the following:",
+          "type": "SECTION_INFO",
+          "parsedCount": 1
+        },
+        {
+          "hour": 0,
+          "description": "The Consulting Environment",
+          "type": "PLAIN_COURSE",
+          "subject": "BUSN",
+          "classId": 3110
+        },
+        {
+          "hour": 0,
+          "description": "International Entrepreneurship and Innovation Consulting",
+          "type": "PLAIN_COURSE",
+          "subject": "ENTR",
+          "classId": 3220
+        },
+        {
+          "hour": 0,
+          "description": "Negotiating in Business",
+          "type": "PLAIN_COURSE",
+          "subject": "MGMT",
+          "classId": 3302
+        },
+        {
+          "hour": 0,
+          "description": "Information Visualization for Business",
+          "type": "PLAIN_COURSE",
+          "subject": "MISM",
+          "classId": 3501
+        },
+        {
+          "hour": 0,
+          "description": "Data Mining for Business",
+          "type": "PLAIN_COURSE",
+          "subject": "MISM",
+          "classId": 3515
+        },
+        {
+          "hour": 0,
+          "description": "Managing Organizational Change and Disruption",
+          "type": "PLAIN_COURSE",
+          "subject": "MGMT",
+          "classId": 3315
+        },
+        {
+          "hour": 0,
+          "description": "Project Management",
+          "type": "PLAIN_COURSE",
+          "subject": "MGMT",
+          "classId": 3530
+        },
+        {
+          "hour": 0,
+          "description": "Managing Human Capital",
+          "type": "PLAIN_COURSE",
+          "subject": "MGMT",
+          "classId": 3420
+        },
+        {
+          "hour": 0,
+          "description": "Workforce Analytics",
+          "type": "PLAIN_COURSE",
+          "subject": "MGMT",
+          "classId": 4410
+        },
+        {
+          "hour": 0,
+          "description": "Management Consulting in Organizations",
+          "type": "PLAIN_COURSE",
+          "subject": "MGMT",
+          "classId": 4550
+        },
+        {
+          "hour": 0,
+          "description": "Interdisciplinary Healthcare Focus",
+          "type": "HEADER"
+        },
+        {
+          "hour": 4,
+          "description": "Complete one of the following:",
+          "type": "SECTION_INFO",
+          "parsedCount": 1
+        },
+        {
+          "hour": 0,
+          "description": "Health Communication",
+          "type": "PLAIN_COURSE",
+          "subject": "COMM",
+          "classId": 3201
+        },
+        {
+          "hour": 0,
+          "description": "Consultation Skills",
+          "type": "PLAIN_COURSE",
+          "subject": "COMM",
+          "classId": 4533
+        },
+        {
+          "hour": 0,
+          "description": "Research Methods for Human Services",
+          "type": "PLAIN_COURSE",
+          "subject": "HUSV",
+          "classId": 2970
+        },
+        {
+          "hour": 0,
+          "description": "Introduction to Healthcare Systems Engineering",
+          "type": "PLAIN_COURSE",
+          "subject": "IE",
+          "classId": 3500
+        },
+        {
+          "hour": 0,
+          "description": "Healthcare Policy and Administration",
+          "type": "PLAIN_COURSE",
+          "subject": "PHTH",
+          "classId": 2515
+        },
+        {
+          "hour": 0,
+          "description": "Critical Issues in Health and Public-Health Policy",
+          "type": "PLAIN_COURSE",
+          "subject": "PHTH",
+          "classId": 4515
+        },
+        {
+          "hour": 0,
+          "description": "Sociology of Human Service Organizations",
+          "type": "PLAIN_COURSE",
+          "subject": "SOCL",
+          "classId": 3440
+        },
+        {
+          "hour": 0,
+          "description": "Sociology of Health and Illness",
+          "type": "PLAIN_COURSE",
+          "subject": "SOCL",
+          "classId": 3441
+        }
+      ],
+      "type": "CONCENTRATION"
+    },
+    {
+      "description": "Concentration in International Business",
+      "entries": [
+        {
+          "hour": 0,
+          "description": "Required Courses",
+          "type": "HEADER"
+        },
+        {
+          "hour": 4,
+          "description": "International Business and Global Social Responsibility",
+          "type": "PLAIN_COURSE",
+          "subject": "INTB",
+          "classId": 1203
+        },
+        {
+          "hour": 0,
+          "description": "International Business and Global Social Responsibility",
+          "type": "OR_COURSE",
+          "subject": "INTB",
+          "classId": 1209
+        },
+        {
+          "hour": 4,
+          "description": "Complete one or both of the following:",
+          "type": "COMMENT"
+        },
+        {
+          "hour": 0,
+          "description": "Competing to Win in Emerging Markets",
+          "type": "PLAIN_COURSE",
+          "subject": "INTB",
+          "classId": 2501
+        },
+        {
+          "hour": 0,
+          "description": "Cultural Aspects of International Business",
+          "type": "PLAIN_COURSE",
+          "subject": "INTB",
+          "classId": 3310
+        },
+        {
+          "hour": 0,
+          "description": "Electives",
+          "type": "HEADER"
+        },
+        {
+          "hour": 4,
+          "description": "Complete two of the following courses (one if both\n                        courses above selected).",
+          "type": "COMMENT"
+        },
+        {
+          "hour": 0,
+          "description": "Note: One course can also count toward a different\n                        business concentration.",
+          "type": "COMMENT"
+        },
+        {
+          "hour": 0,
+          "description": "Managing Internationally",
+          "type": "SUBSUBHEADER"
+        },
+        {
+          "hour": 0,
+          "description": "Understanding and Managing Cultural Differences",
+          "type": "PLAIN_COURSE",
+          "subject": "INTB",
+          "classId": 3205
+        },
+        {
+          "hour": 0,
+          "description": "International Business Management and Environment",
+          "type": "PLAIN_COURSE",
+          "subject": "INTB",
+          "classId": 3320
+        },
+        {
+          "hour": 0,
+          "description": "Executing Global Strategy",
+          "type": "PLAIN_COURSE",
+          "subject": "INTB",
+          "classId": 4202
+        },
+        {
+          "hour": 0,
+          "description": "Special Topics in International Business",
+          "type": "PLAIN_COURSE",
+          "subject": "INTB",
+          "classId": 4983
+        },
+        {
+          "hour": 0,
+          "description": "International Functional Knowledge",
+          "type": "SUBSUBHEADER"
+        },
+        {
+          "hour": 0,
+          "description": "Global Social Enterprise",
+          "type": "PLAIN_COURSE",
+          "subject": "ENTR",
+          "classId": 2206
+        },
+        {
+          "hour": 0,
+          "description": "Global Entrepreneurship",
+          "type": "PLAIN_COURSE",
+          "subject": "ENTR",
+          "classId": 3306
+        },
+        {
+          "hour": 0,
+          "description": "International Financial Management",
+          "type": "PLAIN_COURSE",
+          "subject": "FINA",
+          "classId": 4320
+        },
+        {
+          "hour": 0,
+          "description": "International Marketing",
+          "type": "PLAIN_COURSE",
+          "subject": "MKTG",
+          "classId": 4512
+        },
+        {
+          "hour": 0,
+          "description": "Global Supply Chain Strategy",
+          "type": "PLAIN_COURSE",
+          "subject": "SCHM",
+          "classId": 3301
+        },
+        {
+          "hour": 0,
+          "description": "Electives not listed may be approved via the\n                        undergraduate dean’s office.",
+          "type": "COMMENT"
+        }
+      ],
+      "type": "CONCENTRATION"
+    },
+    {
+      "description": "Concentration in Management",
+      "entries": [
+        {
+          "hour": 0,
+          "description": "Required Course",
+          "type": "HEADER"
+        },
+        {
+          "hour": 4,
+          "description": "Management Consulting in Organizations",
+          "type": "PLAIN_COURSE",
+          "subject": "MGMT",
+          "classId": 4550
+        },
+        {
+          "hour": 0,
+          "description": "Electives",
+          "type": "HEADER"
+        },
+        {
+          "hour": 0,
+          "description": "Note: Only one non-MGMT course may be used as an\n                        elective.",
+          "type": "COMMENT"
+        },
+        {
+          "type": "X_OF_MANY",
+          "description": "Complete three of the following:",
+          "hour": 12
+        },
+        {
+          "hour": 0,
+          "description": "Understanding Family Enterprise",
+          "type": "PLAIN_COURSE",
+          "subject": "ENTR",
+          "classId": 2215
+        },
+        {
+          "hour": 0,
+          "description": "Social Responsibility of Business in an Age of Inequality",
+          "type": "PLAIN_COURSE",
+          "subject": "ENTR",
+          "classId": 2414
+        },
+        {
+          "hour": 0,
+          "description": "Growth, Acquisitions, and Alliances",
+          "type": "PLAIN_COURSE",
+          "subject": "ENTR",
+          "classId": 4225
+        },
+        {
+          "hour": 0,
+          "description": "Negotiating in Business",
+          "type": "PLAIN_COURSE",
+          "subject": "MGMT",
+          "classId": 3302
+        },
+        {
+          "hour": 0,
+          "description": "Power and Influence",
+          "type": "PLAIN_COURSE",
+          "subject": "MGMT",
+          "classId": 3305
+        },
+        {
+          "hour": 0,
+          "description": "Managing Organizational Change and Disruption",
+          "type": "PLAIN_COURSE",
+          "subject": "MGMT",
+          "classId": 3315
+        },
+        {
+          "hour": 0,
+          "description": "Healthcare Management, Innovation, and Design",
+          "type": "PLAIN_COURSE",
+          "subject": "MGMT",
+          "classId": 3340
+        },
+        {
+          "hour": 0,
+          "description": "Managing a Diverse Workforce",
+          "type": "PLAIN_COURSE",
+          "subject": "MGMT",
+          "classId": 3350
+        },
+        {
+          "hour": 0,
+          "description": "Law and the Legal Process",
+          "type": "PLAIN_COURSE",
+          "subject": "MGMT",
+          "classId": 3360
+        },
+        {
+          "hour": 0,
+          "description": "Leading with Character",
+          "type": "PLAIN_COURSE",
+          "subject": "MGMT",
+          "classId": 3380
+        },
+        {
+          "hour": 0,
+          "description": "Managing Human Capital",
+          "type": "PLAIN_COURSE",
+          "subject": "MGMT",
+          "classId": 3420
+        },
+        {
+          "hour": 0,
+          "description": "Social Networks and Organizations",
+          "type": "PLAIN_COURSE",
+          "subject": "MGMT",
+          "classId": 3435
+        },
+        {
+          "hour": 0,
+          "description": "Project Management",
+          "type": "PLAIN_COURSE",
+          "subject": "MGMT",
+          "classId": 3530
+        },
+        {
+          "hour": 0,
+          "description": "The Management Practices of Great Organizations",
+          "type": "PLAIN_COURSE",
+          "subject": "MGMT",
+          "classId": 4310
+        },
+        {
+          "hour": 0,
+          "description": "Workforce Analytics",
+          "type": "PLAIN_COURSE",
+          "subject": "MGMT",
+          "classId": 4410
+        },
+        {
+          "hour": 0,
+          "description": "Special Topics in Management",
+          "type": "PLAIN_COURSE",
+          "subject": "MGMT",
+          "classId": 4983
+        }
+      ],
+      "type": "CONCENTRATION"
+    },
+    {
+      "description": "Concentration in Marketing",
+      "entries": [
+        {
+          "hour": 0,
+          "description": "Required Courses",
+          "type": "HEADER"
+        },
+        {
+          "hour": 4,
+          "description": "Quantitative Analysis of Consumer Data",
+          "type": "PLAIN_COURSE",
+          "subject": "MKTG",
+          "classId": 2602
+        },
+        {
+          "hour": 0,
+          "description": "Marketing Research",
+          "type": "OR_COURSE",
+          "subject": "MKTG",
+          "classId": 3401
+        },
+        {
+          "hour": 0,
+          "description": "Electives",
+          "type": "HEADER"
+        },
+        {
+          "type": "X_OF_MANY",
+          "description": "Complete three of the following:",
+          "hour": 12
+        },
+        {
+          "hour": 0,
+          "description": "Marketing and Society",
+          "type": "PLAIN_COURSE",
+          "subject": "MKTG",
+          "classId": 2301
+        },
+        {
+          "hour": 0,
+          "description": "Quantitative Analysis of Consumer Data (if not taken as a\n                      required course)",
+          "type": "PLAIN_COURSE",
+          "subject": "MKTG",
+          "classId": 2602
+        },
+        {
+          "hour": 0,
+          "description": "Enabling Technologies for Consumer Engagement",
+          "type": "PLAIN_COURSE",
+          "subject": "MKTG",
+          "classId": 2720
+        },
+        {
+          "hour": 0,
+          "description": "Marketing Management",
+          "type": "PLAIN_COURSE",
+          "subject": "MKTG",
+          "classId": 3301
+        },
+        {
+          "hour": 0,
+          "description": "Marketing Research (if not taken as a required course)",
+          "type": "PLAIN_COURSE",
+          "subject": "MKTG",
+          "classId": 3401
+        },
+        {
+          "hour": 0,
+          "description": "Gaining Insights from Consumer Data",
+          "type": "PLAIN_COURSE",
+          "subject": "MKTG",
+          "classId": 3402
+        },
+        {
+          "hour": 0,
+          "description": "Marketing Analytics",
+          "type": "PLAIN_COURSE",
+          "subject": "MKTG",
+          "classId": 3501
+        },
+        {
+          "hour": 0,
+          "description": "Brand Management",
+          "type": "PLAIN_COURSE",
+          "subject": "MKTG",
+          "classId": 3720
+        },
+        {
+          "hour": 0,
+          "description": "Undergraduate Research Practicum in Marketing",
+          "type": "PLAIN_COURSE",
+          "subject": "MKTG",
+          "classId": 4120
+        },
+        {
+          "hour": 0,
+          "description": "Sales Management",
+          "type": "PLAIN_COURSE",
+          "subject": "MKTG",
+          "classId": 4420
+        },
+        {
+          "hour": 0,
+          "description": "Managing Customer Engagement in a Service World",
+          "type": "PLAIN_COURSE",
+          "subject": "MKTG",
+          "classId": 4502
+        },
+        {
+          "hour": 0,
+          "description": "Advertising and Brand Promotion",
+          "type": "PLAIN_COURSE",
+          "subject": "MKTG",
+          "classId": 4504
+        },
+        {
+          "hour": 0,
+          "description": "Consumer Behavior",
+          "type": "PLAIN_COURSE",
+          "subject": "MKTG",
+          "classId": 4506
+        },
+        {
+          "hour": 0,
+          "description": "Digital Marketing",
+          "type": "PLAIN_COURSE",
+          "subject": "MKTG",
+          "classId": 4508
+        },
+        {
+          "hour": 0,
+          "description": "New Product Development",
+          "type": "PLAIN_COURSE",
+          "subject": "MKTG",
+          "classId": 4510
+        },
+        {
+          "hour": 0,
+          "description": "International Marketing",
+          "type": "PLAIN_COURSE",
+          "subject": "MKTG",
+          "classId": 4512
+        },
+        {
+          "hour": 0,
+          "description": "Business-to-Business Marketing",
+          "type": "PLAIN_COURSE",
+          "subject": "MKTG",
+          "classId": 4520
+        },
+        {
+          "hour": 0,
+          "description": "Understanding the Platform Economy",
+          "type": "PLAIN_COURSE",
+          "subject": "MKTG",
+          "classId": 4720
+        },
+        {
+          "hour": 0,
+          "description": "Special Topics in Marketing",
+          "type": "PLAIN_COURSE",
+          "subject": "MKTG",
+          "classId": 4983
+        }
+      ],
+      "type": "CONCENTRATION"
+    },
+    {
+      "description": "Concentration in Marketing Analytics",
+      "entries": [
+        {
+          "hour": 0,
+          "description": "Required Courses",
+          "type": "HEADER"
+        },
+        {
+          "hour": 4,
+          "description": "Quantitative Analysis of Consumer Data",
+          "type": "PLAIN_COURSE",
+          "subject": "MKTG",
+          "classId": 2602
+        },
+        {
+          "hour": 4,
+          "description": "Gaining Insights from Consumer Data",
+          "type": "PLAIN_COURSE",
+          "subject": "MKTG",
+          "classId": 3402
+        },
+        {
+          "hour": 4,
+          "description": "Marketing Analytics",
+          "type": "PLAIN_COURSE",
+          "subject": "MKTG",
+          "classId": 3501
+        },
+        {
+          "hour": 0,
+          "description": "Elective",
+          "type": "HEADER"
+        },
+        {
+          "hour": 4,
+          "description": "Complete one of the following:",
+          "type": "SECTION_INFO",
+          "parsedCount": 1
+        },
+        {
+          "hour": 0,
+          "type": "AND_COURSE",
+          "description": "Fundamentals of Computer Science 1 and Lab for CS 2500",
+          "courses": [
+            {
+              "subject": "CS",
+              "classId": 2500,
+              "description": "Fundamentals of Computer Science 1"
+            },
+            {
+              "subject": "CS",
+              "classId": 2501,
+              "description": "Lab for CS 2500"
+            }
+          ]
+        },
+        {
+          "hour": 0,
+          "type": "AND_COURSE",
+          "description": "Programming with Data and Data Science Programming Practicum",
+          "courses": [
+            {
+              "subject": "DS",
+              "classId": 2000,
+              "description": "Programming with Data"
+            },
+            {
+              "subject": "DS",
+              "classId": 2001,
+              "description": "Data Science Programming Practicum"
+            }
+          ]
+        }
+      ],
+      "type": "CONCENTRATION"
+    },
+    {
+      "description": "Concentration in\n                Social Innovation and Entrepreneurship",
+      "entries": [
+        {
+          "hour": 0,
+          "description": "Required Courses",
+          "type": "HEADER"
+        },
+        {
+          "hour": 4,
+          "description": "Innovation!",
+          "type": "PLAIN_COURSE",
+          "subject": "ENTR",
+          "classId": 2301
+        },
+        {
+          "hour": 4,
+          "description": "Seminar in Social Innovation and Entrepreneurship",
+          "type": "PLAIN_COURSE",
+          "subject": "ENTR",
+          "classId": 4506
+        },
+        {
+          "hour": 0,
+          "description": "Electives",
+          "type": "HEADER"
+        },
+        {
+          "hour": 8,
+          "description": "Complete two of the following, one of which may come\n                        from the additional elective list:",
+          "type": "COMMENT"
+        },
+        {
+          "hour": 0,
+          "description": "Global Social Enterprise",
+          "type": "PLAIN_COURSE",
+          "subject": "ENTR",
+          "classId": 2206
+        },
+        {
+          "hour": 0,
+          "description": "Social Responsibility of Business in an Age of Inequality",
+          "type": "PLAIN_COURSE",
+          "subject": "ENTR",
+          "classId": 2414
+        },
+        {
+          "hour": 0,
+          "description": "Impact Investing and Social Finance",
+          "type": "PLAIN_COURSE",
+          "subject": "ENTR",
+          "classId": 3520
+        },
+        {
+          "hour": 0,
+          "description": "Additional Electives",
+          "type": "SUBHEADER"
+        },
+        {
+          "hour": 0,
+          "description": "Understanding Family Enterprise",
+          "type": "PLAIN_COURSE",
+          "subject": "ENTR",
+          "classId": 2215
+        },
+        {
+          "hour": 0,
+          "description": "Marketing Strategies for Startups",
+          "type": "PLAIN_COURSE",
+          "subject": "ENTR",
+          "classId": 2303
+        },
+        {
+          "hour": 0,
+          "description": "Industry Disruption and Corporate Transformation",
+          "type": "PLAIN_COURSE",
+          "subject": "ENTR",
+          "classId": 2304
+        },
+        {
+          "hour": 0,
+          "description": "Special Topics in Entrepreneurship",
+          "type": "PLAIN_COURSE",
+          "subject": "ENTR",
+          "classId": 4983
+        },
+        {
+          "hour": 0,
+          "description": "Entrepreneurial Finance and Private Equity",
+          "type": "PLAIN_COURSE",
+          "subject": "FINA",
+          "classId": 4610
+        },
+        {
+          "hour": 0,
+          "description": "Negotiating in Business",
+          "type": "PLAIN_COURSE",
+          "subject": "MGMT",
+          "classId": 3302
+        },
+        {
+          "hour": 0,
+          "description": "Marketing and Society",
+          "type": "PLAIN_COURSE",
+          "subject": "MKTG",
+          "classId": 2301
+        },
+        {
+          "hour": 0,
+          "description": "One course from an approved Dialogue may count toward\n                        an elective.",
+          "type": "COMMENT"
+        }
+      ],
+      "type": "CONCENTRATION"
+    },
+    {
+      "description": "Concentration in Supply Chain Management",
+      "entries": [
+        {
+          "hour": 0,
+          "description": "Required Courses",
+          "type": "HEADER"
+        },
+        {
+          "hour": 4,
+          "description": "Global Supply Chain Strategy",
+          "type": "PLAIN_COURSE",
+          "subject": "SCHM",
+          "classId": 3301
+        },
+        {
+          "hour": 4,
+          "description": "Sourcing, Procurement, and Negotiation",
+          "type": "PLAIN_COURSE",
+          "subject": "SCHM",
+          "classId": 3305
+        },
+        {
+          "hour": 4,
+          "description": "Logistics and Transportation Management",
+          "type": "PLAIN_COURSE",
+          "subject": "SCHM",
+          "classId": 3310
+        },
+        {
+          "hour": 0,
+          "description": "Elective",
+          "type": "HEADER"
+        },
+        {
+          "hour": 4,
+          "description": "Complete one of the following:",
+          "type": "SECTION_INFO",
+          "parsedCount": 1
+        },
+        {
+          "hour": 0,
+          "description": "Supply Chain Analytics and Emerging Technologies",
+          "type": "PLAIN_COURSE",
+          "subject": "SCHM",
+          "classId": 3308
+        },
+        {
+          "hour": 0,
+          "description": "Managing Healthcare Operations and Supply Chain",
+          "type": "PLAIN_COURSE",
+          "subject": "SCHM",
+          "classId": 3315
+        },
+        {
+          "hour": 0,
+          "description": "Contemporary Topics in Supply Chain Management",
+          "type": "PLAIN_COURSE",
+          "subject": "SCHM",
+          "classId": 4401
+        },
+        {
+          "hour": 0,
+          "description": "Special Topics in Supply Chain Management",
+          "type": "PLAIN_COURSE",
+          "subject": "SCHM",
+          "classId": 4983
+        }
+      ],
+      "type": "CONCENTRATION"
+    },
+    {
+      "description": "Integrative Course",
+      "entries": [
+        {
+          "hour": 0,
+          "description": "Information Resource Management",
+          "type": "HEADER"
+        },
+        {
+          "hour": 4,
+          "description": "Management Information Systems",
+          "type": "PLAIN_COURSE",
+          "subject": "MISM",
+          "classId": 2301
+        }
+      ],
+      "type": "PRIMARY"
+    },
+    {
+      "description": "Supporting Courses",
+      "entries": [
+        {
+          "hour": 0,
+          "description": "Mathematics",
+          "type": "HEADER"
+        },
+        {
+          "hour": 4,
+          "description": "Calculus 1 for Science and Engineering",
+          "type": "PLAIN_COURSE",
+          "subject": "MATH",
+          "classId": 1341
+        },
+        {
+          "hour": 0,
+          "description": "Calculus for Business and Economics",
+          "type": "OR_COURSE",
+          "subject": "MATH",
+          "classId": 1231
+        },
+        {
+          "hour": 0,
+          "description": "Economics",
+          "type": "HEADER"
+        },
+        {
+          "hour": 4,
+          "description": "Principles of Macroeconomics",
+          "type": "PLAIN_COURSE",
+          "subject": "ECON",
+          "classId": 1115
+        },
+        {
+          "hour": 4,
+          "description": "Principles of Microeconomics",
+          "type": "PLAIN_COURSE",
+          "subject": "ECON",
+          "classId": 1116
+        },
+        {
+          "hour": 0,
+          "description": "Computing and Social Issues",
+          "type": "HEADER"
+        },
+        {
+          "hour": 4,
+          "description": "Complete one of the following:",
+          "type": "SECTION_INFO",
+          "parsedCount": 1
+        },
+        {
+          "hour": 0,
+          "description": "Issues in Race, Science, and Technology",
+          "type": "PLAIN_COURSE",
+          "subject": "AFAM",
+          "classId": 2600
+        },
+        {
+          "hour": 0,
+          "description": "The Law, Ethics, and Policy of Data and Digital\n                      Technologies",
+          "type": "PLAIN_COURSE",
+          "subject": "CY",
+          "classId": 4170
+        },
+        {
+          "hour": 0,
+          "description": "Cyberlaw: Privacy, Ethics, and Digital Rights",
+          "type": "PLAIN_COURSE",
+          "subject": "CY",
+          "classId": 5240
+        },
+        {
+          "hour": 0,
+          "description": "Literature and Digital Diversity",
+          "type": "PLAIN_COURSE",
+          "subject": "ENGL",
+          "classId": 2150
+        },
+        {
+          "hour": 0,
+          "description": "History of Technology",
+          "type": "PLAIN_COURSE",
+          "subject": "HIST",
+          "classId": 2220
+        },
+        {
+          "hour": 0,
+          "description": "Bostonography: The City through Data, Texts, Maps, and\n                      Networks",
+          "type": "PLAIN_COURSE",
+          "subject": "INSH",
+          "classId": 2102
+        },
+        {
+          "hour": 0,
+          "description": "Knowledge in a Digital World",
+          "type": "PLAIN_COURSE",
+          "subject": "IS",
+          "classId": 1300
+        },
+        {
+          "hour": 0,
+          "description": "Knowledge in a Digital World",
+          "type": "OR_COURSE",
+          "subject": "PHIL",
+          "classId": 1300
+        },
+        {
+          "hour": 0,
+          "description": "Technology and Human Values",
+          "type": "PLAIN_COURSE",
+          "subject": "PHIL",
+          "classId": 1145
+        },
+        {
+          "hour": 0,
+          "description": "The Twenty-First-Century Workplace",
+          "type": "PLAIN_COURSE",
+          "subject": "SOCL",
+          "classId": 1280
+        },
+        {
+          "hour": 0,
+          "description": "Environment, Technology, and Society",
+          "type": "PLAIN_COURSE",
+          "subject": "SOCL",
+          "classId": 2485
+        },
+        {
+          "hour": 0,
+          "description": "Computers and Society",
+          "type": "PLAIN_COURSE",
+          "subject": "SOCL",
+          "classId": 4528
+        }
+      ],
+      "type": "PRIMARY"
+    },
+    {
+      "description": "Computer Science Writing Requirement",
+      "entries": [
+        {
+          "hour": 0,
+          "description": "College Writing",
+          "type": "HEADER"
+        },
+        {
+          "hour": 4,
+          "description": "First-Year Writing",
+          "type": "PLAIN_COURSE",
+          "subject": "ENGW",
+          "classId": 1111
+        },
+        {
+          "hour": 0,
+          "description": "Advanced Writing in the Disciplines",
+          "type": "HEADER"
+        },
+        {
+          "hour": 4,
+          "description": "Advanced Writing in the Technical Professions",
+          "type": "PLAIN_COURSE",
+          "subject": "ENGW",
+          "classId": 3302
+        },
+        {
+          "hour": 0,
+          "description": "Interdisciplinary Advanced Writing in the Disciplines",
+          "type": "OR_COURSE",
+          "subject": "ENGW",
+          "classId": 3315
+        },
+        {
+          "hour": 0,
+          "description": "Advanced Writing in the Business Administration\n                      Professions",
+          "type": "OR_COURSE",
+          "subject": "ENGW",
+          "classId": 3304
+        }
+      ],
+      "type": "PRIMARY"
+    },
+    {
+      "description": "Required General Electives",
+      "entries": [
+        {
+          "hour": 16,
+          "description": "Complete 16 credits of general electives.",
+          "type": "COMMENT"
+        }
+      ],
+      "type": "PRIMARY"
+    }
+  ],
+  "programRequiredHours": 133
+}

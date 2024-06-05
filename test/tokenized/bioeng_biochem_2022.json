@@ -1,0 +1,563 @@
+{
+  "sections": [
+    {
+      "description": "Engineering",
+      "entries": [
+        {
+          "hour": 0,
+          "description": "Required Engineering",
+          "type": "HEADER"
+        },
+        {
+          "hour": 4,
+          "description": "Biomechanics",
+          "type": "PLAIN_COURSE",
+          "subject": "BIOE",
+          "classId": 2350
+        },
+        {
+          "hour": 4,
+          "description": "Quantitative Physiology for Bioengineers",
+          "type": "PLAIN_COURSE",
+          "subject": "BIOE",
+          "classId": 2355
+        },
+        {
+          "hour": 5,
+          "type": "AND_COURSE",
+          "description": "Bioengineering Measurement, Experimentation, and\n                      Statistics and Lab for BIOE 2365",
+          "courses": [
+            {
+              "subject": "BIOE",
+              "classId": 2365,
+              "description": "Bioengineering Measurement, Experimentation, and\n                      Statistics"
+            },
+            {
+              "subject": "BIOE",
+              "classId": 2366,
+              "description": "Lab for BIOE 2365"
+            }
+          ]
+        },
+        {
+          "hour": 4,
+          "description": "Bioelectricity",
+          "type": "PLAIN_COURSE",
+          "subject": "BIOE",
+          "classId": 3210
+        },
+        {
+          "hour": 4,
+          "description": "Transport and Fluids for Bioengineers",
+          "type": "PLAIN_COURSE",
+          "subject": "BIOE",
+          "classId": 3310
+        },
+        {
+          "hour": 4,
+          "description": "Biomolecular Dynamics and Control",
+          "type": "PLAIN_COURSE",
+          "subject": "BIOE",
+          "classId": 3380
+        },
+        {
+          "hour": 4,
+          "description": "Molecular Bioengineering",
+          "type": "PLAIN_COURSE",
+          "subject": "BIOE",
+          "classId": 5410
+        },
+        {
+          "hour": 4,
+          "description": "Cellular Engineering",
+          "type": "PLAIN_COURSE",
+          "subject": "BIOE",
+          "classId": 5420
+        },
+        {
+          "hour": 4,
+          "description": "Principles and Applications of Tissue Engineering",
+          "type": "PLAIN_COURSE",
+          "subject": "BIOE",
+          "classId": 5430
+        },
+        {
+          "hour": 0,
+          "description": "Bioengineering Capstone",
+          "type": "HEADER"
+        },
+        {
+          "hour": 4,
+          "description": "Capstone Design 1",
+          "type": "PLAIN_COURSE",
+          "subject": "BIOE",
+          "classId": 4790
+        },
+        {
+          "hour": 4,
+          "description": "Capstone Design 2",
+          "type": "PLAIN_COURSE",
+          "subject": "BIOE",
+          "classId": 4792
+        },
+        {
+          "hour": 0,
+          "description": "Supplemental Credit",
+          "type": "HEADER"
+        },
+        {
+          "hour": 2,
+          "description": "2 semester hours from the following course count toward\n                        the engineering requirement:",
+          "type": "COMMENT"
+        },
+        {
+          "hour": 0,
+          "description": "Cornerstone of Engineering 1 1",
+          "type": "PLAIN_COURSE",
+          "subject": "GE",
+          "classId": 1501
+        },
+        {
+          "hour": 3,
+          "description": "3 semester hours from the following course count toward\n                        the engineering requirement:",
+          "type": "COMMENT"
+        },
+        {
+          "hour": 0,
+          "description": "Cornerstone of Engineering 2 1",
+          "type": "PLAIN_COURSE",
+          "subject": "GE",
+          "classId": 1502
+        }
+      ],
+      "type": "PRIMARY"
+    },
+    {
+      "description": "Mathematics/Science Requirement",
+      "entries": [
+        {
+          "hour": 0,
+          "description": "Required Mathematics/Science",
+          "type": "HEADER"
+        },
+        {
+          "hour": 5,
+          "type": "AND_COURSE",
+          "description": "General Biology 1 for Engineers and Lab for BIOL 1115",
+          "courses": [
+            {
+              "subject": "BIOL",
+              "classId": 1115,
+              "description": "General Biology 1 for Engineers"
+            },
+            {
+              "subject": "BIOL",
+              "classId": 1116,
+              "description": "Lab for BIOL 1115"
+            }
+          ]
+        },
+        {
+          "hour": 0,
+          "type": "OR_OF_AND_COURSE",
+          "description": "General Biology 1 and Lab for BIOL 1111",
+          "courses": [
+            {
+              "subject": "BIOL",
+              "classId": 1111,
+              "description": "General Biology 1"
+            },
+            {
+              "subject": "BIOL",
+              "classId": 1112,
+              "description": "Lab for BIOL 1111"
+            }
+          ]
+        },
+        {
+          "hour": 5,
+          "type": "AND_COURSE",
+          "description": "Genetics and Molecular Biology and Lab for BIOL 2301",
+          "courses": [
+            {
+              "subject": "BIOL",
+              "classId": 2301,
+              "description": "Genetics and Molecular Biology"
+            },
+            {
+              "subject": "BIOL",
+              "classId": 2302,
+              "description": "Lab for BIOL 2301"
+            }
+          ]
+        },
+        {
+          "hour": 5,
+          "type": "AND_COURSE",
+          "description": "Biochemistry and Lab for BIOL 3611",
+          "courses": [
+            {
+              "subject": "BIOL",
+              "classId": 3611,
+              "description": "Biochemistry"
+            },
+            {
+              "subject": "BIOL",
+              "classId": 3612,
+              "description": "Lab for BIOL 3611"
+            }
+          ]
+        },
+        {
+          "hour": 4,
+          "type": "AND_COURSE",
+          "description": "General Chemistry for Engineers and Recitation for CHEM 1151",
+          "courses": [
+            {
+              "subject": "CHEM",
+              "classId": 1151,
+              "description": "General Chemistry for Engineers"
+            },
+            {
+              "subject": "CHEM",
+              "classId": 1153,
+              "description": "Recitation for CHEM 1151"
+            }
+          ]
+        },
+        {
+          "hour": 5,
+          "type": "AND_COURSE",
+          "description": "Organic Chemistry 1 and Lab for CHEM 2311",
+          "courses": [
+            {
+              "subject": "CHEM",
+              "classId": 2311,
+              "description": "Organic Chemistry 1"
+            },
+            {
+              "subject": "CHEM",
+              "classId": 2312,
+              "description": "Lab for CHEM 2311"
+            }
+          ]
+        },
+        {
+          "hour": 5,
+          "type": "AND_COURSE",
+          "description": "Organic Chemistry 2 and Lab for CHEM 2313",
+          "courses": [
+            {
+              "subject": "CHEM",
+              "classId": 2313,
+              "description": "Organic Chemistry 2"
+            },
+            {
+              "subject": "CHEM",
+              "classId": 2314,
+              "description": "Lab for CHEM 2313"
+            }
+          ]
+        },
+        {
+          "hour": 4,
+          "description": "Calculus 1 for Science and Engineering",
+          "type": "PLAIN_COURSE",
+          "subject": "MATH",
+          "classId": 1341
+        },
+        {
+          "hour": 4,
+          "description": "Calculus 2 for Science and Engineering",
+          "type": "PLAIN_COURSE",
+          "subject": "MATH",
+          "classId": 1342
+        },
+        {
+          "hour": 4,
+          "description": "Calculus 3 for Science and Engineering",
+          "type": "PLAIN_COURSE",
+          "subject": "MATH",
+          "classId": 2321
+        },
+        {
+          "hour": 4,
+          "description": "Differential Equations and Linear Algebra for Engineering",
+          "type": "PLAIN_COURSE",
+          "subject": "MATH",
+          "classId": 2341
+        },
+        {
+          "hour": 5,
+          "type": "AND_COURSE",
+          "description": "Physics 1 for Bioscience and Bioengineering and Lab for PHYS 1171 and Interactive Learning Seminar for PHYS 1171",
+          "courses": [
+            {
+              "subject": "PHYS",
+              "classId": 1171,
+              "description": "Physics 1 for Bioscience and Bioengineering"
+            },
+            {
+              "subject": "PHYS",
+              "classId": 1172,
+              "description": "Lab for PHYS 1171"
+            },
+            {
+              "subject": "PHYS",
+              "classId": 1173,
+              "description": "Interactive Learning Seminar for PHYS 1171"
+            }
+          ]
+        },
+        {
+          "hour": 0,
+          "type": "OR_OF_AND_COURSE",
+          "description": "Physics for Engineering 1 and Lab for PHYS 1151 and Interactive Learning Seminar for PHYS 1151",
+          "courses": [
+            {
+              "subject": "PHYS",
+              "classId": 1151,
+              "description": "Physics for Engineering 1"
+            },
+            {
+              "subject": "PHYS",
+              "classId": 1152,
+              "description": "Lab for PHYS 1151"
+            },
+            {
+              "subject": "PHYS",
+              "classId": 1153,
+              "description": "Interactive Learning Seminar for PHYS 1151"
+            }
+          ]
+        },
+        {
+          "hour": 5,
+          "type": "AND_COURSE",
+          "description": "Physics 2 for Bioscience and Bioengineering and Lab for PHYS 1175 and Interactive Learning Seminar for PHYS 1175",
+          "courses": [
+            {
+              "subject": "PHYS",
+              "classId": 1175,
+              "description": "Physics 2 for Bioscience and Bioengineering"
+            },
+            {
+              "subject": "PHYS",
+              "classId": 1176,
+              "description": "Lab for PHYS 1175"
+            },
+            {
+              "subject": "PHYS",
+              "classId": 1177,
+              "description": "Interactive Learning Seminar for PHYS 1175"
+            }
+          ]
+        },
+        {
+          "hour": 0,
+          "type": "OR_OF_AND_COURSE",
+          "description": "Physics for Engineering 2 and Lab for PHYS 1155 and Interactive Learning Seminar for PHYS 1155",
+          "courses": [
+            {
+              "subject": "PHYS",
+              "classId": 1155,
+              "description": "Physics for Engineering 2"
+            },
+            {
+              "subject": "PHYS",
+              "classId": 1156,
+              "description": "Lab for PHYS 1155"
+            },
+            {
+              "subject": "PHYS",
+              "classId": 1157,
+              "description": "Interactive Learning Seminar for PHYS 1155"
+            }
+          ]
+        },
+        {
+          "hour": 0,
+          "description": "Advanced Biology Elective",
+          "type": "HEADER"
+        },
+        {
+          "type": "X_OF_MANY",
+          "description": "Complete one course in the following range:",
+          "hour": 4
+        },
+        {
+          "hour": 0,
+          "subject": "BIOL",
+          "classIdStart": 2311,
+          "classIdEnd": 5999,
+          "type": "RANGE_BOUNDED"
+        },
+        {
+          "hour": 0,
+          "description": "Advanced Chemistry Elective",
+          "type": "HEADER"
+        },
+        {
+          "type": "X_OF_MANY",
+          "description": "Complete one course in the following range:",
+          "hour": 4
+        },
+        {
+          "hour": 0,
+          "subject": "CHEM",
+          "classIdStart": 2310,
+          "classIdEnd": 5999,
+          "type": "RANGE_BOUNDED"
+        },
+        {
+          "hour": 0,
+          "description": "Supplemental Credit",
+          "type": "HEADER"
+        },
+        {
+          "hour": 1,
+          "description": "1 semester hour from the following course counts toward\n                        the mathematics/science requirement:",
+          "type": "COMMENT"
+        },
+        {
+          "hour": 0,
+          "description": "Cornerstone of Engineering 1 1",
+          "type": "PLAIN_COURSE",
+          "subject": "GE",
+          "classId": 1501
+        }
+      ],
+      "type": "PRIMARY"
+    },
+    {
+      "description": "Professional Development",
+      "entries": [
+        {
+          "hour": 0,
+          "description": "Professional Development",
+          "type": "HEADER"
+        },
+        {
+          "hour": 1,
+          "description": "First-Year Seminar",
+          "type": "PLAIN_COURSE",
+          "subject": "GE",
+          "classId": 1000
+        },
+        {
+          "hour": 1,
+          "description": "Introduction to Engineering Co-op Education",
+          "type": "PLAIN_COURSE",
+          "subject": "ENCP",
+          "classId": 2000
+        },
+        {
+          "hour": 1,
+          "description": "Professional Issues in Engineering",
+          "type": "PLAIN_COURSE",
+          "subject": "ENCP",
+          "classId": 3000
+        },
+        {
+          "hour": 0,
+          "description": "Additional Required Courses",
+          "type": "HEADER"
+        },
+        {
+          "hour": 1,
+          "description": "1 semester hour from the following course counts toward\n                        the professional development requirement:",
+          "type": "COMMENT"
+        },
+        {
+          "hour": 0,
+          "description": "Cornerstone of Engineering 1 1",
+          "type": "PLAIN_COURSE",
+          "subject": "GE",
+          "classId": 1501
+        },
+        {
+          "hour": 1,
+          "description": "1 semester hour from the following course counts toward\n                        the professional development requirement:",
+          "type": "COMMENT"
+        },
+        {
+          "hour": 0,
+          "description": "Cornerstone of Engineering 2 1",
+          "type": "PLAIN_COURSE",
+          "subject": "GE",
+          "classId": 1502
+        }
+      ],
+      "type": "PRIMARY"
+    },
+    {
+      "description": "Writing Requirements",
+      "entries": [
+        {
+          "hour": 0,
+          "description": "A grade of C or higher is required:",
+          "type": "COMMENT"
+        },
+        {
+          "hour": 4,
+          "description": "First-Year Writing",
+          "type": "PLAIN_COURSE",
+          "subject": "ENGW",
+          "classId": 1111
+        },
+        {
+          "hour": 4,
+          "description": "Advanced Writing in the Technical Professions",
+          "type": "PLAIN_COURSE",
+          "subject": "ENGW",
+          "classId": 3302
+        },
+        {
+          "hour": 0,
+          "description": "Advanced Writing in the Sciences",
+          "type": "OR_COURSE",
+          "subject": "ENGW",
+          "classId": 3307
+        },
+        {
+          "hour": 0,
+          "description": "Interdisciplinary Advanced Writing in the Disciplines",
+          "type": "OR_COURSE",
+          "subject": "ENGW",
+          "classId": 3315
+        }
+      ],
+      "type": "PRIMARY"
+    },
+    {
+      "description": "Required General Electives",
+      "entries": [
+        {
+          "hour": 12,
+          "description": "Complete 12 semester hours of academic, nonremedial,\n                        nonrepetitive courses.",
+          "type": "COMMENT"
+        }
+      ],
+      "type": "PRIMARY"
+    },
+    {
+      "description": "Integrative Course",
+      "entries": [
+        {
+          "hour": 0,
+          "description": "This course is already required above and also fulfills\n                        the integrative requirement.",
+          "type": "COMMENT"
+        },
+        {
+          "hour": 4,
+          "description": "Capstone Design 1",
+          "type": "PLAIN_COURSE",
+          "subject": "BIOE",
+          "classId": 4790
+        }
+      ],
+      "type": "PRIMARY"
+    }
+  ],
+  "programRequiredHours": 139
+}

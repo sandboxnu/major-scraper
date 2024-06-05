@@ -1,0 +1,722 @@
+{
+  "sections": [
+    {
+      "description": "Architecture Requirements",
+      "entries": [
+        {
+          "hour": 0,
+          "description": "Required Courses",
+          "type": "HEADER"
+        },
+        {
+          "hour": 4,
+          "description": "Fundamental Architectural Representation",
+          "type": "PLAIN_COURSE",
+          "subject": "ARCH",
+          "classId": 1110
+        },
+        {
+          "hour": 6,
+          "description": "Fundamental Architectural Design",
+          "type": "PLAIN_COURSE",
+          "subject": "ARCH",
+          "classId": 1120
+        },
+        {
+          "hour": 4,
+          "description": "Buildings and Cities, A Global History",
+          "type": "PLAIN_COURSE",
+          "subject": "ARCH",
+          "classId": 1310
+        },
+        {
+          "hour": 4,
+          "description": "Understanding Design",
+          "type": "PLAIN_COURSE",
+          "subject": "ARCH",
+          "classId": 1450
+        },
+        {
+          "hour": 6,
+          "description": "Site, Space, and Program",
+          "type": "PLAIN_COURSE",
+          "subject": "ARCH",
+          "classId": 2130
+        },
+        {
+          "hour": 4,
+          "description": "Architectonic Systems",
+          "type": "PLAIN_COURSE",
+          "subject": "ARCH",
+          "classId": 2240
+        },
+        {
+          "hour": 8,
+          "description": "Architecure History Electives",
+          "type": "HEADER"
+        },
+        {
+          "hour": 0,
+          "description": "Complete any two courses in the range of ARCH\n                          2300–ARCH 2399.",
+          "type": "COMMENT"
+        },
+        {
+          "hour": 0,
+          "description": "Electives",
+          "type": "HEADER"
+        },
+        {
+          "type": "X_OF_MANY",
+          "description": "Complete two of the following:",
+          "hour": 8
+        },
+        {
+          "hour": 0,
+          "description": "Advanced Topics in Architectural History",
+          "type": "PLAIN_COURSE",
+          "subject": "ARCH",
+          "classId": 3370
+        },
+        {
+          "hour": 0,
+          "description": "Advanced Architectural Communication",
+          "type": "PLAIN_COURSE",
+          "subject": "ARCH",
+          "classId": 3450
+        },
+        {
+          "hour": 0,
+          "description": "Design Tactics and Operations",
+          "type": "PLAIN_COURSE",
+          "subject": "ARCH",
+          "classId": 5310
+        }
+      ],
+      "type": "PRIMARY"
+    },
+    {
+      "description": "English Requirements",
+      "entries": [
+        {
+          "hour": 0,
+          "description": "English Course-Level Requirement",
+          "type": "HEADER"
+        },
+        {
+          "hour": 0,
+          "description": "In addition to the capstone, two of the courses\n                        completed from the lists below must be numbered\n                        3000–4999.",
+          "type": "COMMENT"
+        },
+        {
+          "hour": 0,
+          "description": "Introduction to College",
+          "type": "HEADER"
+        },
+        {
+          "hour": 1,
+          "description": "English at Northeastern",
+          "type": "PLAIN_COURSE",
+          "subject": "ENGL",
+          "classId": 1000
+        },
+        {
+          "hour": 0,
+          "description": "Foundational Courses",
+          "type": "HEADER"
+        },
+        {
+          "hour": 4,
+          "description": "Introduction to Literary Studies",
+          "type": "PLAIN_COURSE",
+          "subject": "ENGL",
+          "classId": 1400
+        },
+        {
+          "hour": 4,
+          "description": "Introduction to Rhetoric",
+          "type": "PLAIN_COURSE",
+          "subject": "ENGL",
+          "classId": 1160
+        },
+        {
+          "hour": 0,
+          "description": "Introduction to Research on Writing",
+          "type": "OR_COURSE",
+          "subject": "ENGL",
+          "classId": 1410
+        },
+        {
+          "hour": 0,
+          "description": "Diversity",
+          "type": "HEADER"
+        },
+        {
+          "hour": 4,
+          "description": "Complete one of the following. This course may also be\n                        used to fulfill an additional English requirement\n                        below:",
+          "type": "COMMENT"
+        },
+        {
+          "hour": 0,
+          "description": "Literature and Digital Diversity",
+          "type": "PLAIN_COURSE",
+          "subject": "ENGL",
+          "classId": 2150
+        },
+        {
+          "hour": 0,
+          "description": "Early African-American Literature",
+          "type": "PLAIN_COURSE",
+          "subject": "ENGL",
+          "classId": 2296
+        },
+        {
+          "hour": 0,
+          "description": "Postcolonial Literature",
+          "type": "PLAIN_COURSE",
+          "subject": "ENGL",
+          "classId": 2450
+        },
+        {
+          "hour": 0,
+          "description": "American Women Writers",
+          "type": "PLAIN_COURSE",
+          "subject": "ENGL",
+          "classId": 2455
+        },
+        {
+          "hour": 0,
+          "description": "Writing in Global Contexts",
+          "type": "PLAIN_COURSE",
+          "subject": "ENGL",
+          "classId": 2760
+        },
+        {
+          "hour": 0,
+          "description": "The African American Novel",
+          "type": "PLAIN_COURSE",
+          "subject": "ENGL",
+          "classId": 3663
+        },
+        {
+          "hour": 0,
+          "description": "Bedrooms and Battlefields: Hebrew Bible and the Origins of\n                      Sex, Gender, and Ethnicity",
+          "type": "PLAIN_COURSE",
+          "subject": "ENGL",
+          "classId": 3678
+        },
+        {
+          "hour": 0,
+          "description": "Modern and Contemporary Jewish Literature",
+          "type": "PLAIN_COURSE",
+          "subject": "ENGL/JWSS",
+          "classId": 3685
+        },
+        {
+          "hour": 0,
+          "description": "Pre–Nineteenth-Century Literature",
+          "type": "HEADER"
+        },
+        {
+          "hour": 4,
+          "description": "Complete one of the following:",
+          "type": "SECTION_INFO",
+          "parsedCount": 1
+        },
+        {
+          "hour": 0,
+          "description": "Introduction to Shakespeare",
+          "type": "PLAIN_COURSE",
+          "subject": "ENGL",
+          "classId": 1600
+        },
+        {
+          "hour": 0,
+          "description": "Global Literatures 1",
+          "type": "PLAIN_COURSE",
+          "subject": "ENGL",
+          "classId": 1700
+        },
+        {
+          "hour": 0,
+          "description": "17th-Century British Literature",
+          "type": "PLAIN_COURSE",
+          "subject": "ENGL",
+          "classId": 2240
+        },
+        {
+          "hour": 0,
+          "description": "Early African-American Literature",
+          "type": "PLAIN_COURSE",
+          "subject": "ENGL",
+          "classId": 2296
+        },
+        {
+          "hour": 0,
+          "description": "Bedrooms and Battlefields: Hebrew Bible and the Origins of\n                      Sex, Gender, and Ethnicity",
+          "type": "PLAIN_COURSE",
+          "subject": "ENGL/JWSS",
+          "classId": 3678
+        },
+        {
+          "hour": 0,
+          "description": "Nineteenth-, Twentieth-, and Twenty-First-Century\n                        Literature",
+          "type": "HEADER"
+        },
+        {
+          "hour": 4,
+          "description": "Complete one of the following:",
+          "type": "SECTION_INFO",
+          "parsedCount": 1
+        },
+        {
+          "hour": 0,
+          "description": "The American Renaissance",
+          "type": "PLAIN_COURSE",
+          "subject": "ENGL",
+          "classId": 2330
+        },
+        {
+          "hour": 0,
+          "description": "19th-Century Major Figure",
+          "type": "PLAIN_COURSE",
+          "subject": "ENGL",
+          "classId": 3720
+        },
+        {
+          "hour": 0,
+          "description": "The Graphic Novel",
+          "type": "PLAIN_COURSE",
+          "subject": "ENGL",
+          "classId": 2301
+        },
+        {
+          "hour": 0,
+          "description": "The Modern Bestseller",
+          "type": "PLAIN_COURSE",
+          "subject": "ENGL",
+          "classId": 2440
+        },
+        {
+          "hour": 0,
+          "description": "Irish Literary Culture (Abroad)",
+          "type": "PLAIN_COURSE",
+          "subject": "ENGL",
+          "classId": 2600
+        },
+        {
+          "hour": 0,
+          "description": "Contemporary Israeli Literature and Art (Abroad)",
+          "type": "PLAIN_COURSE",
+          "subject": "ENGL",
+          "classId": 2610
+        },
+        {
+          "hour": 0,
+          "description": "Modern and Contemporary Jewish Literature",
+          "type": "PLAIN_COURSE",
+          "subject": "ENGL/JWSS",
+          "classId": 3685
+        },
+        {
+          "hour": 0,
+          "description": "20th- and 21st-Century Major Figure",
+          "type": "PLAIN_COURSE",
+          "subject": "ENGL",
+          "classId": 3730
+        },
+        {
+          "hour": 0,
+          "description": "Theories and Methods",
+          "type": "HEADER"
+        },
+        {
+          "hour": 4,
+          "description": "Complete one of the following:",
+          "type": "SECTION_INFO",
+          "parsedCount": 1
+        },
+        {
+          "hour": 0,
+          "description": "Grammar: The Architecture of English",
+          "type": "PLAIN_COURSE",
+          "subject": "ENGL",
+          "classId": 1140
+        },
+        {
+          "hour": 0,
+          "description": "Introduction to Rhetoric",
+          "type": "PLAIN_COURSE",
+          "subject": "ENGL",
+          "classId": 1160
+        },
+        {
+          "hour": 0,
+          "description": "Introduction to Research on Writing",
+          "type": "PLAIN_COURSE",
+          "subject": "ENGL",
+          "classId": 1410
+        },
+        {
+          "hour": 0,
+          "description": "Literature and Digital Diversity",
+          "type": "PLAIN_COURSE",
+          "subject": "ENGL",
+          "classId": 2150
+        },
+        {
+          "hour": 0,
+          "description": "Rhetoric of Law",
+          "type": "PLAIN_COURSE",
+          "subject": "ENGL",
+          "classId": 3325
+        },
+        {
+          "hour": 0,
+          "description": "Technologies of Text",
+          "type": "PLAIN_COURSE",
+          "subject": "ENGL",
+          "classId": 3340
+        },
+        {
+          "hour": 0,
+          "description": "The Practice and Theory of Teaching Writing",
+          "type": "PLAIN_COURSE",
+          "subject": "ENGL",
+          "classId": 3381
+        },
+        {
+          "hour": 0,
+          "description": "Narrative Medicine",
+          "type": "PLAIN_COURSE",
+          "subject": "ENGL",
+          "classId": 3700
+        },
+        {
+          "hour": 0,
+          "description": "Introduction to Language and Linguistics",
+          "type": "PLAIN_COURSE",
+          "subject": "LING",
+          "classId": 1150
+        },
+        {
+          "hour": 0,
+          "description": "Linguistic Analysis",
+          "type": "PLAIN_COURSE",
+          "subject": "LING",
+          "classId": 2350
+        },
+        {
+          "hour": 0,
+          "description": "Syntax",
+          "type": "PLAIN_COURSE",
+          "subject": "LING",
+          "classId": 3450
+        },
+        {
+          "hour": 0,
+          "description": "Semantics",
+          "type": "PLAIN_COURSE",
+          "subject": "LING",
+          "classId": 3452
+        },
+        {
+          "hour": 0,
+          "description": "History of English",
+          "type": "PLAIN_COURSE",
+          "subject": "LING",
+          "classId": 3454
+        },
+        {
+          "hour": 0,
+          "description": "Language and Gender",
+          "type": "PLAIN_COURSE",
+          "subject": "LING",
+          "classId": 3456
+        },
+        {
+          "hour": 0,
+          "description": "Topics in Linguistics",
+          "type": "PLAIN_COURSE",
+          "subject": "LING",
+          "classId": 3458
+        },
+        {
+          "hour": 0,
+          "description": "Comparative Literature",
+          "type": "HEADER"
+        },
+        {
+          "hour": 4,
+          "description": "Complete one of the following:",
+          "type": "SECTION_INFO",
+          "parsedCount": 1
+        },
+        {
+          "hour": 0,
+          "description": "Reading and Writing in the Digital Age",
+          "type": "PLAIN_COURSE",
+          "subject": "ENGL",
+          "classId": 1450
+        },
+        {
+          "hour": 0,
+          "description": "American Literature to 1865",
+          "type": "PLAIN_COURSE",
+          "subject": "ENGL",
+          "classId": 1502
+        },
+        {
+          "hour": 0,
+          "description": "Literature and Digital Diversity",
+          "type": "PLAIN_COURSE",
+          "subject": "ENGL",
+          "classId": 2150
+        },
+        {
+          "hour": 0,
+          "description": "Contemporary Poetry",
+          "type": "PLAIN_COURSE",
+          "subject": "ENGL",
+          "classId": 2420
+        },
+        {
+          "hour": 0,
+          "description": "Contemporary Fiction",
+          "type": "PLAIN_COURSE",
+          "subject": "ENGL",
+          "classId": 2430
+        },
+        {
+          "hour": 0,
+          "description": "Postcolonial Literature",
+          "type": "PLAIN_COURSE",
+          "subject": "ENGL",
+          "classId": 2450
+        },
+        {
+          "hour": 0,
+          "description": "American Women Writers",
+          "type": "PLAIN_COURSE",
+          "subject": "ENGL",
+          "classId": 2455
+        },
+        {
+          "hour": 0,
+          "description": "Horror Fiction",
+          "type": "PLAIN_COURSE",
+          "subject": "ENGL",
+          "classId": 2510
+        },
+        {
+          "hour": 0,
+          "description": "Science Fiction",
+          "type": "PLAIN_COURSE",
+          "subject": "ENGL",
+          "classId": 2520
+        },
+        {
+          "hour": 0,
+          "description": "Irish Literary Culture (Abroad)",
+          "type": "PLAIN_COURSE",
+          "subject": "ENGL",
+          "classId": 2600
+        },
+        {
+          "hour": 0,
+          "description": "What Is Nature?",
+          "type": "PLAIN_COURSE",
+          "subject": "ENGL",
+          "classId": 2620
+        },
+        {
+          "hour": 0,
+          "description": "Boston in Literature",
+          "type": "PLAIN_COURSE",
+          "subject": "ENGL",
+          "classId": 2690
+        },
+        {
+          "hour": 0,
+          "description": "Film and Text (Abroad)",
+          "type": "PLAIN_COURSE",
+          "subject": "ENGL",
+          "classId": 3487
+        },
+        {
+          "hour": 0,
+          "description": "The African American Novel",
+          "type": "PLAIN_COURSE",
+          "subject": "ENGL",
+          "classId": 3663
+        },
+        {
+          "hour": 0,
+          "description": "Writing",
+          "type": "HEADER"
+        },
+        {
+          "hour": 4,
+          "description": "Complete one of the following:",
+          "type": "SECTION_INFO",
+          "parsedCount": 1
+        },
+        {
+          "hour": 0,
+          "description": "Creative Writing",
+          "type": "PLAIN_COURSE",
+          "subject": "ENGL",
+          "classId": 2700
+        },
+        {
+          "hour": 0,
+          "description": "Style and Editing",
+          "type": "PLAIN_COURSE",
+          "subject": "ENGL",
+          "classId": 2710
+        },
+        {
+          "hour": 0,
+          "description": "Writing and Community Engagement",
+          "type": "PLAIN_COURSE",
+          "subject": "ENGL",
+          "classId": 2740
+        },
+        {
+          "hour": 0,
+          "description": "Writing in Global Contexts",
+          "type": "PLAIN_COURSE",
+          "subject": "ENGL",
+          "classId": 2760
+        },
+        {
+          "hour": 0,
+          "description": "Writing to Heal",
+          "type": "PLAIN_COURSE",
+          "subject": "ENGL",
+          "classId": 2770
+        },
+        {
+          "hour": 0,
+          "description": "Visual Writing",
+          "type": "PLAIN_COURSE",
+          "subject": "ENGL",
+          "classId": 2780
+        },
+        {
+          "hour": 0,
+          "description": "Writing for Social Media: Theory and Practice",
+          "type": "PLAIN_COURSE",
+          "subject": "ENGL",
+          "classId": 2850
+        },
+        {
+          "hour": 0,
+          "description": "Writing Boston",
+          "type": "PLAIN_COURSE",
+          "subject": "ENGL",
+          "classId": 3375
+        },
+        {
+          "hour": 0,
+          "description": "Creative Nonfiction",
+          "type": "PLAIN_COURSE",
+          "subject": "ENGL",
+          "classId": 3376
+        },
+        {
+          "hour": 0,
+          "description": "Poetry Workshop",
+          "type": "PLAIN_COURSE",
+          "subject": "ENGL",
+          "classId": 3377
+        },
+        {
+          "hour": 0,
+          "description": "Fiction Workshop",
+          "type": "PLAIN_COURSE",
+          "subject": "ENGL",
+          "classId": 3378
+        },
+        {
+          "hour": 0,
+          "description": "Writing Seminar",
+          "type": "PLAIN_COURSE",
+          "subject": "ENGL",
+          "classId": 3380
+        },
+        {
+          "hour": 0,
+          "description": "Publishing in the 21st Century",
+          "type": "PLAIN_COURSE",
+          "subject": "ENGL",
+          "classId": 3382
+        },
+        {
+          "hour": 0,
+          "description": "The Writer’s Marketplace",
+          "type": "PLAIN_COURSE",
+          "subject": "ENGL",
+          "classId": 3384
+        },
+        {
+          "hour": 0,
+          "description": "Capstone",
+          "type": "HEADER"
+        },
+        {
+          "hour": 4,
+          "description": "Capstone Seminar",
+          "type": "PLAIN_COURSE",
+          "subject": "ENGL",
+          "classId": 4710
+        },
+        {
+          "hour": 0,
+          "description": "Capstone Project",
+          "type": "OR_COURSE",
+          "subject": "ENGL",
+          "classId": 4720
+        },
+        {
+          "hour": 0,
+          "description": "English Electives",
+          "type": "HEADER"
+        },
+        {
+          "hour": 8,
+          "description": "Complete two additional ENGL electives.",
+          "type": "COMMENT"
+        }
+      ],
+      "type": "PRIMARY"
+    },
+    {
+      "description": "Integrative Requirement",
+      "entries": [
+        {
+          "hour": 4,
+          "description": "Architecture and the City in the Nineteenth Century",
+          "type": "PLAIN_COURSE",
+          "subject": "ARCH",
+          "classId": 2330
+        },
+        {
+          "hour": 0,
+          "description": "Modern Architecture",
+          "type": "OR_COURSE",
+          "subject": "ARCH",
+          "classId": 2340
+        },
+        {
+          "hour": 4,
+          "description": "Writing Boston",
+          "type": "PLAIN_COURSE",
+          "subject": "ENGL",
+          "classId": 3375
+        }
+      ],
+      "type": "PRIMARY"
+    }
+  ],
+  "programRequiredHours": 128
+}

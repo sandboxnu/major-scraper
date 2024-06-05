@@ -49,6 +49,7 @@ export type HRow =
   | TextRow<HRowType.X_OF_MANY>
   | TextRow<HRowType.HEADER>
   | TextRow<HRowType.SUBHEADER>
+  | TextRow<HRowType.SUBSUBHEADER>
   // course rows
   | CourseRow<HRowType.OR_COURSE>
   | CourseRow<HRowType.PLAIN_COURSE>
@@ -69,6 +70,7 @@ export type HRow =
 export enum HRowType {
   HEADER = "HEADER",
   SUBHEADER = "SUBHEADER",
+  SUBSUBHEADER = "SUBSUBHEADER",
   COMMENT = "COMMENT",
   COMMENT_COUNT = "COMMENT_COUNT",
   SECTION_INFO = "SECTION_INFO",

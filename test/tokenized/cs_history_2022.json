@@ -1,0 +1,554 @@
+{
+  "sections": [
+    {
+      "description": "Computer Science Courses",
+      "entries": [
+        {
+          "hour": 0,
+          "description": "Computer Science Overview",
+          "type": "HEADER"
+        },
+        {
+          "hour": 1,
+          "description": "First Year Seminar",
+          "type": "PLAIN_COURSE",
+          "subject": "CS",
+          "classId": 1200
+        },
+        {
+          "hour": 0,
+          "description": "History at Northeastern",
+          "type": "OR_COURSE",
+          "subject": "HIST",
+          "classId": 1000
+        },
+        {
+          "hour": 1,
+          "description": "Professional Development for Khoury Co-op",
+          "type": "PLAIN_COURSE",
+          "subject": "CS",
+          "classId": 1210
+        },
+        {
+          "hour": 0,
+          "description": "Professional Development for Co-op",
+          "type": "OR_COURSE",
+          "subject": "EESH",
+          "classId": 2000
+        },
+        {
+          "hour": 0,
+          "description": "Computer Science Fundamental Courses",
+          "type": "HEADER"
+        },
+        {
+          "hour": 5,
+          "type": "AND_COURSE",
+          "description": "Discrete Structures and Seminar for CS 1800",
+          "courses": [
+            {
+              "subject": "CS",
+              "classId": 1800,
+              "description": "Discrete Structures"
+            },
+            {
+              "subject": "CS",
+              "classId": 1802,
+              "description": "Seminar for CS 1800"
+            }
+          ]
+        },
+        {
+          "hour": 5,
+          "type": "AND_COURSE",
+          "description": "Fundamentals of Computer Science 1 and Lab for CS 2500",
+          "courses": [
+            {
+              "subject": "CS",
+              "classId": 2500,
+              "description": "Fundamentals of Computer Science 1"
+            },
+            {
+              "subject": "CS",
+              "classId": 2501,
+              "description": "Lab for CS 2500"
+            }
+          ]
+        },
+        {
+          "hour": 5,
+          "type": "AND_COURSE",
+          "description": "Fundamentals of Computer Science 2 and Lab for CS 2510",
+          "courses": [
+            {
+              "subject": "CS",
+              "classId": 2510,
+              "description": "Fundamentals of Computer Science 2"
+            },
+            {
+              "subject": "CS",
+              "classId": 2511,
+              "description": "Lab for CS 2510"
+            }
+          ]
+        },
+        {
+          "hour": 0,
+          "description": "Computer Science Required Courses",
+          "type": "HEADER"
+        },
+        {
+          "hour": 4,
+          "description": "Algorithms and Data",
+          "type": "PLAIN_COURSE",
+          "subject": "CS",
+          "classId": 3000
+        },
+        {
+          "hour": 4,
+          "description": "Database Design",
+          "type": "PLAIN_COURSE",
+          "subject": "CS",
+          "classId": 3200
+        },
+        {
+          "hour": 5,
+          "type": "AND_COURSE",
+          "description": "Object-Oriented Design and Lab for CS 3500",
+          "courses": [
+            {
+              "subject": "CS",
+              "classId": 3500,
+              "description": "Object-Oriented Design"
+            },
+            {
+              "subject": "CS",
+              "classId": 3501,
+              "description": "Lab for CS 3500"
+            }
+          ]
+        },
+        {
+          "hour": 4,
+          "description": "Principles of Information Science",
+          "type": "PLAIN_COURSE",
+          "subject": "IS",
+          "classId": 2000
+        },
+        {
+          "hour": 0,
+          "description": "Khoury Elective Courses",
+          "type": "HEADER"
+        },
+        {
+          "hour": 0,
+          "description": "With adviser approval, directed study, research,\n                        project study, and appropriate graduate-level courses\n                        may also be taken as upper-division electives.",
+          "type": "COMMENT"
+        },
+        {
+          "hour": 16,
+          "description": "Complete 16 credits of upper-division CS, CY, DS, or IS\n                        courses that are not already required. Choose courses\n                        within the following ranges:",
+          "type": "COMMENT"
+        },
+        {
+          "hour": 0,
+          "description": "CS 2500\n                          or higher, except\n                          CS 5010",
+          "type": "COMMENT"
+        },
+        {
+          "type": "RANGE_LOWER_BOUNDED_WITH_EXCEPTIONS",
+          "hour": 0,
+          "subject": "CY",
+          "classIdStart": 2000,
+          "exceptions": [
+            {
+              "subject": "CY",
+              "classId": 4930
+            }
+          ]
+        },
+        {
+          "hour": 0,
+          "description": "DS 2500\n                          or higher, except DS 4900",
+          "type": "COMMENT"
+        },
+        {
+          "hour": 0,
+          "description": "IS 2000\n                          or higher, except\n                          IS 4900",
+          "type": "COMMENT"
+        }
+      ],
+      "type": "PRIMARY"
+    },
+    {
+      "description": "History Courses",
+      "entries": [
+        {
+          "hour": 0,
+          "description": "History Required Courses",
+          "type": "HEADER"
+        },
+        {
+          "hour": 1,
+          "description": "Historical Research and Writing",
+          "type": "PLAIN_COURSE",
+          "subject": "HIST",
+          "classId": 1200
+        },
+        {
+          "hour": 4,
+          "description": "First-Year Seminar",
+          "type": "PLAIN_COURSE",
+          "subject": "HIST",
+          "classId": 1201
+        },
+        {
+          "hour": 4,
+          "description": "The History Seminar",
+          "type": "PLAIN_COURSE",
+          "subject": "HIST",
+          "classId": 2301
+        },
+        {
+          "hour": 1,
+          "description": "Historical Writing",
+          "type": "PLAIN_COURSE",
+          "subject": "HIST",
+          "classId": 2302
+        },
+        {
+          "hour": 0,
+          "description": "History Electives",
+          "type": "HEADER"
+        },
+        {
+          "hour": 4,
+          "description": "Complete one introductory course from the\n                        following:",
+          "type": "COMMENT"
+        },
+        {
+          "hour": 0,
+          "description": "East Asian Studies",
+          "type": "PLAIN_COURSE",
+          "subject": "ASNS",
+          "classId": 1150
+        },
+        {
+          "hour": 0,
+          "description": "Public History, Public Memory",
+          "type": "PLAIN_COURSE",
+          "subject": "HIST",
+          "classId": 1120
+        },
+        {
+          "hour": 0,
+          "description": "Introduction to the History of the United States",
+          "type": "PLAIN_COURSE",
+          "subject": "HIST",
+          "classId": 1130
+        },
+        {
+          "hour": 0,
+          "description": "Europe: Empires, Revolutions, Wars, and Their Aftermath",
+          "type": "PLAIN_COURSE",
+          "subject": "HIST",
+          "classId": 1170
+        },
+        {
+          "hour": 0,
+          "description": "Introduction to Middle Eastern History",
+          "type": "PLAIN_COURSE",
+          "subject": "HIST",
+          "classId": 1185
+        },
+        {
+          "hour": 0,
+          "description": "Introduction to Women’s, Gender, and Sexuality Studies",
+          "type": "PLAIN_COURSE",
+          "subject": "WMNS",
+          "classId": 1103
+        },
+        {
+          "type": "X_OF_MANY",
+          "description": "Complete one course from the following:",
+          "hour": 4
+        },
+        {
+          "hour": 0,
+          "description": "Pirates, Planters, and Patriots: Making the Americas,\n                      1492–1804",
+          "type": "PLAIN_COURSE",
+          "subject": "HIST",
+          "classId": 1218
+        },
+        {
+          "hour": 0,
+          "description": "Japanese Literature and Culture",
+          "type": "PLAIN_COURSE",
+          "subject": "HIST",
+          "classId": 1252
+        },
+        {
+          "hour": 0,
+          "description": "Introduction to Russian Civilization",
+          "type": "PLAIN_COURSE",
+          "subject": "HIST",
+          "classId": 1285
+        },
+        {
+          "hour": 0,
+          "description": "History of Espionage 1: Antiquity to World War II",
+          "type": "PLAIN_COURSE",
+          "subject": "HIST",
+          "classId": 1389
+        },
+        {
+          "hour": 0,
+          "description": "Colonial and Revolutionary America",
+          "type": "PLAIN_COURSE",
+          "subject": "HIST",
+          "classId": 2330
+        },
+        {
+          "hour": 12,
+          "description": "Intermediate/Advanced History Cluster",
+          "type": "COMMENT"
+        },
+        {
+          "type": "RANGE_LOWER_BOUNDED",
+          "hour": 0,
+          "subject": "HIST",
+          "classIdStart": 2303
+        },
+        {
+          "hour": 4,
+          "description": "Complete one advanced-level course:",
+          "type": "COMMENT"
+        },
+        {
+          "hour": 0,
+          "description": "Select from any HIST course numbered 3000 or\n                          above.",
+          "type": "COMMENT"
+        },
+        {
+          "hour": 0,
+          "description": "History Capstone Seminar or Senior Project",
+          "type": "HEADER"
+        },
+        {
+          "hour": 4,
+          "description": "Capstone Seminar",
+          "type": "PLAIN_COURSE",
+          "subject": "HIST",
+          "classId": 4701
+        }
+      ],
+      "type": "PRIMARY"
+    },
+    {
+      "description": "Integrative Course Requirement",
+      "entries": [
+        {
+          "hour": 4,
+          "description": "The World Since 1945",
+          "type": "PLAIN_COURSE",
+          "subject": "HIST",
+          "classId": 2211
+        }
+      ],
+      "type": "PRIMARY"
+    },
+    {
+      "description": "Supporting Courses",
+      "entries": [
+        {
+          "hour": 0,
+          "description": "Research Methods",
+          "type": "HEADER"
+        },
+        {
+          "type": "X_OF_MANY",
+          "description": "Complete one course from the following:",
+          "hour": 4
+        },
+        {
+          "hour": 0,
+          "description": "Statistics",
+          "type": "PLAIN_COURSE",
+          "subject": "ECON",
+          "classId": 2350
+        },
+        {
+          "hour": 0,
+          "description": "Geographic Information Systems",
+          "type": "PLAIN_COURSE",
+          "subject": "ENVR",
+          "classId": 3300
+        },
+        {
+          "hour": 0,
+          "description": "Geographical Information Systems",
+          "type": "PLAIN_COURSE",
+          "subject": "ENVR",
+          "classId": 5260
+        },
+        {
+          "hour": 0,
+          "description": "Quantitative Techniques",
+          "type": "PLAIN_COURSE",
+          "subject": "POLS",
+          "classId": 2400
+        },
+        {
+          "hour": 0,
+          "description": "Statistics in Psychological Research",
+          "type": "PLAIN_COURSE",
+          "subject": "PSYC",
+          "classId": 2320
+        },
+        {
+          "hour": 0,
+          "description": "Computing and Social Issues",
+          "type": "HEADER"
+        },
+        {
+          "hour": 4,
+          "description": "Complete one of the following:",
+          "type": "SECTION_INFO",
+          "parsedCount": 1
+        },
+        {
+          "hour": 0,
+          "description": "Issues in Race, Science, and Technology",
+          "type": "PLAIN_COURSE",
+          "subject": "AFAM",
+          "classId": 2600
+        },
+        {
+          "hour": 0,
+          "description": "The Law, Ethics, and Policy of Data and Digital\n                      Technologies",
+          "type": "PLAIN_COURSE",
+          "subject": "CY",
+          "classId": 4170
+        },
+        {
+          "hour": 0,
+          "description": "Cyberlaw: Privacy, Ethics, and Digital Rights",
+          "type": "PLAIN_COURSE",
+          "subject": "CY",
+          "classId": 5240
+        },
+        {
+          "hour": 0,
+          "description": "Literature and Digital Diversity",
+          "type": "PLAIN_COURSE",
+          "subject": "ENGL",
+          "classId": 2150
+        },
+        {
+          "hour": 0,
+          "description": "History of Technology",
+          "type": "PLAIN_COURSE",
+          "subject": "HIST",
+          "classId": 2220
+        },
+        {
+          "hour": 0,
+          "description": "Bostonography: The City through Data, Texts, Maps, and\n                      Networks",
+          "type": "PLAIN_COURSE",
+          "subject": "INSH",
+          "classId": 2102
+        },
+        {
+          "hour": 0,
+          "description": "Knowledge in a Digital World",
+          "type": "PLAIN_COURSE",
+          "subject": "IS",
+          "classId": 1300
+        },
+        {
+          "hour": 0,
+          "description": "Knowledge in a Digital World",
+          "type": "OR_COURSE",
+          "subject": "PHIL",
+          "classId": 1300
+        },
+        {
+          "hour": 0,
+          "description": "Technology and Human Values",
+          "type": "PLAIN_COURSE",
+          "subject": "PHIL",
+          "classId": 1145
+        },
+        {
+          "hour": 0,
+          "description": "The Twenty-First-Century Workplace",
+          "type": "PLAIN_COURSE",
+          "subject": "SOCL",
+          "classId": 1280
+        },
+        {
+          "hour": 0,
+          "description": "Environment, Technology, and Society",
+          "type": "PLAIN_COURSE",
+          "subject": "SOCL",
+          "classId": 2485
+        },
+        {
+          "hour": 0,
+          "description": "Computers and Society",
+          "type": "PLAIN_COURSE",
+          "subject": "SOCL",
+          "classId": 4528
+        }
+      ],
+      "type": "PRIMARY"
+    },
+    {
+      "description": "Computer Science Writing Requirement",
+      "entries": [
+        {
+          "hour": 0,
+          "description": "College Writing",
+          "type": "HEADER"
+        },
+        {
+          "hour": 4,
+          "description": "First-Year Writing",
+          "type": "PLAIN_COURSE",
+          "subject": "ENGW",
+          "classId": 1111
+        },
+        {
+          "hour": 0,
+          "description": "First-Year Writing for Multilingual Writers",
+          "type": "OR_COURSE",
+          "subject": "ENGW",
+          "classId": 1102
+        },
+        {
+          "hour": 0,
+          "description": "Advanced Writing in the Disciplines",
+          "type": "HEADER"
+        },
+        {
+          "hour": 0,
+          "description": "This requirement is satisfied by\n                        HIST 2302\n                        taken in conjunction with\n                        HIST 2301.",
+          "type": "COMMENT"
+        }
+      ],
+      "type": "PRIMARY"
+    },
+    {
+      "description": "Required General Electives",
+      "entries": [
+        {
+          "hour": 32,
+          "description": "Complete 32 credits of general electives.",
+          "type": "COMMENT"
+        }
+      ],
+      "type": "PRIMARY"
+    }
+  ],
+  "programRequiredHours": 135
+}

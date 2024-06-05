@@ -15,18 +15,18 @@ export const PLAIN_COURSE_TOKEN: HRow = {
   subject: "CS",
 };
 
+export const PLAIN_COURSE_PARSED: IRequiredCourse = {
+  type: "COURSE",
+  classId: 2500,
+  subject: "CS",
+};
+
 export const OR_COURSE_TOKEN: HRow = {
   type: HRowType.OR_COURSE,
   subject: "CS",
   hour: 1,
   classId: 2501,
   description: "",
-};
-
-export const PLAIN_COURSE_PARSED: IRequiredCourse = {
-  type: "COURSE",
-  classId: 2500,
-  subject: "CS",
 };
 
 export const OR_COURSE_PARSED: IRequiredCourse = {
@@ -242,4 +242,16 @@ export const OR_OF_AND_COURSE_PARSED: IAndCourse2 = {
       type: "COURSE",
     },
   ],
+};
+
+export const SUBHEADER_TOKEN: HRow = {
+  hour: 0,
+  description: "Subheader Token",
+  type: HRowType.SUBHEADER,
+};
+
+export const X_OF_MANY_TOKEN: HRow = {
+  type: HRowType.X_OF_MANY,
+  description: "Complete two of the following:",
+  hour: 8,
 };

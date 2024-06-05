@@ -108,6 +108,7 @@ async function phaseLogger<R>(
   const { errorLog, nextEntries } = await result;
   spin.stop(`${phaseName} - finished`);
 
+  // aggregate the catalog entries with similar errors
   const aggregatedLog = new Map<string, string[]>();
 
   errorLog.forEach(err => {
@@ -118,9 +119,15 @@ async function phaseLogger<R>(
     aggregatedLog.get(err.message)!.push(err.entryInfo);
   });
 
-  const errorNotes = Array.from(
-    aggregatedLog,
-    ([name, value]) => `${color.bold(name)} ${JSON.stringify(value, null, 2)}`,
+  // sort the error based on occurance (how many entries have it)
+  const errorNotes = Array.from(aggregatedLog, ([err, entries]) => ({
+    err,
+    entries,
+  }))
+    .sort((a, b) => b.entries.length - a.entries.length)
+    .map(
+      ({ err, entries }) =>
+        `${color.bold(err)} ${JSON.stringify(entries, null, 2)}`,
   );
 
   const stats = `Number of entries: ${

@@ -197,36 +197,47 @@ const tokenizeSections = async (
   // use a stack to keep track of the course list title and description
   const descriptions: string[] = [];
   const courseList: HSection[] = [];
+  let courseListQueue: CheerioElement[] = [];
 
   for (const element of requirementsContainer.children().toArray()) {
-    if (element.name === "h2" || element.name === "h3") {
-      // element is h2 or h3 means it's a header text
-      descriptions.push(parseText($(element)));
-    } else if (
-      element.name === "table" &&
-      element.attribs["class"] === "sc_courselist"
-    ) {
-      // class "sc_courselist" signifies that this table is a list of courses
-      // => parse the table's rows
+    const isHeaderText = element.name === "h2" || element.name === "h3";
+    if (isHeaderText) {
+      if (courseListQueue.length === 0) {
+        descriptions.push(parseText($(element)));
+        continue;
+      }
       const tableDesc = descriptions.pop() || "";
+
+      const entries = courseListQueue
+        .map(courseListElement => tokenizeRows($, courseListElement))
+        .flat();
+
       const courseTable: HSection = {
         description: tableDesc,
-        entries: tokenizeRows($, element),
+        entries: entries,
         type: tableDesc.toLowerCase().includes("concentration")
           ? HSectionType.CONCENTRATION
           : HSectionType.PRIMARY,
       };
       courseList.push(courseTable);
-    } else if (
-      // if we encounter an unordered list and preceding element contains text "concentration",
-      // assume the list is of links for business concentrations.
+      courseListQueue = [];
+
+      descriptions.push(parseText($(element)));
+    }
+
+    const isCourseList =
+      element.name === "table" && element.attribs["class"] === "sc_courselist";
+    if (isCourseList) {
+      courseListQueue.push(element);
+    }
+
+    // some concentrations are in a separate html instead of
+    // in the same html as the main major (see CS and Business for example)
+    const isConcentrationList =
       element.name === "ul" &&
-      parseText($(element).prev()).includes("concentration")
-    ) {
+      parseText($(element).prev()).includes("concentration");
+    if (isConcentrationList) {
       const links = constructNestedLinks($, element);
-      if (links.length === 0) {
-        return courseList;
-      }
 
       // get all the concentration locally instead of fetching
       // them from the catalog by mapping the url path (in this case called link)
@@ -271,6 +282,23 @@ const tokenizeSections = async (
     }
   }
 
+  if (courseListQueue.length > 0) {
+    const tableDesc = descriptions.pop() || "";
+
+    const entries = courseListQueue
+      .map(courseListElement => tokenizeRows($, courseListElement))
+      .flat();
+
+    const courseTable: HSection = {
+      description: tableDesc,
+      entries: entries,
+      type: tableDesc.toLowerCase().includes("concentration")
+        ? HSectionType.CONCENTRATION
+        : HSectionType.PRIMARY,
+    };
+    courseList.push(courseTable);
+  }
+
   return courseList;
 };
 
@@ -282,7 +310,6 @@ const tokenizeSections = async (
  * @param element
  */
 const constructNestedLinks = ($: CheerioStatic, element: CheerioElement) => {
-  // TODO: add support to non-current catalogs
   return (
     $(element)
       .find("li > a")
@@ -304,10 +331,10 @@ const constructNestedLinks = ($: CheerioStatic, element: CheerioElement) => {
 const tokenizeRows = ($: CheerioStatic, table: CheerioElement): HRow[] => {
   const courseTable: HRow[] = [];
 
-  for (const tr of $(table).find("tbody > tr").toArray()) {
+  for (const [index, tr] of $(table).find("tbody > tr").toArray().entries()) {
     // different row type
     const tds = $(tr).find("td").toArray().map($);
-    const type = getRowType($, tr, tds);
+    const type = getRowType($, tr, tds, index, courseTable);
     const row = constructRow($, tds, type);
     courseTable.push(row);
   }
@@ -317,12 +344,14 @@ const tokenizeRows = ($: CheerioStatic, table: CheerioElement): HRow[] => {
 
 /**
  * Pre-parses the row to determine its type
- *
- * @param $
- * @param tr
- * @param tds
  */
-const getRowType = ($: CheerioStatic, tr: CheerioElement, tds: Cheerio[]) => {
+const getRowType = (
+  $: CheerioStatic,
+  tr: CheerioElement,
+  tds: Cheerio[],
+  rowIndex: number,
+  courseTable: HRow[],
+) => {
   const trClasses = new Set(tr.attribs["class"]?.split(" "));
   const td = ensureAtLeastLength(tds, 1)[0];
   const tdClasses = new Set(td.attr("class")?.split(" "));
@@ -347,6 +376,10 @@ const getRowType = ($: CheerioStatic, tr: CheerioElement, tds: Cheerio[]) => {
   }
 
   if (trClasses.has("subheader")) {
+    const isSubSubHeader = $(tr).find("span").hasClass("commentindent");
+    if (isSubSubHeader) {
+      return HRowType.SUBSUBHEADER;
+    }
     return HRowType.SUBHEADER;
   } else if (trClasses.has("areaheader")) {
     return HRowType.HEADER;
@@ -365,19 +398,32 @@ const getRowType = ($: CheerioStatic, tr: CheerioElement, tds: Cheerio[]) => {
     return HRowType.RANGE_UNBOUNDED;
   }
 
-  if (sectionInfoAll.includes(tdText.toLowerCase())) {
+  // section info should always be after the header
+  // or be the first token in the list of entries
+  const isSectionInfoPosition =
+    rowIndex == 0 ||
+    courseTable[rowIndex - 1]!.type === HRowType.HEADER ||
+    courseTable[rowIndex - 1]!.type === HRowType.SUBHEADER ||
+    courseTable[rowIndex - 1]!.type === HRowType.SUBSUBHEADER;
+
+  if (isSectionInfoPosition && sectionInfoAll.includes(tdText.toLowerCase())) {
     return HRowType.SECTION_INFO;
   }
 
-  if (
-    tdText.toLowerCase().match(XOM_REGEX_CREDITS) ||
-    tdText.toLowerCase().match(XOM_REGEX_NUMBER)
-  ) {
+  if (isXOM(tdText)) {
     return HRowType.X_OF_MANY;
   }
 
   return HRowType.COMMENT;
 };
+
+export function isXOM(text: string): boolean {
+  const match =
+    text.toLowerCase().match(XOM_REGEX_CREDITS) ||
+    text.toLowerCase().match(XOM_REGEX_NUMBER);
+
+  return match !== null && match.length > 0;
+}
 
 /**
  * Converts a single row based on the passed-in type (determined by {@link getRowType}
@@ -394,6 +440,7 @@ const constructRow = (
   switch (type) {
     case HRowType.HEADER:
     case HRowType.SUBHEADER:
+    case HRowType.SUBSUBHEADER:
     case HRowType.COMMENT:
       return constructTextRow($, tds, type);
     case HRowType.OR_COURSE:
