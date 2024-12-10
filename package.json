@@ -7,6 +7,7 @@
     "test": "pnpm parser:generate && vitest --watch=false",
     "test:watch": "pnpm parser:generate && vitest --watch",
     "scrape": "pnpm parser:generate && tsx ./src/main.ts",
+    "scrape:debug": "pnpm parser:generate && tsx --inspect-brk ./src/main.ts",
     "parser:generate": "nearleyc src/parse/grammar.ne -o src/parse/grammar.ts"
   },
   "dependencies": {

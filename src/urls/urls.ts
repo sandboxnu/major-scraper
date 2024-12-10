@@ -39,6 +39,16 @@ const getChildrenForPathId = ($: CheerioStatic, url: URL) => {
 };
 
 export async function scrapeMajorLinks(startYear: number, currentYear: number) {
+  const _override: MandatoryPipelineEntry[] = [
+    {
+      url: new URL(
+        "https://catalog.northeastern.edu/undergraduate/engineering/electrical-computer/electrical-computer-engineering-bsee-bscompe",
+      ),
+    },
+  ];
+
+  // return { nextEntries: _override, errorLog: [] };
+
   const path =
     startYear === currentYear
       ? "undergraduate"

@@ -115,14 +115,26 @@ export const parse = async (
     },
   };
 
+  const prunedParsed = stripEmptySections(major);
+
   await writeFile(
     `${entry.savePath}/${FileName.PARSED}.${entry.saveStage}.json`,
-    JSON.stringify(major, null, 2),
+    JSON.stringify(prunedParsed, null, 2),
   );
 
   return {
     url: entry.url,
     degreeType: entry.degreeType,
-    parsed: major,
+    parsed: prunedParsed,
   };
 };
+
+function stripEmptySections(major: Major2): Major2 {
+  return {
+    ...major,
+    requirementSections: major.requirementSections.filter(section => {
+      console.log(section.requirements.length);
+      return section.requirements.length >= 1;
+    }),
+  };
+}

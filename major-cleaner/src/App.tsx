@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Major2 } from "../../src/graduate-types/major2";
+import { Major2 } from "../../src/types";
 import "./App.css";
 import { handleSection } from "./change";
 import { Tokens } from "./components/tokens";
@@ -13,81 +13,111 @@ import actualStyle from "../../src/css/styles.css?inline";
 
 const parseTokens = (tokens: string) => {
   try {
-    console.log(JSON.parse(tokens))
+    console.log(JSON.parse(tokens));
     const token = JSON.parse(tokens)["sections"];
-    console.log(token)
-    return token
+    console.log(token);
+    return token;
   } catch (e) {
-    console.log(tokens)
+    console.log(tokens);
     console.error(e);
     return undefined;
   }
 };
 
-type Year = "2023" | "2022" | "2021" | "2020" | "2019"
-type College = "computer-information-science" | "arts-media-design"
-type Form = "raw.initial.html" | "parsed.initial.json" | "tokens.initial.json"
+type Year = "2023" | "2022" | "2021" | "2020" | "2019";
+type College =
+  | "computer-information-science"
+  | "arts-media-design"
+  | "engineering";
+type Form = "raw.initial.html" | "parsed.initial.json" | "tokens.initial.json";
 
-const read_major_file = async (year: Year, college: College, name: string, form: Form) => {
+const read_major_file = async (
+  year: Year,
+  college: College,
+  name: string,
+  form: Form,
+) => {
   return await invoke<string>("read_major_file", {
     year,
-    college, 
-    name, 
-    form
-  })
-}
+    college,
+    name,
+    form,
+  });
+};
 
 function prepareHTML(html: string): string {
-  console.log("reset style", resetStyle)
-  console.log("SDFLKSDJFLKSDJFLKSDJLKFJSLDKJFLKSDJFLKSDJLKFJSDLK")
   const styleReplaced = html
-    .replace(`href="/src/css/reset.css"`, `href="data:text/css;base64,${btoa(resetStyle)}"`)
-    .replace(`href="/src/css/styles.css"`, `href="data:text/css;base64,${btoa(actualStyle)}"`)
+    .replace(
+      `href="/src/css/reset.css"`,
+      `href="data:text/css;base64,${btoa(resetStyle)}"`,
+    )
+    .replace(
+      `href="/src/css/styles.css"`,
+      `href="data:text/css;base64,${btoa(actualStyle)}"`,
+    );
 
-  return "data:text/html;base64," + btoa(styleReplaced)
+  return "data:text/html;base64," + btoa(styleReplaced);
 }
 
 function App() {
   const [major, setMajor] = useState<Major2>();
   const [html, setHtml] = useState<string>("");
   const [tokenSections, setTokenSections] = useState<HSection[]>();
+  const [stupidRefresh, setStupidRefresh] = useState<number>(0);
 
   useEffect(() => {
-    read_major_file("2023", "computer-information-science", "Computer_Science_BSCS", "raw.initial.html")
-      .then(setHtml);
-    read_major_file("2023", "computer-information-science", "Computer_Science_BSCS", "tokens.initial.json")
+    invoke("generate_major_list").then(console.log);
+    read_major_file(
+      "2023",
+      "engineering",
+      "electrical_and_computer_engineering_bsee_or_bscmpe",
+      "raw.initial.html",
+    ).then(setHtml);
+    read_major_file(
+      "2023",
+      "engineering",
+      "electrical_and_computer_engineering_bsee_or_bscmpe",
+      "tokens.initial.json",
+    )
       .then(parseTokens)
-      .then(tokens => setTokenSections(tokens));
-    read_major_file("2023", "computer-information-science", "Computer_Science_BSCS", "parsed.initial.json")
-      .then((val) => {
-        try {
-          setMajor(JSON.parse(val))
-        }
-        catch (e) {
-          console.error(val, e)
-        }
-      });
+      .then((tokens) => setTokenSections(tokens));
+    read_major_file(
+      "2023",
+      "engineering",
+      "electrical_and_computer_engineering_bsee_or_bscmpe",
+      "parsed.initial.json",
+    ).then((val) => {
+      try {
+        setMajor(JSON.parse(val));
+      } catch (e) {
+        console.error(val, e);
+      }
+    });
     // read_major_file("2023", "computer-information-science", "Computer_Science_and_Behavioral_Neuroscience_BS", "parsed.json")
     //   .then((val) => setMajor(JSON.parse(val)));
-  }, []);
+  }, [stupidRefresh]);
 
   const handleChange: MajorChangeHandler = (change, location) => {
-    if(major) {
-      const majorClone = {...major};
-      if(location.length > 0){
+    if (major) {
+      const majorClone = { ...major };
+      if (location.length > 0) {
         const locationIndex = location.shift();
-        if(locationIndex === undefined) {
+        if (locationIndex === undefined) {
           throw new Error(majorClone.requirementSections.toString());
         }
-        handleSection(majorClone.requirementSections[locationIndex], change, location);
+        handleSection(
+          majorClone.requirementSections[locationIndex],
+          change,
+          location,
+        );
       } else {
-        if(change.type === "DELETE") {
-          majorClone.requirementSections.splice(change.location, 1)
+        if (change.type === "DELETE") {
+          majorClone.requirementSections.splice(change.location, 1);
         }
       }
       setMajor(majorClone);
     }
-  }
+  };
 
   return (
     <div style={styles.appContainer}>
@@ -101,24 +131,28 @@ function App() {
           <option value="CAMD">CAMD</option>
         </select>
       </div>
+      <button onClick={() => setStupidRefresh((val) => val + 1)}>Thingy</button>
       <div style={styles.container}>
         <div style={styles.column}>
           <p style={styles.columnHeader}>HTML</p>
           <div style={styles.content}>
-            <iframe src={prepareHTML(html)} style={styles.iframe} width="100%"/>
+            <iframe
+              src={prepareHTML(html)}
+              style={styles.iframe}
+              width="100%"
+            />
           </div>
         </div>
         <div style={styles.column}>
           <p style={styles.columnHeader}>Tokens</p>
           <div style={styles.content}>
-            {
-              tokenSections && tokenSections.map(section => (
+            {tokenSections &&
+              tokenSections.map((section) => (
                 <React.Fragment>
                   <h1>{section.description}</h1>
                   <Tokens section={section} />
                 </React.Fragment>
-              ))
-            }
+              ))}
           </div>
         </div>
         <div style={styles.column}>
@@ -138,7 +172,7 @@ const styles = {
     height: "100%",
     display: "flex",
     flexDirection: "column",
-    padding: "10px"
+    padding: "10px",
   },
   container: {
     margin: 0,
@@ -148,35 +182,35 @@ const styles = {
     justifyContent: "flex-start",
     maxWidth: "100vw",
     gap: 5,
-    overflow: "hidden"
+    overflow: "hidden",
   },
   column: {
     // border: "1px solid gray",
     background: "#222",
     flexGrow: 1,
     flexBasis: "100%",
-    overflow: 'auto',
+    overflow: "auto",
     borderRadius: 5,
-    overflowY: 'hidden',
+    overflowY: "hidden",
     display: "flex",
-    flexDirection: "column"
+    flexDirection: "column",
   },
   columnHeader: {
     fontWeight: "bold",
-    background: '#111',
+    background: "#111",
     padding: "6px 10px",
   },
   content: {
-    overflowY: 'auto',
+    overflowY: "auto",
     padding: "10px",
     height: "100%",
   },
   pre: {
-    whiteSpace: 'pre-wrap',
-    overflowWrap: 'break-word',
+    whiteSpace: "pre-wrap",
+    overflowWrap: "break-word",
     // width: '100%',
     // height: '100%',
-    overflowY: 'auto'
+    overflowY: "auto",
   },
   iframe: {
     height: "100%",
@@ -184,4 +218,3 @@ const styles = {
   dropdownContainer: {},
 } satisfies Record<string, React.CSSProperties>;
 export default App;
-

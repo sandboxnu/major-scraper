@@ -14,7 +14,9 @@ import {
   RANGE_UNBOUNDED,
   SUBJECT_REGEX,
   XOM_REGEX_CREDITS,
+  XOM_REGEX_NOT_ALREADY_TAKEN,
   XOM_REGEX_NUMBER,
+  XOM_REGEX_NUMBER_KHOURY,
 } from "./constants";
 import { HSectionType, HRowType } from "./types";
 import type {
@@ -198,7 +200,13 @@ const tokenizeSections = async (
   const descriptions: string[] = [];
   const courseList: HSection[] = [];
 
-  for (const element of requirementsContainer.children().toArray()) {
+  const requirementsContainerChildren = requirementsContainer
+    .children()
+    .toArray();
+
+  for (const element of requirementsContainerChildren) {
+    // debugger;
+    // Accumulate section headers:
     if (element.name === "h2" || element.name === "h3") {
       // element is h2 or h3 means it's a header text
       descriptions.push(parseText($(element)));
@@ -224,9 +232,10 @@ const tokenizeSections = async (
       parseText($(element).prev()).includes("concentration")
     ) {
       const links = constructNestedLinks($, element);
-      if (links.length === 0) {
-        return courseList;
-      }
+      console.log(links);
+      // if (links.length === 0) {
+      //   return courseList;
+      // }
 
       // get all the concentration locally instead of fetching
       // them from the catalog by mapping the url path (in this case called link)
@@ -371,7 +380,9 @@ const getRowType = ($: CheerioStatic, tr: CheerioElement, tds: Cheerio[]) => {
 
   if (
     tdText.toLowerCase().match(XOM_REGEX_CREDITS) ||
-    tdText.toLowerCase().match(XOM_REGEX_NUMBER)
+    tdText.toLowerCase().match(XOM_REGEX_NUMBER) ||
+    tdText.toLowerCase().match(XOM_REGEX_NOT_ALREADY_TAKEN) ||
+    tdText.toLowerCase().match(XOM_REGEX_NUMBER_KHOURY)
   ) {
     return HRowType.X_OF_MANY;
   }
@@ -685,15 +696,21 @@ const constructXOfMany = (
   const description = parseText(c1);
 
   if (!hour) {
-    const matchesNumber = description.toLowerCase().match(XOM_REGEX_NUMBER);
-    if (matchesNumber) {
-      const numberTranslation = XOM_NUMBERS.get(
-        ensureAtLeastLength(matchesNumber, 2)[1],
-      );
-      if (numberTranslation != undefined) {
-        hour = numberTranslation * 4;
+    [
+      XOM_REGEX_NUMBER,
+      XOM_REGEX_NOT_ALREADY_TAKEN,
+      XOM_REGEX_NUMBER_KHOURY,
+    ].forEach(regex => {
+      const match = description.toLowerCase().match(regex);
+      if (match) {
+        const numberTranslation = XOM_NUMBERS.get(
+          ensureAtLeastLength(match, 2)[1],
+        );
+        if (numberTranslation != undefined) {
+          hour = numberTranslation * 4;
+        }
       }
-    }
+    });
 
     const matchesCredits = description.toLowerCase().match(XOM_REGEX_CREDITS);
     if (matchesCredits) {
