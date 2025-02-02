@@ -1,120 +1,222 @@
 {
-  "Sample Pattern: Four Years, Two Co-ops in Summer 2/Fall": {
+  "Sample Plans of Study": {},
+  "Four Years, One Co-op In Spring/Summer 1": {
     "Year 1": {
       "Fall": [
-        "BIOL 1107 and BIOL 1108",
-        "CS 1200",
-        "CS 1800 and CS 1802",
-        "CS 2500 and CS 2501",
+        "MATH 1341",
+        "CHEM 1151",
+        "CHEM 1153",
+        "GE 1000",
+        "GE 1501",
         "ENGW 1111"
       ],
       "Spring": [
-        "CS 2510 and CS 2511",
-        "BIOL 2299",
-        "CHEM 1161 and CHEM 1162 and CHEM 1163",
-        "MATH 1341"
+        "MATH 1342",
+        "PHYS 1151",
+        "PHYS 1152",
+        "PHYS 1153",
+        "GE 1502"
       ],
       "Summer 1": [
-        "BIOL 2301 and BIOL 2302",
-        "CS 3500 and CS 3501"
-      ],
-      "Summer 2": [
-        "CS 3000"
+        "MATH 2341"
       ]
     },
     "Year 2": {
       "Fall": [
-        "CHEM 2311 and CHEM 2312",
-        "CS 1210",
-        "BIOL 2301 and BIOL 2302"
+        "MATH 2321",
+        "PHYS 1155",
+        "PHYS 1156",
+        "PHYS 1157",
+        "EECE 2150 and 2160 or",
+        "EECE 2140"
       ],
       "Spring": [
-        "CS 1210",
-        "CHEM 2313 and CHEM 2314",
-        "BIOL 2309"
-      ],
-      "Summer 1": [
-        "BIOL 3611 and BIOL 3612"
-      ],
-      "Summer 2": [
-        "CHEM 2313 and CHEM 2314"
+        "CS 1800",
+        "CS 1802",
+        "EECE 2150 and 2160 or"
       ]
     },
     "Year 3": {
-      "Spring": [
-        "CS 4500 and 4530 or"
-      ],
-      "Summer 1": [
-        "ENGW 3302 and 3307 and 3315 , , or"
+      "Summer 2": [
+        "EECE 4791",
+        "ENGW 3302 and 3315 or"
       ],
       "Fall": [
-        "BIOL 2309",
-        "BIOL 3611 and BIOL 3612"
-      ],
-      "Summer 2": [
-        "ENGW 3302 and 3307 and 3315 , , or"
+        "ENCP 2000"
       ]
     },
     "Year 4": {
       "Fall": [
-        "CS 4500 and 4530 or",
-        "ENVR 2500 and ENVR 2501"
+        "EECE 4792",
+        "ENCP 3000"
       ],
       "Spring": [
-        "CS 3800",
-        "CS 3200"
+        "EECE 3468"
       ]
     }
   },
-  "Four Years, Two Co-ops in Spring/Summer 1": {
+  "Four Years, One Co-op in Summer 2/Fall": {
     "Year 1": {
       "Fall": [
-        "BIOL 1107 and BIOL 1108",
-        "CS 1200",
-        "CS 1800 and CS 1802",
-        "CS 2500 and CS 2501",
-        "ENGW 1111"
+        "CHEM 1151 (ND)",
+        "CHEM 1153",
+        "ENGW 1111 (WF)",
+        "GE 1000",
+        "GE 1501",
+        "MATH 1341 (FQ)"
       ],
       "Spring": [
-        "CS 2510 and CS 2511",
-        "BIOL 2299",
-        "CHEM 1161 and CHEM 1162 and CHEM 1163",
-        "MATH 1341"
+        "GE 1502 (ER)",
+        "MATH 1342 (FQ)",
+        "PHYS 1151 (ND)",
+        "PHYS 1152 (AD)",
+        "PHYS 1153"
       ],
       "Summer 1": [
-        "CS 3500 and CS 3501"
-      ],
-      "Summer 2": [
-        "CS 3000"
+        "MATH 2341"
       ]
     },
     "Year 2": {
       "Fall": [
-        "CS 1210",
-        "CHEM 2311 and CHEM 2312",
-        "BIOL 2301 and BIOL 2302"
+        "EECE 2140",
+        "EECE 2150 and 2160 or (AD)",
+        "MATH 2321 (FQ)",
+        "PHYS 1155 (ND)",
+        "PHYS 1156 (AD)",
+        "PHYS 1157"
       ],
-      "Summer 2": [
-        "CHEM 2313 and CHEM 2314"
+      "Spring": [
+        "CS 1800 (FQ)",
+        "CS 1802",
+        "EECE 2160 and 2150 or",
+        "ENCP 2000"
       ]
     },
     "Year 3": {
-      "Fall": [
-        "BIOL 2309",
-        "BIOL 3611 and BIOL 3612"
+      "Spring": [
+        "ENCP 3000"
       ],
-      "Summer 2": [
-        "ENGW 3302 and 3307 and 3315 , , or"
+      "Summer 1": [
+        "EECE 4791 (EI, WI, CE)",
+        "ENGW 3302 and 3315 or (WD)"
       ]
     },
     "Year 4": {
       "Fall": [
-        "CS 4500 and 4530 or",
-        "ENVR 2500 and ENVR 2501"
+        "EECE 3468"
       ],
       "Spring": [
-        "CS 3800",
-        "CS 3200"
+        "EECE 4792 (EI, WI, CE)"
+      ]
+    }
+  },
+  "Five Years, Three Co-ops in Summer 2/Fall": {
+    "Year 1": {
+      "Fall": [
+        "CHEM 1151 (ND)",
+        "CHEM 1153",
+        "ENGW 1111 (WF)",
+        "GE 1000",
+        "GE 1501",
+        "MATH 1341 (FQ)"
+      ],
+      "Spring": [
+        "GE 1502 (ER)",
+        "MATH 1342 (FQ)",
+        "PHYS 1151 (ND)",
+        "PHYS 1152 (AD)",
+        "PHYS 1153"
+      ]
+    },
+    "Year 2": {
+      "Fall": [
+        "EECE 2140",
+        "EECE 2150 and 2160 or (AD)",
+        "MATH 2341",
+        "PHYS 1155 (ND)",
+        "PHYS 1156 (AD)",
+        "PHYS 1157"
+      ],
+      "Spring": [
+        "CS 1800 (FQ)",
+        "CS 1802",
+        "EECE 2160 and 2150 or",
+        "ENCP 2000",
+        "MATH 2321 (FQ)"
+      ]
+    },
+    "Year 3": {
+      "Summer 1": [
+        "ENGW 3302 and 3315 or (WD)"
+      ]
+    },
+    "Year 4": {
+      "Spring": [
+        "EECE 3468",
+        "ENCP 3000"
+      ],
+      "Summer 1": [
+        "EECE 4791 (EI, CE, WI)"
+      ]
+    },
+    "Year 5": {
+      "Spring": [
+        "EECE 4792 (EI, WI, CE)"
+      ]
+    }
+  },
+  "Five Years, Three Co-ops in Spring/Summer 1": {
+    "Year 1": {
+      "Fall": [
+        "CHEM 1151 (ND)",
+        "CHEM 1153",
+        "ENGW 1111 (WF)",
+        "GE 1000",
+        "GE 1501",
+        "MATH 1341 (FQ)"
+      ],
+      "Spring": [
+        "GE 1502 (ER)",
+        "MATH 1342 (FQ)",
+        "PHYS 1151 (ND)",
+        "PHYS 1152 (AD)",
+        "PHYS 1153"
+      ]
+    },
+    "Year 2": {
+      "Fall": [
+        "EECE 2140",
+        "EECE 2150 and 2160 or (AD)",
+        "ENCP 2000",
+        "MATH 2341",
+        "PHYS 1155 (ND)",
+        "PHYS 1156 (AD)",
+        "PHYS 1157"
+      ]
+    },
+    "Year 3": {
+      "Fall": [
+        "CS 1800 (FQ)",
+        "CS 1802",
+        "EECE 2160 and 2150 or",
+        "MATH 2321 (FQ)"
+      ],
+      "Summer 2": [
+        "ENGW 3302 and 3315 or (WD)"
+      ]
+    },
+    "Year 4": {
+      "Fall": [
+        "ENCP 3000"
+      ],
+      "Summer 2": [
+        "EECE 4791 (EI, CE, WI)"
+      ]
+    },
+    "Year 5": {
+      "Fall": [
+        "EECE 3468",
+        "EECE 4792 (EI, CE, WI)"
       ]
     }
   }

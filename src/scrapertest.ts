@@ -2,7 +2,7 @@ import cheerio from "cheerio";
 import { promises as fs } from "fs";
 
 const url =
-  "https://catalog.northeastern.edu/undergraduate/computer-information-science/computer-information-science-combined-majors/computer-science-biology-bs/#planofstudytext";
+  "https://catalog.northeastern.edu/undergraduate/engineering/electrical-computer/electrical-computer-engineering-bsee/#planofstudytext";
 
 async function scrapeData() {
   try {
@@ -55,14 +55,12 @@ async function scrapeData() {
 
           // If we find the term header row, extract the mapping.
           if ($row.hasClass("plangridterm")) {
-            // Extract all header cells then allow only provided term names.
+            // Only extract the <th> cells that are not the hours column.
             termMapping = $row
-              .find("th")
+              .find("th:not(.hourscol)")
               .map((i, th) => $(th).text().trim())
               .get();
-            // Only allow term headers that are one of the allowed terms.
-            const allowedTerms = ["Fall", "Spring", "Summer 1", "Summer 2"];
-            termMapping = termMapping.filter(term => allowedTerms.includes(term));
+            // (Optionally, filter allowed terms – though this is now defined by the table itself.)
             return; // Continue to next row
           }
 
@@ -80,61 +78,55 @@ async function scrapeData() {
           // Process course data rows (skip summary or total rows)
           if (
             !$row.hasClass("plangridsum") &&
-            !$row.hasClass("plangridtotal")
+            !$row.hasClass("plangridtotal") &&
+            !$row.hasClass("plangridsum")
           ) {
-            $row.find("td").each((i, td) => {
-              const $td = $(td);
-              if (i % 2 === 0 && $td.length > 0) {
-                let courseText = "";
-                const courses = $td
-                  .find("a.bubblelink.code")
-                  .map((_, link) => $(link).text().trim())
-                  .get();
+            // Only select the course cells (skip hours columns)
+            const courseCells = $row.find("td:not(.hourscol)");
+            courseCells.each((index, cell) => {
+              const $cell = $(cell);
+              let courseText = "";
+              const courses = $cell
+                .find("a.bubblelink.code")
+                .map((_, link) => $(link).text().trim())
+                .get();
 
-                // Get any additional text (like ND, WD, etc.)
-                const tags = $td
-                  ?.clone()
-                  ?.children()
-                  ?.remove()
-                  ?.end()
-                  ?.text()
-                  ?.trim()
-                  ?.split("\n")[0]
-                  ?.replace(/\s+/g, " ")
-                  .trim();
+              // Get any additional text in the cell
+              const tags = $cell
+                ?.clone()
+                ?.children()
+                ?.remove()
+                ?.end()
+                ?.text()
+                ?.trim()
+                ?.split("\n")[0]
+                ?.replace(/\s+/g, " ")
+                .trim();
 
-                if (courses.length > 0) {
-                  courseText = courses.join(" and ");
-                  if (tags) {
-                    courseText += " " + tags;
-                  }
+              if (courses.length > 0) {
+                courseText = courses.join(" and ");
+                if (tags) {
+                  courseText += " " + tags;
                 }
+              }
 
-                if (
-                  courseText &&
-                  !courseText.includes("Vacation") &&
-                  !courseText.includes("Co-op")
-                ) {
-                  // Determine the term based on the extracted header mapping.
-                  const colIndex = Math.floor(i / 2);
-                  currentTerm = termMapping[colIndex] || "";
-                  if (!currentTerm) return;
+              // Map the cell to the corresponding term from our header mapping.
+              currentTerm = termMapping[index] || "";
+              if (!currentTerm) return;
 
-                  if (
-                    courseText &&
-                    currentYear &&
-                    currentTerm &&
-                    plans[currentPlan]
-                  ) {
-                    const yearData = plans[currentPlan]?.[currentYear] ?? {};
-                    plans[currentPlan]![currentYear] = yearData;
-                    const termsData = yearData[currentTerm] ?? [];
-                    yearData[currentTerm] = termsData;
-                    // Only add the course text if it isn't already present
-                    if (!termsData.includes(courseText)) {
-                      termsData.push(courseText);
-                    }
-                  }
+              if (
+                courseText &&
+                currentYear &&
+                currentTerm &&
+                plans[currentPlan]
+              ) {
+                const yearData = plans[currentPlan]?.[currentYear] ?? {};
+                plans[currentPlan]![currentYear] = yearData;
+                const termsData = yearData[currentTerm] ?? [];
+                yearData[currentTerm] = termsData;
+                // Only add the course text if it isn't already present
+                if (!termsData.includes(courseText)) {
+                  termsData.push(courseText);
                 }
               }
             });
