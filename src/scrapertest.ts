@@ -1,10 +1,11 @@
 import cheerio from "cheerio";
 import { promises as fs } from "fs";
+import { getCurrentYear } from "./urls";
+import { scrapePlans } from "./runtime";
 
-const url =
-  "https://catalog.northeastern.edu/undergraduate/engineering/electrical-computer/electrical-computer-engineering-bsee/#planofstudytext";
+//const url = "https://catalog.northeastern.edu/undergraduate/health-sciences/nursing/bsn/#planofstudytext";
 
-async function scrapeData() {
+export async function scrapePlan(url: string, fileName: string) {
   try {
     // Add a User-Agent header to mimic a real browser
     const response = await fetch(url, {
@@ -134,13 +135,18 @@ async function scrapeData() {
         });
       }
     });
+    const directory = "./src/output";
+    await fs.mkdir(directory, { recursive: true });
 
     // Save JSON data to a file
-    await fs.writeFile("output.json", JSON.stringify(plans, null, 2));
-    console.log("Data successfully saved to output.json");
+    const sanitizedFileName = fileName.replace(/[\/\\:*?"<>|]/g, "_");
+    const outputFilePath = `${directory}/${sanitizedFileName}`;
+    await fs.writeFile(outputFilePath, JSON.stringify(plans, null, 2));
+    console.log("Data successfully saved to " + outputFilePath);
   } catch (error) {
     console.error("Error scraping data:", error);
   }
 }
 
-scrapeData();
+//scrapeData(url);
+await scrapePlans(2022, await getCurrentYear());

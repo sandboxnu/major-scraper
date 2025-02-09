@@ -5,11 +5,38 @@ import {
   type ErrorLog,
   type MandatoryPipelineEntry,
 } from "@/runtime/types";
+import { scrapePlan } from "@/scrapertest";
 import { tokenize } from "@/tokenize";
-import { scrapeMajorLinks } from "@/urls";
+import { scrapeMajorLinks, scrapeMajorPlanLinks } from "@/urls";
 import { log, note, spinner } from "@clack/prompts";
 import color from "picocolors";
 
+export async function scrapePlans(year: number, currentYear: number) {
+  log.info(color.bold(`Scraping the ${year} - ${year + 1} plans of study`));
+  //const spin = spinner();
+
+  //await phaseLogger(
+    //spin,
+    //PhaseLabel.ScrapeMajorLinks,
+    //scrapeMajorPlanLinks(year, currentYear),
+  //)
+    //.then(addPhase(spin, PhaseLabel.Classify, classify))
+    //.then(addPhase(spin, PhaseLabel.Tokenize, tokenize))
+    //.then(addPhase(spin, PhaseLabel.Parse, parse));
+  const { nextEntries, errorLog } = await scrapeMajorPlanLinks(year, currentYear);
+
+  let idx = 0;
+  for (const entry of nextEntries) {
+    console.log(entry.savePath);
+    await scrapePlan(entry.url.href, entry.savePath|| "FAILED_PATH.json") 
+    idx++;
+    if (idx > 10) {
+      break;
+    }
+  }
+
+  log.success(`Finished scraping ${year} - ${year + 1} catalog!`);
+}
 export async function scrape(year: number, currentYear: number) {
   log.info(color.bold(`Scraping the ${year} - ${year + 1} catalog`));
   const spin = spinner();
