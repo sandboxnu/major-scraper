@@ -30,7 +30,7 @@ export async function scrapePlans(year: number, currentYear: number) {
     console.log(entry.savePath);
     await scrapePlan(entry.url.href, entry.savePath|| "FAILED_PATH.json") 
     idx++;
-    if (idx > 10) {
+    if (idx > 50) {
       break;
     }
   }

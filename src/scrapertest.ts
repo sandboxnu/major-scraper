@@ -25,6 +25,15 @@ export async function scrapePlan(url: string, fileName: string) {
       $("#planofstudytextcontainer h3, #planofstudytext h3").length,
     );
 
+    const $tbody = $("tbody").first();
+
+    if (!$tbody.length) {
+      console.log(`No plan of study table found for: ${url}`);
+      return; // Skip creating JSON if no table is found
+    }
+
+    const planTitle = $tbody.prevAll("h3").first().text().trim();
+
     const plans: Record<string, Record<string, Record<string, any[]>>> = {};
     let currentPlan = "";
     let currentYear = "";
@@ -135,13 +144,28 @@ export async function scrapePlan(url: string, fileName: string) {
         });
       }
     });
-    const directory = "./src/output";
+
+    if (Object.keys(plans).length === 0) {
+      console.log(`No valid plans found for: ${url}`);
+      return;
+    }
+
+    // Convert string URL to URL object and extract pathname parts
+    const urlObj = new URL(url);
+    const pathParts = urlObj.pathname.split('/');
+    const year = pathParts[1]?.startsWith('archive') ? pathParts[1] : 'current';
+    const undergraduateIndex = pathParts.indexOf('undergraduate');
+    const college = pathParts[undergraduateIndex + 1] || 'unknown';
+    const major = pathParts.slice(undergraduateIndex + 2, -1).join('/') || 'unknown';
+
+    // Construct the directory path
+    const directory = `./src/output/${year}/${college}/${major}`;
     await fs.mkdir(directory, { recursive: true });
 
     // Save JSON data to a file
-    const sanitizedFileName = fileName.replace(/[\/\\:*?"<>|]/g, "_");
-    const outputFilePath = `${directory}/${sanitizedFileName}`;
+    const outputFilePath = `${directory}/plans.json`;
     await fs.writeFile(outputFilePath, JSON.stringify(plans, null, 2));
+    console.log("URL: " + url);
     console.log("Data successfully saved to " + outputFilePath);
   } catch (error) {
     console.error("Error scraping data:", error);
