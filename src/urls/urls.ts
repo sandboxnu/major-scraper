@@ -37,10 +37,8 @@ const getChildrenForPathId = ($: CheerioStatic, url: URL) => {
   const current = $(`#${id}`);
   return current.children();
 };
-export async function scrapeMajorPlanLinks(
-  startYear: number,
-  currentYear: number,
-) {
+
+export async function scrapeMajorLinks(startYear: number, currentYear: number, suffix:string) {
   const path =
     startYear === currentYear
       ? "undergraduate"
@@ -69,83 +67,7 @@ export async function scrapeMajorPlanLinks(
             "https://nextcatalog.northeastern.edu/",
             startYear === currentYear
               ? ""
-              : `archive/${startYear}-${startYear + 1}/#planofstudytext`,
-          ),
-        ),
-      );
-
-      if (
-        seen.has(url.href) ||
-        !Object.values(College).some(linkPart => url.href.includes(linkPart))
-      ) {
-        continue;
-      }
-
-      if (isParent(element)) {
-        nextQueue.push(url);
-      } else {
-        nextEntries.push({ url, savePath: "PLAN" + url.pathname + ".json" });
-      }
-
-      seen.add(url.href);
-    }
-  };
-
-  while (queue.length > 0) {
-    const nextQueue: URL[] = [];
-
-    await Promise.all(
-      queue.map(async url =>
-        matchResult(await retryFetchHTML(url), {
-          Ok: html => {
-            processHTML(html, url, nextQueue);
-          },
-          Err: message => {
-            errorLog.push({
-              entryInfo: url.href,
-              message,
-            });
-          },
-        }),
-      ),
-    );
-
-    queue = nextQueue;
-  }
-
-  return { nextEntries, errorLog };
-}
-
-export async function scrapeMajorLinks(startYear: number, currentYear: number) {
-  const path =
-    startYear === currentYear
-      ? "undergraduate"
-      : `archive/${startYear}-${startYear + 1}/undergraduate`;
-
-  const initQueue = Object.values(College).map(
-    college => new URL(join(BASE_URL, path, college, "/")),
-  );
-
-  const nextEntries: MandatoryPipelineEntry[] = [];
-  const errorLog: ErrorLog[] = [];
-  const seen = new Set(initQueue.map(url => url.href));
-  let queue: URL[] = initQueue;
-
-  const processHTML = (html: CheerioStatic, url: URL, nextQueue: URL[]) => {
-    const children = getChildrenForPathId(html, url).toArray().map(html);
-
-    for (const element of children) {
-      const path = getLinkForEl(element);
-      const url = new URL(
-        join(
-          BASE_URL,
-          // some links just includes the dev version of the catalog
-          // so we just replace that with the correpsonding url from the current catalog
-          path.replace(
-            "https://nextcatalog.northeastern.edu/",
-            startYear === currentYear
-              ? ""
-              : `archive/${startYear}-${startYear + 1}/`,
+              : `archive/${startYear}-${startYear + 1}/${suffix}`,
           ),
         ),
       );

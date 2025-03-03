@@ -150,20 +150,27 @@ export async function scrapePlan(url: string, fileName: string) {
       return;
     }
 
-    // Convert string URL to URL object and extract pathname parts
+    // Extract path components from URL
     const urlObj = new URL(url);
-    const pathParts = urlObj.pathname.split('/');
-    const year = pathParts[1]?.startsWith('archive') ? pathParts[1] : 'current';
-    const undergraduateIndex = pathParts.indexOf('undergraduate');
-    const college = pathParts[undergraduateIndex + 1] || 'unknown';
-    const major = pathParts.slice(undergraduateIndex + 2, -1).join('/') || 'unknown';
+    const pathParts = urlObj.pathname.split("/");
 
-    // Construct the directory path
-    const directory = `./src/output/${year}/${college}/${major}`;
+    // Get year from either archive URL or current year
+    const year =
+      pathParts[1] === "archive"
+        ? pathParts[2]?.split("-")[0]
+        : new Date().getFullYear().toString();
+
+    // Get college and major parts
+    const undergraduateIndex = pathParts.indexOf("undergraduate");
+    const college = pathParts[undergraduateIndex + 1] || "unknown";
+    const majorPath = pathParts[pathParts.length - 2] || "unknown";
+
+    // Construct standardized output path
+    const directory = `./src/output/${year}/${college}/${majorPath}`;
     await fs.mkdir(directory, { recursive: true });
 
-    // Save JSON data to a file
-    const outputFilePath = `${directory}/plans.json`;
+    // Save as plan.json
+    const outputFilePath = `${directory}/plan.json`;
     await fs.writeFile(outputFilePath, JSON.stringify(plans, null, 2));
     console.log("URL: " + url);
     console.log("Data successfully saved to " + outputFilePath);

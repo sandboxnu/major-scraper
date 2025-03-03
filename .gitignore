@@ -1,3 +1,7 @@
+
+# plan scraper output
+src\output
+
 # Logs
 logs
 *.log
