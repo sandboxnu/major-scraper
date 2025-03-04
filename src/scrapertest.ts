@@ -124,8 +124,8 @@ export async function scrapePlan(url: string, savePath: string) {
     // Ensure the directory exists before writing the file
     await mkdir(savePath, { recursive: true });
 
-    // Save as plan.json
-    const outputFilePath = `${savePath}/plan.json`;
+    // Save as template.json
+    const outputFilePath = `${savePath}/template.json`;
     //console.log("Saving plan to " + outputFilePath);
     await writeFile(outputFilePath, JSON.stringify(plans, null, 2));
   } catch (error) {
