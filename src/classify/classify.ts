@@ -19,6 +19,7 @@ import { ARCHIVE_PLACEMENT, CURRENT_PLACEMENT } from "@/constants";
 import * as prettier from "prettier";
 import { existsSync } from "fs";
 import { ResultType } from "@/types";
+import { scrapePlan } from "@/scrapertest";
 
 export const classify = async (entry: {
   url: URL;
@@ -52,6 +53,16 @@ export const classify = async (entry: {
 
   if (degreeType === CatalogEntryType.Concentration) {
     throw new ConcentrationError(savePath);
+  }
+
+  // If this is a major, also scrape the plan of study if it exists
+  if (degreeType === CatalogEntryType.Major) {
+    const planUrl = new URL(entry.url.href + "#planofstudytext");
+    try {
+      await scrapePlan(entry.url.href, savePath);
+    } catch (error) {
+      console.log(`No plan found for ${entry.url.href}`);
+    }
   }
 
   return {

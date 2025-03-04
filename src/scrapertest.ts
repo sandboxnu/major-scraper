@@ -1,12 +1,18 @@
 import cheerio from "cheerio";
-import { promises as fs } from "fs";
+import { mkdir, writeFile } from "fs/promises";
 import { getCurrentYear } from "./urls";
 import { scrapePlans } from "./runtime";
+import { majorNameToFileName } from "@/utils";
 
 //const url = "https://catalog.northeastern.edu/undergraduate/health-sciences/nursing/bsn/#planofstudytext";
 
-export async function scrapePlan(url: string, fileName: string) {
+export async function scrapePlan(url: string, savePath: string) {
   try {
+    // Add #planofstudytext to the URL if it's not already there
+    if (!url.includes("#planofstudytext")) {
+      url = url + "#planofstudytext";
+    }
+
     // Add a User-Agent header to mimic a real browser
     const response = await fetch(url, {
       headers: {
@@ -15,24 +21,12 @@ export async function scrapePlan(url: string, fileName: string) {
       },
     });
     const html = await response.text();
-    // Debug: log the length of fetched HTML to see if content is returned
-    console.log("Fetched HTML length:", html.length);
-
     const $ = cheerio.load(html);
-    // Debug: log the number of headers found with our combined selector
-    console.log(
-      "Found plan headers:",
-      $("#planofstudytextcontainer h3, #planofstudytext h3").length,
-    );
-
     const $tbody = $("tbody").first();
 
     if (!$tbody.length) {
-      console.log(`No plan of study table found for: ${url}`);
       return; // Skip creating JSON if no table is found
     }
-
-    const planTitle = $tbody.prevAll("h3").first().text().trim();
 
     const plans: Record<string, Record<string, Record<string, any[]>>> = {};
     let currentPlan = "";
@@ -95,48 +89,25 @@ export async function scrapePlan(url: string, fileName: string) {
             const courseCells = $row.find("td:not(.hourscol)");
             courseCells.each((index, cell) => {
               const $cell = $(cell);
-              let courseText = "";
-              const courses = $cell
+              //note: we can get all the courses in the cell but for simplicity i am only taking the first one
+              //could be a good idea to get all the courses in the cell and have cool ui to switch between
+              const course = $cell
                 .find("a.bubblelink.code")
                 .map((_, link) => $(link).text().trim())
-                .get();
-
-              // Get any additional text in the cell
-              const tags = $cell
-                ?.clone()
-                ?.children()
-                ?.remove()
-                ?.end()
-                ?.text()
-                ?.trim()
-                ?.split("\n")[0]
-                ?.replace(/\s+/g, " ")
-                .trim();
-
-              if (courses.length > 0) {
-                courseText = courses.join(" and ");
-                if (tags) {
-                  courseText += " " + tags;
-                }
-              }
+                .get()[0];
 
               // Map the cell to the corresponding term from our header mapping.
               currentTerm = termMapping[index] || "";
               if (!currentTerm) return;
 
-              if (
-                courseText &&
-                currentYear &&
-                currentTerm &&
-                plans[currentPlan]
-              ) {
+              if (course && currentYear && currentTerm && plans[currentPlan]) {
                 const yearData = plans[currentPlan]?.[currentYear] ?? {};
                 plans[currentPlan]![currentYear] = yearData;
                 const termsData = yearData[currentTerm] ?? [];
                 yearData[currentTerm] = termsData;
                 // Only add the course text if it isn't already present
-                if (!termsData.includes(courseText)) {
-                  termsData.push(courseText);
+                if (!termsData.includes(course)) {
+                  termsData.push(course);
                 }
               }
             });
@@ -150,30 +121,13 @@ export async function scrapePlan(url: string, fileName: string) {
       return;
     }
 
-    // Extract path components from URL
-    const urlObj = new URL(url);
-    const pathParts = urlObj.pathname.split("/");
-
-    // Get year from either archive URL or current year
-    const year =
-      pathParts[1] === "archive"
-        ? pathParts[2]?.split("-")[0]
-        : new Date().getFullYear().toString();
-
-    // Get college and major parts
-    const undergraduateIndex = pathParts.indexOf("undergraduate");
-    const college = pathParts[undergraduateIndex + 1] || "unknown";
-    const majorPath = pathParts[pathParts.length - 2] || "unknown";
-
-    // Construct standardized output path
-    const directory = `./src/output/${year}/${college}/${majorPath}`;
-    await fs.mkdir(directory, { recursive: true });
+    // Ensure the directory exists before writing the file
+    await mkdir(savePath, { recursive: true });
 
     // Save as plan.json
-    const outputFilePath = `${directory}/plan.json`;
-    await fs.writeFile(outputFilePath, JSON.stringify(plans, null, 2));
-    console.log("URL: " + url);
-    console.log("Data successfully saved to " + outputFilePath);
+    const outputFilePath = `${savePath}/plan.json`;
+    //console.log("Saving plan to " + outputFilePath);
+    await writeFile(outputFilePath, JSON.stringify(plans, null, 2));
   } catch (error) {
     console.error("Error scraping data:", error);
   }
