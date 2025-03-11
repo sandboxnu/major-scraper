@@ -3,12 +3,14 @@ import {
   fatalError,
   matchResult,
   retryFetchHTML,
+  majorNameToFileName,
 } from "@/utils";
 import { College } from "./types";
 import { join } from "path";
 import { BASE_URL } from "@/constants";
 import type { AssertionError } from "assert";
 import type { ErrorLog, MandatoryPipelineEntry } from "@/runtime/types";
+import { scrapePlan } from "@/scrapertest";
 
 const isParent = (el: Cheerio) => {
   return el.hasClass("isparent");
@@ -38,7 +40,11 @@ const getChildrenForPathId = ($: CheerioStatic, url: URL) => {
   return current.children();
 };
 
-export async function scrapeMajorLinks(startYear: number, currentYear: number) {
+export async function scrapeMajorLinks(
+  startYear: number,
+  currentYear: number,
+  suffix: string,
+) {
   const path =
     startYear === currentYear
       ? "undergraduate"
@@ -53,7 +59,11 @@ export async function scrapeMajorLinks(startYear: number, currentYear: number) {
   const seen = new Set(initQueue.map(url => url.href));
   let queue: URL[] = initQueue;
 
-  const processHTML = (html: CheerioStatic, url: URL, nextQueue: URL[]) => {
+  const processHTML = async (
+    html: CheerioStatic,
+    url: URL,
+    nextQueue: URL[],
+  ) => {
     const children = getChildrenForPathId(html, url).toArray().map(html);
 
     for (const element of children) {
@@ -67,7 +77,7 @@ export async function scrapeMajorLinks(startYear: number, currentYear: number) {
             "https://nextcatalog.northeastern.edu/",
             startYear === currentYear
               ? ""
-              : `archive/${startYear}-${startYear + 1}/`,
+              : `archive/${startYear}-${startYear + 1}/${suffix}`,
           ),
         ),
       );
@@ -82,7 +92,19 @@ export async function scrapeMajorLinks(startYear: number, currentYear: number) {
       if (isParent(element)) {
         nextQueue.push(url);
       } else {
-        nextEntries.push({ url });
+        // Extract college and major from URL path
+        const pathParts = url.pathname.split("/");
+        const undergraduateIndex = pathParts.indexOf("undergraduate");
+        const college = pathParts[undergraduateIndex + 1] || "unknown";
+        const majorName = pathParts[pathParts.length - 2] || "unknown";
+
+        const savePath = `degrees/major/${startYear}/${college}/${majorNameToFileName(majorName)}`;
+        nextEntries.push({ url, savePath });
+
+        if (suffix === "#planofstudytext") {
+          console.log("scraping plan for " + url.href);
+          await scrapePlan(url.href, savePath);
+        }
       }
 
       seen.add(url.href);
@@ -95,8 +117,8 @@ export async function scrapeMajorLinks(startYear: number, currentYear: number) {
     await Promise.all(
       queue.map(async url =>
         matchResult(await retryFetchHTML(url), {
-          Ok: html => {
-            processHTML(html, url, nextQueue);
+          Ok: async html => {
+            await processHTML(html, url, nextQueue);
           },
           Err: message => {
             errorLog.push({

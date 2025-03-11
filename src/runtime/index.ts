@@ -5,10 +5,45 @@ import {
   type ErrorLog,
   type MandatoryPipelineEntry,
 } from "@/runtime/types";
+import { scrapePlan } from "@/scrapertest";
 import { tokenize } from "@/tokenize";
 import { scrapeMajorLinks } from "@/urls";
 import { log, note, spinner } from "@clack/prompts";
 import color from "picocolors";
+
+export async function scrapePlans(year: number, currentYear: number) {
+  log.info(color.bold(`Scraping the ${year} - ${year + 1} plans of study`));
+  const { nextEntries, errorLog } = await scrapeMajorLinks(
+    year,
+    currentYear,
+    "#planofstudy",
+  );
+
+  const spin = spinner();
+
+  await phaseLogger(
+    spin,
+    PhaseLabel.ScrapeMajorPlans,
+    scrapeMajorLinks(year, currentYear, "#planofstudytext"),
+  )
+    .then(addPhase(spin, PhaseLabel.Classify, classify))
+    .then(addPhase(spin, PhaseLabel.Tokenize, tokenize))
+    .then(addPhase(spin, PhaseLabel.Parse, parse));
+
+  log.success(`Finished scraping ${year} - ${year + 1} catalog for plans!`);
+
+  let idx = 0;
+  for (const entry of nextEntries) {
+    console.log(entry.savePath);
+    await scrapePlan(entry.url.href, entry.savePath || "FAILED_PATH.json");
+    idx++;
+    if (idx > 50) {
+      break;
+    }
+  }
+
+  log.success(`Finished scraping ${year} - ${year + 1} catalog!`);
+}
 
 export async function scrape(year: number, currentYear: number) {
   log.info(color.bold(`Scraping the ${year} - ${year + 1} catalog`));
@@ -17,7 +52,7 @@ export async function scrape(year: number, currentYear: number) {
   await phaseLogger(
     spin,
     PhaseLabel.ScrapeMajorLinks,
-    scrapeMajorLinks(year, currentYear),
+    scrapeMajorLinks(year, currentYear, ""),
   )
     .then(addPhase(spin, PhaseLabel.Classify, classify))
     .then(addPhase(spin, PhaseLabel.Tokenize, tokenize))
@@ -128,7 +163,7 @@ async function phaseLogger<R>(
     .map(
       ({ err, entries }) =>
         `${color.bold(err)} ${JSON.stringify(entries, null, 2)}`,
-  );
+    );
 
   const stats = `Number of entries: ${
     nextEntries.length + errorLog.length
