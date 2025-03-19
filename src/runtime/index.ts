@@ -12,41 +12,54 @@ import { log, note, spinner } from "@clack/prompts";
 import color from "picocolors";
 
 export async function scrapePlans(year: number, currentYear: number) {
-  log.info(color.bold(`Scraping the ${year} - ${year + 1} plans of study`));
-  const { nextEntries, errorLog } = await scrapeMajorLinks(
-    year,
-    currentYear,
-    "#planofstudy",
+  log.info(
+    color.bold(`Scraping templates for the ${year} - ${year + 1} catalog`),
   );
-
   const spin = spinner();
 
-  await phaseLogger(
+  // First get major links from the catalog
+  const majorLinksResult = await phaseLogger(
     spin,
-    PhaseLabel.ScrapeMajorPlans,
-    scrapeMajorLinks(year, currentYear, "#planofstudytext"),
-  )
-    .then(addPhase(spin, PhaseLabel.Classify, classify))
-    .then(addPhase(spin, PhaseLabel.Tokenize, tokenize))
-    .then(addPhase(spin, PhaseLabel.Parse, parse));
+    PhaseLabel.ScrapeMajorLinks,
+    scrapeMajorLinks(year, currentYear, ""),
+  );
 
-  log.success(`Finished scraping ${year} - ${year + 1} catalog for plans!`);
+  // Then classify them to get proper save paths
+  const classifiedEntries = await phaseLogger(
+    spin,
+    PhaseLabel.Classify,
+    phaseResult(majorLinksResult, classify),
+  );
+
+  log.info(`Found ${classifiedEntries.length} majors to scrape templates for`);
 
   let idx = 0;
-  for (const entry of nextEntries) {
-    console.log(entry.savePath);
-    await scrapePlan(entry.url.href, entry.savePath || "FAILED_PATH.json");
+  const totalEntries = classifiedEntries.length;
+
+  // Process each entry to scrape its plan of study
+  for (const entry of classifiedEntries) {
     idx++;
-    if (idx > 50) {
-      break;
+    spin.start(`Scraping template ${idx}/${totalEntries}: ${entry.majorName}`);
+
+    try {
+      await scrapePlan(entry.url.href, entry.savePath || "FAILED_PATH", entry.yearVersion);
+      spin.stop(`Template ${idx}/${totalEntries}: ${entry.majorName} - Done`);
+    } catch (error) {
+      spin.stop(
+        `Template ${idx}/${totalEntries}: ${entry.majorName} - Failed: ${error}`,
+      );
     }
   }
 
-  log.success(`Finished scraping ${year} - ${year + 1} catalog!`);
+  log.success(`Finished scraping templates for ${year} - ${year + 1} catalog!`);
 }
 
 export async function scrape(year: number, currentYear: number) {
-  log.info(color.bold(`Scraping the ${year} - ${year + 1} catalog`));
+  log.info(
+    color.bold(
+      `Scraping major requirements for the ${year} - ${year + 1} catalog`,
+    ),
+  );
   const spin = spinner();
 
   await phaseLogger(
@@ -58,7 +71,9 @@ export async function scrape(year: number, currentYear: number) {
     .then(addPhase(spin, PhaseLabel.Tokenize, tokenize))
     .then(addPhase(spin, PhaseLabel.Parse, parse));
 
-  log.success(`Finished scraping ${year} - ${year + 1} catalog!`);
+  log.success(
+    `Finished scraping major requirements for ${year} - ${year + 1} catalog!`,
+  );
 }
 
 /**

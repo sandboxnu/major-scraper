@@ -59,7 +59,7 @@ export const classify = async (entry: {
   if (degreeType === CatalogEntryType.Major) {
     const planUrl = new URL(entry.url.href + "#planofstudytext");
     try {
-      await scrapePlan(entry.url.href, savePath);
+      await scrapePlan(entry.url.href, savePath, yearVersion);
     } catch (error) {
       console.log(`No plan found for ${entry.url.href}`);
     }

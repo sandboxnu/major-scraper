@@ -6,7 +6,9 @@
   "scripts": {
     "test": "pnpm parser:generate && vitest --watch=false",
     "test:watch": "pnpm parser:generate && vitest --watch",
-    "scrape": "pnpm parser:generate && tsx ./src/main.ts",
+    "scrape": "tsx src/main.ts",
+    "scrape:templates": "tsx src/scrapeTemplates.ts",
+    "scrape:all": "pnpm scrape && pnpm scrape:templates",
     "testScrape": "tsx ./src/scrapertest.ts",
     "parser:generate": "nearleyc src/parse/grammar.ne -o src/parse/grammar.ts"
   },

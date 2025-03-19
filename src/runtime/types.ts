@@ -2,6 +2,7 @@
 export enum PhaseLabel {
   ScrapeMajorLinks = "Scrape Major Links",
   ScrapeMajorPlans = "Scrape Major Plans",
+  ScrapeTemplates = "Scrape Templates",
   Classify = "Classify",
   Tokenize = "Tokenize",
   Parse = "Parse",

@@ -1,12 +1,9 @@
 import cheerio from "cheerio";
 import { mkdir, writeFile } from "fs/promises";
-import { getCurrentYear } from "./urls";
-import { scrapePlans } from "./runtime";
 import { majorNameToFileName } from "@/utils";
+import { join } from "path";
 
-//const url = "https://catalog.northeastern.edu/undergraduate/health-sciences/nursing/bsn/#planofstudytext";
-
-export async function scrapePlan(url: string, savePath: string) {
+export async function scrapePlan(url: string, originalSavePath: string, yearVersion?: number) {
   try {
     // Add #planofstudytext to the URL if it's not already there
     if (!url.includes("#planofstudytext")) {
@@ -121,17 +118,41 @@ export async function scrapePlan(url: string, savePath: string) {
       return;
     }
 
-    // Ensure the directory exists before writing the file
-    await mkdir(savePath, { recursive: true });
+    // We want to save to a templates folder with the same structure
+    // Extract college and major name from the originalSavePath
+    const pathParts = originalSavePath.split(/[\/\\]/);
 
-    // Save as plan.json
-    const outputFilePath = `${savePath}/plan.json`;
-    //console.log("Saving plan to " + outputFilePath);
+    // Get the relevant parts from the path - degree type, year, college, and major
+    const degreeTypeIdx = pathParts.indexOf("degrees") + 1;
+    const yearIdx = degreeTypeIdx + 1;
+    const collegeIdx = degreeTypeIdx + 2;
+
+    if (pathParts.length < collegeIdx + 2) {
+      console.error(`Invalid path structure: ${originalSavePath}`);
+      return;
+    }
+
+    // Extract year from path or use provided yearVersion or default to current year
+    const year = yearVersion || (pathParts[yearIdx] !== undefined ? pathParts[yearIdx] : new Date().getFullYear());
+    const college = pathParts[collegeIdx];
+    const majorName = pathParts[collegeIdx + 1];
+
+    // Create a new path in the templates directory
+    if (!college || !majorName) {
+      console.error("College or major name is undefined");
+      return;
+    }
+
+    // Include the year in the template path
+    const templateSavePath = join("templates", year.toString(), college, majorName);
+
+    // Ensure the directory exists before writing the file
+    await mkdir(templateSavePath, { recursive: true });
+
+    // Save as template.json
+    const outputFilePath = `${templateSavePath}/template.json`;
     await writeFile(outputFilePath, JSON.stringify(plans, null, 2));
   } catch (error) {
-    console.error("Error scraping data:", error);
+    console.error("Error scraping template data:", error);
   }
 }
-
-//scrapeData(url);
-await scrapePlans(2022, await getCurrentYear());
