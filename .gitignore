@@ -1,6 +1,5 @@
 
 # plan scraper output
-src\output
 
 # Logs
 logs
@@ -55,6 +54,7 @@ graduatenu.code-workspace
 
 # Scraper cache
 degrees
+templates
 src/parse/grammar.ts
 
 src/output/*

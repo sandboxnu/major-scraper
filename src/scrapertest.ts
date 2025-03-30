@@ -3,7 +3,11 @@ import { mkdir, writeFile } from "fs/promises";
 import { majorNameToFileName } from "@/utils";
 import { join } from "path";
 
-export async function scrapePlan(url: string, originalSavePath: string, yearVersion?: number) {
+export async function scrapePlan(
+  url: string,
+  originalSavePath: string,
+  yearVersion?: number,
+) {
   try {
     // Add #planofstudytext to the URL if it's not already there
     if (!url.includes("#planofstudytext")) {
@@ -133,7 +137,11 @@ export async function scrapePlan(url: string, originalSavePath: string, yearVers
     }
 
     // Extract year from path or use provided yearVersion or default to current year
-    const year = yearVersion || (pathParts[yearIdx] !== undefined ? pathParts[yearIdx] : new Date().getFullYear());
+    const year =
+      yearVersion ||
+      (pathParts[yearIdx] !== undefined
+        ? pathParts[yearIdx]
+        : new Date().getFullYear());
     const college = pathParts[collegeIdx];
     const majorName = pathParts[collegeIdx + 1];
 
@@ -144,7 +152,12 @@ export async function scrapePlan(url: string, originalSavePath: string, yearVers
     }
 
     // Include the year in the template path
-    const templateSavePath = join("templates", year.toString(), college, majorName);
+    const templateSavePath = join(
+      "templates",
+      year.toString(),
+      college,
+      majorName,
+    );
 
     // Ensure the directory exists before writing the file
     await mkdir(templateSavePath, { recursive: true });

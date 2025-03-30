@@ -42,7 +42,11 @@ export async function scrapePlans(year: number, currentYear: number) {
     spin.start(`Scraping template ${idx}/${totalEntries}: ${entry.majorName}`);
 
     try {
-      await scrapePlan(entry.url.href, entry.savePath || "FAILED_PATH", entry.yearVersion);
+      await scrapePlan(
+        entry.url.href,
+        entry.savePath || "FAILED_PATH",
+        entry.yearVersion,
+      );
       spin.stop(`Template ${idx}/${totalEntries}: ${entry.majorName} - Done`);
     } catch (error) {
       spin.stop(

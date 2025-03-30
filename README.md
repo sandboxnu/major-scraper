@@ -12,14 +12,17 @@ Clone the repo and run:
 After installing dependencies, you can:
 
 ## Scrape Major Requirements
+
 To scrape major requirements:  
 `pnpm scrape`
 
 ## Scrape Plans of Study (Templates)
+
 To scrape plans of study (templates):  
 `pnpm scrape:templates`
 
 ## Scrape Both
+
 To scrape both major requirements and templates:  
 `pnpm scrape:all`
 
@@ -27,6 +30,7 @@ The scraper uses the current catalog by default, but you can specify one or more
 `pnpm scrape 2021 2022 current`
 
 This will populate:
+
 - The `degrees` folder with parsed major requirement JSON files
 - The `templates` folder with plan of study templates in JSON format
 - The `catalogCache` folder with cached HTML files
