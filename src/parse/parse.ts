@@ -1,11 +1,11 @@
 import nearly from "nearley";
 import type { ParsedCatalogEntry } from "./types";
-import { HRowType, HSectionType } from "@/tokenize";
-import type {
-  HRow,
-  HSection,
-  TextRow,
-  TokenizedCatalogEntry,
+import { HRowType, HSectionType, ConcentrationLeadingHeaderExceptionValue, ConcentrationTrailingHeaderExceptionValue } from "@/tokenize";
+import {
+  type HRow,
+  type HSection,
+  type TextRow,
+  type TokenizedCatalogEntry,
 } from "@/tokenize";
 import { writeFile } from "fs/promises";
 import { FileName } from "@/classify";
@@ -125,9 +125,56 @@ export const parseTokens = (sections: HSection[]) => {
     .filter(metaSection => metaSection.type === HSectionType.CONCENTRATION)
     .map(metaSection => {
       metaSection.entries = metaSection.entries.filter(
-        row =>
-          row.type !== HRowType.COMMENT && row.type !== HRowType.SUBSUBHEADER,
+        row => row.type !== HRowType.SUBSUBHEADER
       );
+
+      metaSection.entries = metaSection.entries.flatMap((row, index) => {
+        console.log("NEW KOBE READING ROW")
+        console.log(row)
+        // if this row is a comment and the previous row is an exception elective header, 
+        // then this row is probably a comment that is meant to be a X_OF_MANY row
+        if ((row.type == HRowType.COMMENT || row.type == HRowType.SECTION_INFO) && index > 0) {
+          if (row.description.startsWith("If")) {
+            // special case introduced by "Concentration in Campaigns and Elections" in the following major
+            // https://catalog.northeastern.edu/archive/2021-2022/undergraduate/arts-media-design/journalism/journalism-political-science-ba/#programrequirementstext
+            return [];
+          }
+          const prevRow = metaSection.entries[index - 1]!;
+          console.log("KOBE CHECKING PREVIOUS ROW")
+          console.log(prevRow)
+          if (prevRow.type == HRowType.HEADER && isConcentrationExceptionValue(prevRow.description)) {
+            console.log("CONVERTING TO X_OF_MANY")
+            return [
+              {
+                type: HRowType.X_OF_MANY,
+                description: row.description,
+                hour: row.hour,
+              },
+            ];
+          } else {
+            return [];
+          }
+        }
+        
+        // if this row is a header and the 'Required Courses' exception type,
+        // then the description of the section should be used to identify the concentration section 
+        // otherwise, remove the 'Electives' exception type
+        if (row.type == HRowType.HEADER && isConcentrationExceptionValue(row.description)) {
+          if (isConcentrationLeadingHeaderExceptionValue(row.description) && index == 0) {
+            console.log("KOBE CONVERTING TO CONCENTRATION " + metaSection.description)
+            return [
+              {
+                ...row,
+                description: metaSection.description,
+              }
+            ];
+          } else {
+            console.log("KOBE REMOVING EXCEPTION")
+            return []
+          }
+        }
+        return row;
+      });
 
       if (
         metaSection.entries.length >= 1 &&
@@ -150,3 +197,33 @@ export const parseTokens = (sections: HSection[]) => {
     concentrations,
   };
 };
+
+/**
+ * Checks if the text is a concentration exception type.
+ * https://www.geeksforgeeks.org/what-is-type-predicates-in-typescript/
+ */
+/*
+function isConcentrationExceptionValue(value: string): value is ConcentrationValueExceptionType {
+  return Object.values(ConcentrationValueExceptionType).includes(value as ConcentrationValueExceptionType);
+}
+*/
+function isConcentrationExceptionValue(
+  value: string
+): value is (ConcentrationLeadingHeaderExceptionValue | ConcentrationTrailingHeaderExceptionValue) {
+  return (
+    Object.values(ConcentrationLeadingHeaderExceptionValue).includes(
+      value as ConcentrationLeadingHeaderExceptionValue
+    ) ||
+    Object.values(ConcentrationTrailingHeaderExceptionValue).includes(
+      value as ConcentrationTrailingHeaderExceptionValue
+    )
+  );
+}
+
+function isConcentrationLeadingHeaderExceptionValue(value: string): value is ConcentrationLeadingHeaderExceptionValue {
+  return Object.values(ConcentrationLeadingHeaderExceptionValue).includes(value as ConcentrationLeadingHeaderExceptionValue);
+}
+
+function isConcentrationTrailingHeaderExceptionValue(value: string): value is ConcentrationTrailingHeaderExceptionValue {
+  return Object.values(ConcentrationTrailingHeaderExceptionValue).includes(value as ConcentrationTrailingHeaderExceptionValue);
+}
