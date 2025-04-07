@@ -5,13 +5,13 @@ import {
   type ErrorLog,
   type MandatoryPipelineEntry,
 } from "@/runtime/types";
-import { scrapePlan } from "@/scrapertest";
+import { scrapeTemplate } from "@/scrapeTemplate";
 import { tokenize } from "@/tokenize";
 import { scrapeMajorLinks } from "@/urls";
 import { log, note, spinner } from "@clack/prompts";
 import color from "picocolors";
 
-export async function scrapePlans(year: number, currentYear: number) {
+export async function scrapeTemplates(year: number, currentYear: number) {
   log.info(
     color.bold(`Scraping templates for the ${year} - ${year + 1} catalog`),
   );
@@ -42,7 +42,7 @@ export async function scrapePlans(year: number, currentYear: number) {
     spin.start(`Scraping template ${idx}/${totalEntries}: ${entry.majorName}`);
 
     try {
-      await scrapePlan(
+      await scrapeTemplate(
         entry.url.href,
         entry.savePath || "FAILED_PATH",
         entry.yearVersion,

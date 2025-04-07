@@ -19,7 +19,7 @@ import { ARCHIVE_PLACEMENT, CURRENT_PLACEMENT } from "@/constants";
 import * as prettier from "prettier";
 import { existsSync } from "fs";
 import { ResultType } from "@/types";
-import { scrapePlan } from "@/scrapertest";
+import { scrapeTemplate} from "@/scrapeTemplate";
 
 export const classify = async (entry: {
   url: URL;
@@ -59,7 +59,7 @@ export const classify = async (entry: {
   if (degreeType === CatalogEntryType.Major) {
     const planUrl = new URL(entry.url.href + "#planofstudytext");
     try {
-      await scrapePlan(entry.url.href, savePath, yearVersion);
+      await scrapeTemplate(entry.url.href, savePath, yearVersion);
     } catch (error) {
       console.log(`No plan found for ${entry.url.href}`);
     }

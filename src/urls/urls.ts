@@ -10,7 +10,7 @@ import { join } from "path";
 import { BASE_URL } from "@/constants";
 import type { AssertionError } from "assert";
 import type { ErrorLog, MandatoryPipelineEntry } from "@/runtime/types";
-import { scrapePlan } from "@/scrapertest";
+import { scrapeTemplate } from "@/scrapeTemplate";
 
 const isParent = (el: Cheerio) => {
   return el.hasClass("isparent");
@@ -103,7 +103,7 @@ export async function scrapeMajorLinks(
 
         if (suffix === "#planofstudytext") {
           console.log("scraping plan for " + url.href);
-          await scrapePlan(url.href, savePath);
+          await scrapeTemplate(url.href, savePath);
         }
       }
 

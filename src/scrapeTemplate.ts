@@ -1,9 +1,8 @@
 import cheerio from "cheerio";
 import { mkdir, writeFile } from "fs/promises";
-import { majorNameToFileName } from "@/utils";
 import { join } from "path";
 
-export async function scrapePlan(
+export async function scrapeTemplate(
   url: string,
   originalSavePath: string,
   yearVersion?: number,
@@ -23,12 +22,7 @@ export async function scrapePlan(
     });
     const html = await response.text();
     const $ = cheerio.load(html);
-    const $tbody = $("tbody").first();
-
-    if (!$tbody.length) {
-      return; // Skip creating JSON if no table is found
-    }
-
+    
     const plans: Record<string, Record<string, Record<string, any[]>>> = {};
     let currentPlan = "";
     let currentYear = "";
