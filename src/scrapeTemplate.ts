@@ -22,7 +22,7 @@ export async function scrapeTemplate(
     });
     const html = await response.text();
     const $ = cheerio.load(html);
-    
+
     const plans: Record<string, Record<string, Record<string, any[]>>> = {};
     let currentPlan = "";
     let currentYear = "";
@@ -33,7 +33,7 @@ export async function scrapeTemplate(
       "#planofstudytextcontainer h2, #planofstudytext h2, #planofstudytextcontainer h3, #planofstudytext h3",
     ).each((_, header) => {
       const planTitle = $(header).text().trim();
-      // Remove the "Notes" exclusion so that all plans are processed.
+      // Skip notes sections
       if (!planTitle.startsWith("Notes")) {
         // If we've already seen this plan title, skip to avoid duplicate processing
         if (plans[planTitle]) {
@@ -43,8 +43,37 @@ export async function scrapeTemplate(
         currentPlan = planTitle;
         plans[currentPlan] = {};
 
-        // Find the table that follows this header
-        const planTable = $(header).nextUntil("h3", "table.sc_plangrid");
+        // Try multiple approaches to find the plan table
+        let planTable;
+
+        // First try the original approach
+        planTable = $(header).nextUntil("h3", "table.sc_plangrid");
+
+        // If that didn't work, try looking for the next table directly
+        if (!planTable.length) {
+          planTable = $(header).nextAll("table.sc_plangrid").first();
+        }
+
+        // If still not found, find the nearest following table
+        if (!planTable.length) {
+          // Find the section this header is in
+          const sectionContainer = $(header).closest(
+            "#planofstudytextcontainer, #planofstudytext",
+          );
+          if (sectionContainer.length) {
+            // Find all tables in this section
+            const tables = sectionContainer.find("table.sc_plangrid");
+            // Find the first table that comes after this header
+            const headerIndex = $(header).index();
+            tables.each((i, table) => {
+              if ($(table).index() > headerIndex && !planTable.length) {
+                planTable = $(table);
+                return false; // Break the loop
+              }
+            });
+          }
+        }
+
         // We'll store a term mapping for each year. Reset it before processing rows.
         let termMapping: string[] = [];
 
@@ -111,6 +140,73 @@ export async function scrapeTemplate(
       }
     });
 
+    // If no plans were found through headers, look directly for tables
+    if (Object.keys(plans).length === 0) {
+      const defaultPlanTables = $(
+        "#planofstudytextcontainer table.sc_plangrid, #planofstudytext table.sc_plangrid",
+      );
+
+      if (defaultPlanTables.length > 0) {
+        currentPlan = "Default Plan";
+        plans[currentPlan] = {};
+
+        // Process the first table found
+        const planTable = defaultPlanTables.first();
+        let termMapping: string[] = [];
+
+        planTable.find("tr").each((_, element) => {
+          // Use existing row processing logic
+          const $row = $(element);
+
+          if ($row.hasClass("plangridterm")) {
+            termMapping = $row
+              .find("th:not(.hourscol)")
+              .map((i, th) => $(th).text().trim())
+              .get();
+            return;
+          }
+
+          if ($row.hasClass("plangridyear")) {
+            currentYear = $row.find("th").text().trim();
+            termMapping = [];
+            if (!plans[currentPlan]![currentYear]) {
+              plans[currentPlan]![currentYear] = {};
+            }
+            return;
+          }
+
+          if (
+            !$row.hasClass("plangridsum") &&
+            !$row.hasClass("plangridtotal") &&
+            !$row.hasClass("plangridsum")
+          ) {
+            // Only select the course cells (skip hours columns)
+            const courseCells = $row.find("td:not(.hourscol)");
+            courseCells.each((index, cell) => {
+              const $cell = $(cell);
+              const course = $cell
+                .find("a.bubblelink.code")
+                .map((_, link) => $(link).text().trim())
+                .get()[0];
+
+              currentTerm = termMapping[index] || "";
+              if (!currentTerm) return;
+
+              if (course && currentYear && currentTerm && plans[currentPlan]) {
+                const yearData = plans[currentPlan]?.[currentYear] ?? {};
+                plans[currentPlan]![currentYear] = yearData;
+                const termsData = yearData[currentTerm] ?? [];
+                yearData[currentTerm] = termsData;
+                if (!termsData.includes(course)) {
+                  termsData.push(course);
+                }
+              }
+            });
+          }
+        });
+      }
+    }
+
     if (Object.keys(plans).length === 0) {
       console.log(`No valid plans found for: ${url}`);
       return;
@@ -160,6 +256,11 @@ export async function scrapeTemplate(
     const outputFilePath = `${templateSavePath}/template.json`;
     await writeFile(outputFilePath, JSON.stringify(plans, null, 2));
   } catch (error) {
-    console.error("Error scraping template data:", error);
+    if (error == "TypeError: fetch failed") {
+      console.error("Network error: fetch failed. Retrying...");
+      scrapeTemplate(url, originalSavePath, yearVersion);
+    } else {
+      console.error("Error scraping template data:", error);
+    }
   }
 }
