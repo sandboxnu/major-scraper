@@ -16,3 +16,6 @@ The scraper scrapes the current catalog by default, but you can specify one or m
 `pnpm scrape 2021 2022 current`
 
 This will populate the `results` folder with parsed JSON files and the catalogCache folder with cached HTML.
+
+There is a separate command that can scrape a single academic catalog log by providing a link. To do that, run the following:  
+`pnpm scrape-link <link>`

@@ -27,6 +27,24 @@ export async function scrape(year: number, currentYear: number) {
 }
 
 /**
+ * Scrapes the given academic catalog URL and returns the parsed data.
+ * This function is used for testing to verify a single page scrape.
+ * @param url the academic catalog URL to scrape
+ */
+export async function scrapeLink(url: URL) {
+  log.info(color.bold(`Scraping the link: ${url.href}`));
+  const spin = spinner();
+
+  await new Promise<{ url: URL }[]>(resolve => {
+    resolve([{ url }])
+  }).then(addPhase(spin, PhaseLabel.Classify, classify))
+    .then(addPhase(spin, PhaseLabel.Tokenize, tokenize))
+    .then(addPhase(spin, PhaseLabel.Parse, parse));
+  
+  log.success(`Finished scraping the link: ${url.href}`);
+}
+
+/**
  * Main function for adding new phase to the scraper
  * This function was made higher-order mainly to shorten the
  * arrow function syntax when using .then
