@@ -50,6 +50,7 @@ export type HRow =
   | TextRow<HRowType.HEADER>
   | TextRow<HRowType.SUBHEADER>
   | TextRow<HRowType.SUBSUBHEADER>
+  | TextRow<HRowType.POTENTIAL_CONCENTRATION_ERROR>
   // course rows
   | CourseRow<HRowType.OR_COURSE>
   | CourseRow<HRowType.PLAIN_COURSE>
@@ -89,6 +90,7 @@ export enum HRowType {
   RANGE_UNBOUNDED = "RANGE_UNBOUNDED",
 
   X_OF_MANY = "X_OF_MANY",
+  POTENTIAL_CONCENTRATION_ERROR = "POTENTIAL_CONCENTRATION_ERROR",
 }
 
 export interface TextRow<T> {

@@ -129,18 +129,34 @@ export const parseTokens = (sections: HSection[]) => {
           row.type !== HRowType.COMMENT && row.type !== HRowType.SUBSUBHEADER,
       );
 
-      if (
-        metaSection.entries.length >= 1 &&
-        metaSection.entries[0]?.type != HRowType.HEADER
-      ) {
-        const newHeader: TextRow<HRowType.HEADER> = {
-          type: HRowType.HEADER,
+      // TODO: 
+      // if we scan the section and flag it as having an issue (ex. header is "Elective"),
+      // then we want to add a new flag to the top of the section
+      if (entriesHaveConcentrationError(metaSection.entries)) { // method to check metaSection entries for issue) 
+        metaSection.entries = [{
+          type: HRowType.POTENTIAL_CONCENTRATION_ERROR,
           description: metaSection.description,
           hour: 0,
-        };
-        metaSection.entries = [newHeader, ...metaSection.entries];
-      }
-      return metaSection.entries;
+        }, ...metaSection.entries];
+
+        // NOTE: this is not fully done because in addition to flagging it as a potential concentration error, 
+        // we need to change the headers to another label that can be parsed, because if they are all headers,
+        // the different requirements of a single concentration will be separated as different sections
+        return metaSection.entries;
+      } else {
+        if (
+          metaSection.entries.length >= 1 &&
+          metaSection.entries[0]?.type != HRowType.HEADER
+        ) {
+          const newHeader: TextRow<HRowType.HEADER> = {
+            type: HRowType.HEADER,
+            description: metaSection.description,
+            hour: 0,
+          };
+          metaSection.entries = [newHeader, ...metaSection.entries];
+        }
+        return metaSection.entries;
+      }  
     })
     .map(rows => parseRows("[Concentration Entries]", rows))
     .flat();
@@ -150,3 +166,12 @@ export const parseTokens = (sections: HSection[]) => {
     concentrations,
   };
 };
+
+// TODO: this is a test to check if we can scan for "Elective" in the header as an error
+// in the future, we can acculumate all the potential errors that can tell us 
+// the concentration was not parsed correctly. 
+const entriesHaveConcentrationError = (rows: HRow[]) => {
+  return rows.some(row => {
+    return row.type === HRowType.HEADER && row.description === "Elective";
+  })
+}

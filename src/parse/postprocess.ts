@@ -198,6 +198,49 @@ export const processXOM = ([xom, reqs]: [
   ];
 };
 
+// TODO:
+// now we have to handle the error cases and change the formatting to be correct
+// in the case below, change the section title to the description of the POTENTIAL_CONCENTRATION_ERROR
+/**
+ * 
+ * [
+        {
+          "type": "POTENTIAL_CONCENTRATION_ERROR",
+          "description": "Concentration in Accounting and Advisory Services",
+          "hour": 0
+        },
+        {
+          "type": "SECTION",
+          "title": "Required Courses",
+          "requirements": [
+            {
+              "type": "COURSE",
+              "classId": 3402,
+              "subject": "ACCT"
+            },
+            {
+              "type": "COURSE",
+              "classId": 3403,
+              "subject": "ACCT"
+            },
+            {
+              "type": "COURSE",
+              "classId": 5220,
+              "subject": "ACCT"
+            }
+          ],
+          "minRequirementCount": 3
+        }
+      ],
+ */
+export const processConcentrationError = ([potential_concentration_error, section]: [
+  TextRow<HRowType.POTENTIAL_CONCENTRATION_ERROR>,
+  Section,
+]): Section => {
+  section.title = potential_concentration_error.description;
+  return section;
+}
+
 export default {
   processSection,
   processSectionWithInfo,
@@ -214,4 +257,5 @@ export default {
   processOr,
   processOrOfAnd,
   processXOM,
+  processConcentrationError,
 };
