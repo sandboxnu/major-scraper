@@ -152,3 +152,44 @@ export type TokenizedCatalogEntry = TypedCatalogEntry & {
   programRequiredHours: number;
   sections: HSection[];
 };
+
+/**
+ * Enumerations specifying the headers that lead to common concentration name issue. 
+ * Typically, the headers within the requirement tables specifiy the requirement section name.
+ * However, in some cases, the headers of concentration sections specify the concentration requirements
+ * instead of the concentration name. This causes issues with concentration names becoming the requirement section name.
+ * This type is used to identify concentration header issues, and provide separate tokenization and parsing logic.
+ * 
+ * Read more here:
+ * https://www.notion.so/sandboxnu/Concentration-Issue-1a118273b1f4806da9e9fa99c9ca9a27?pvs=4
+ */
+export enum ConcentrationExceptionValue {
+  ELECTIVES = "Electives",
+  REQUIRED_COURSES = "Required Courses",
+}
+
+/**
+ * Leading headers are identified to be headers that may need to be replaced by the concentration name.
+ */
+export enum ConcentrationLeadingHeaderExceptionValue {
+  REQUIRED_COURSES = "Required Courses",
+  // caused by: https://catalog.northeastern.edu/archive/2021-2022/undergraduate/arts-media-design/journalism/journalism-political-science-ba/#programrequirementstext
+  THEORETICAL_REQUIREMENTS = "Theoretical Requirement",
+  CORE_COURSE = "Core Course",
+  EXPERIENTIAL_REQUIREMENT = "Experiential/Practicum Requirement",
+  CORE_REQUIREMENT = "Core Requirement",
+
+}
+
+/**
+ * 
+ */
+export enum ConcentrationTrailingHeaderExceptionValue {
+  ELECTIVES = "Electives",
+  // caused by: https://catalog.northeastern.edu/archive/2021-2022/undergraduate/arts-media-design/journalism/journalism-political-science-ba/#programrequirementstext
+  CAMPAIGNS_AND_ELECTIONS_ELECTIVES = "Campaigns and Elections Electives",
+  REGIONAL_REQUIREMENTS = "Regional Requirements",
+  EXPERIENTIAL_REQUIREMENT = "Experiential/Practicum Requirement",
+  CORE_COURSE = "Core Courses",
+}
+

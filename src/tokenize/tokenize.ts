@@ -375,6 +375,8 @@ const getRowType = (
     throw Error(`td class was not "codecol": "${tdClasses}"`);
   }
 
+  const tdText = parseText(td);
+
   if (trClasses.has("subheader")) {
     const isSubSubHeader = $(tr).find("span").hasClass("commentindent");
     if (isSubSubHeader) {
@@ -385,7 +387,6 @@ const getRowType = (
     return HRowType.HEADER;
   }
 
-  const tdText = parseText(td);
   // Different range types
   if (
     RANGE_LOWER_BOUNDED_MAYBE_EXCEPTIONS_1.test(tdText) ||
