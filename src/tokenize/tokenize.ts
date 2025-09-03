@@ -244,9 +244,9 @@ const tokenizeSections = async (
       // to the local folder path
       const pages = await Promise.all(
         links.map(async link => {
-          const [, , college, , majorName] = ensureAtLeastLength(
+          const [,,,,college,,conc_name] = ensureAtLeastLength(
             link.split("/"),
-            5,
+            7,
             `Link path incomplete for concentration: ${link}`,
           );
           const filePath = join(
@@ -254,7 +254,7 @@ const tokenizeSections = async (
             CatalogEntryType.Concentration,
             yearVersion.toString(),
             college,
-            majorNameToFileName(majorName),
+            majorNameToFileName(conc_name),
             `${FileName.RAW}.${saveStage}.html`,
           );
 
@@ -464,6 +464,8 @@ const constructRow = (
       throw new Error("We don't support comment counts yet!");
     case HRowType.X_OF_MANY:
       return constructXOfMany($, tds);
+    case HRowType.POTENTIAL_CONCENTRATION_ERROR:
+      throw new Error("Encountered POTENTIAL_CONCENTRATION_ERROR row type, which should not be processed.");
     default:
       return assertUnreachable(type);
   }
