@@ -244,11 +244,13 @@ const tokenizeSections = async (
       // to the local folder path
       const pages = await Promise.all(
         links.map(async link => {
-          const [,,,,college,,conc_name] = ensureAtLeastLength(
+          const pathParts = ensureAtLeastLength(
             link.split("/"),
-            7,
+            5,
             `Link path incomplete for concentration: ${link}`,
           );
+          const college: string = pathParts[2];
+          const conc_name: string = pathParts[4];
           const filePath = join(
             saveDir,
             CatalogEntryType.Concentration,
