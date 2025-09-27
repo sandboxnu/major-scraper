@@ -8,7 +8,8 @@
     "test:watch": "pnpm parser:generate && vitest --watch",
     "scrape": "pnpm parser:generate && tsx ./src/main.ts",
     "scrape-link" : "pnpm parser:generate && tsx ./src/scrape-link.ts",
-    "parser:generate": "nearleyc src/parse/grammar.ne -o src/parse/grammar.ts"
+    "parser:generate": "nearleyc src/parse/grammar.ne -o src/parse/grammar.ts",
+    "diff": "tsx ./src/diff/index.ts"
   },
   "dependencies": {
     "@clack/prompts": "^0.7.0",

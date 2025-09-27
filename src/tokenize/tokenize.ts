@@ -765,6 +765,16 @@ const parseHour = (td: Cheerio) => {
 };
 
 const parseCourseTitle = (parsedCourse: string) => {
+  // Prefer regex extraction to handle concatenations like "ENVR 1202and ENVR 1203"
+  const match = Array.from(parsedCourse.matchAll(COURSE_REGEX))[0];
+  if (match) {
+    return {
+      subject: match[1] as string,
+      classId: Number(match[2]),
+    };
+  }
+
+  // Fallback to strict split-based parsing
   const [subject, classId] = ensureExactLength(
     parsedCourse.split(" "),
     2,
