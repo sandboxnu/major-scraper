@@ -52,3 +52,4 @@ graduatenu.code-workspace
 # Scraper cache
 degrees
 src/parse/grammar.ts
+parsed_files
