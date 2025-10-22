@@ -8,9 +8,50 @@ import type {
   TokenizedCatalogEntry,
 } from "@/tokenize";
 import { writeFile } from "fs/promises";
+import { execSync } from "child_process";
 import { FileName } from "@/classify";
 import grammar from "./grammar";
 import type { Major2, Section } from "@/types";
+
+// Cache the branch name to avoid repeated git calls
+let cachedBranchName: string | null = null;
+
+/**
+ * Gets the current branch name with fallback options.
+ * Priority: BRANCH env var > git branch > default fallback
+ * Result is cached to avoid repeated git calls during parsing.
+ */
+function getBranchName(): string {
+  // Return cached value if available
+  if (cachedBranchName !== null) {
+    return cachedBranchName;
+  }
+
+  // 1. Check environment variable first (highest priority)
+  if (process.env.BRANCH) {
+    cachedBranchName = process.env.BRANCH;
+    return cachedBranchName;
+  }
+
+  // 2. Try to get branch from git
+  try {
+    const branch = execSync("git rev-parse --abbrev-ref HEAD", { 
+      encoding: "utf8",
+      stdio: ["pipe", "pipe", "pipe"]
+    }).trim();
+    
+    if (branch && branch !== "HEAD") {
+      cachedBranchName = branch;
+      return cachedBranchName;
+    }
+  } catch (error) {
+    // Git command failed, continue to fallback
+  }
+
+  // 3. Fallback to a default value
+  cachedBranchName = "unknown";
+  return cachedBranchName;
+}
 
 export const parseRows = (errorMessage: string, rows: HRow[]) => {
   const parser = new nearly.Parser(nearly.Grammar.fromCompiled(grammar));
@@ -66,11 +107,14 @@ export const parse = async (
 ): Promise<ParsedCatalogEntry> => {
   const { mainReqs, concentrations } = parseTokens(entry.sections);
 
+  const branch = getBranchName();
+
   const major: Major2 = {
     name: entry.majorName,
     metadata: {
       verified: false,
       lastEdited: new Date(Date.now()).toLocaleDateString("en-US"),
+      branch: branch,
     },
     totalCreditsRequired: entry.programRequiredHours,
     yearVersion: entry.yearVersion,
