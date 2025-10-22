@@ -9,7 +9,9 @@
     "scrape": "pnpm parser:generate && tsx ./src/main.ts",
     "scrape-link" : "pnpm parser:generate && tsx ./src/scrape-link.ts",
     "parser:generate": "nearleyc src/parse/grammar.ne -o src/parse/grammar.ts",
-    "diff": "tsx ./src/diff/index.ts"
+    "diff": "tsx ./src/diff/index.ts",
+    "scrape:templates": "tsx src/templates.ts",
+    "scrape:all": "pnpm scrape && pnpm scrape:templates"
   },
   "dependencies": {
     "@clack/prompts": "^0.7.0",
