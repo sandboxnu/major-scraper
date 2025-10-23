@@ -21,7 +21,7 @@ let cachedBranchName: string | null = null;
  * Priority: BRANCH env var > git branch > default fallback
  * Result is cached to avoid repeated git calls during parsing.
  */
-function getBranchName(): string {
+export function getBranchName(): string {
   // Return cached value if available
   if (cachedBranchName !== null) {
     return cachedBranchName;

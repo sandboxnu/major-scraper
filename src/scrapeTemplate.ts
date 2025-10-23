@@ -1,6 +1,7 @@
 import cheerio from "cheerio";
 import { mkdir, writeFile } from "fs/promises";
 import { join } from "path";
+import { getBranchName } from "./parse/parse";
 
 export async function scrapeTemplate(
   url: string,
@@ -254,7 +255,15 @@ export async function scrapeTemplate(
 
     // Save as template.json
     const outputFilePath = `${templateSavePath}/template.json`;
-    await writeFile(outputFilePath, JSON.stringify(plans, null, 2));
+    // Add metadata as a separate property, not directly on plans as an index signature if plans is expected to be Record<string, any[]>
+    const outputObj = {
+      "metadata": {
+        "branch": getBranchName(),
+        "lastEdited": new Date(Date.now()).toLocaleDateString("en-US"),
+      },
+      ...plans,
+    };
+    await writeFile(outputFilePath, JSON.stringify(outputObj, null, 2));
   } catch (error) {
     if (error == "TypeError: fetch failed") {
       console.error("Network error: fetch failed. Retrying...");
