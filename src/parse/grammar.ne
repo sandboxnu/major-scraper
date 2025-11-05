@@ -7,6 +7,7 @@ const HEADER = { test: x => x.type === "HEADER" };
 const SUBHEADER = { test: x => x.type === "SUBHEADER" };
 const COMMENT = { test: x => x.type === "COMMENT" };
 const SECTION_INFO = { test: x => x.type === "SECTION_INFO" };
+const POTENTIAL_CONCENTRATION_ERROR = { test: x => x.type === "POTENTIAL_CONCENTRATION_ERROR" };
 
 const OR_COURSE = { test: x => x.type === "OR_COURSE" };
 const OR_OF_AND_COURSE = { test: x => x.type === "OR_OF_AND_COURSE" };
@@ -39,6 +40,7 @@ requirement2_section ->
   | %HEADER %SECTION_INFO subsection:+                     {% postprocess.processSubsectionsWithInfo %}
   | %HEADER requirement2_list subsection:+                 {% postprocess.processSectionWithSubsections %}
   | %HEADER                                                {% postprocess.processEmptySection %}
+  | %POTENTIAL_CONCENTRATION_ERROR requirement2_section    {% postprocess.processConcentrationError %}
 
 subsection ->
     %SUBHEADER top_level_requirement2_list                 {% postprocess.processSection %}

@@ -244,17 +244,19 @@ const tokenizeSections = async (
       // to the local folder path
       const pages = await Promise.all(
         links.map(async link => {
-          const [, , college, , majorName] = ensureAtLeastLength(
+          const pathParts = ensureAtLeastLength(
             link.split("/"),
             5,
             `Link path incomplete for concentration: ${link}`,
           );
+          const college: string = pathParts[2];
+          const conc_name: string = pathParts[4];
           const filePath = join(
             saveDir,
             CatalogEntryType.Concentration,
             yearVersion.toString(),
             college,
-            majorNameToFileName(majorName),
+            majorNameToFileName(conc_name),
             `${FileName.RAW}.${saveStage}.html`,
           );
 
@@ -464,6 +466,8 @@ const constructRow = (
       throw new Error("We don't support comment counts yet!");
     case HRowType.X_OF_MANY:
       return constructXOfMany($, tds);
+    case HRowType.POTENTIAL_CONCENTRATION_ERROR:
+      throw new Error("Encountered POTENTIAL_CONCENTRATION_ERROR row type, which should not be processed.");
     default:
       return assertUnreachable(type);
   }
@@ -761,6 +765,16 @@ const parseHour = (td: Cheerio) => {
 };
 
 const parseCourseTitle = (parsedCourse: string) => {
+  // Prefer regex extraction to handle concatenations like "ENVR 1202and ENVR 1203"
+  const match = Array.from(parsedCourse.matchAll(COURSE_REGEX))[0];
+  if (match) {
+    return {
+      subject: match[1] as string,
+      classId: Number(match[2]),
+    };
+  }
+
+  // Fallback to strict split-based parsing
   const [subject, classId] = ensureExactLength(
     parsedCourse.split(" "),
     2,

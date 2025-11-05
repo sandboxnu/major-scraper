@@ -8,9 +8,50 @@ import type {
   TokenizedCatalogEntry,
 } from "@/tokenize";
 import { writeFile } from "fs/promises";
+import { execSync } from "child_process";
 import { FileName } from "@/classify";
 import grammar from "./grammar";
 import type { Major2, Section } from "@/types";
+
+// Cache the branch name to avoid repeated git calls
+let cachedBranchName: string | null = null;
+
+/**
+ * Gets the current branch name with fallback options.
+ * Priority: BRANCH env var > git branch > default fallback
+ * Result is cached to avoid repeated git calls during parsing.
+ */
+export function getBranchName(): string {
+  // Return cached value if available
+  if (cachedBranchName !== null) {
+    return cachedBranchName;
+  }
+
+  // 1. Check environment variable first (highest priority)
+  if (process.env.BRANCH) {
+    cachedBranchName = process.env.BRANCH;
+    return cachedBranchName;
+  }
+
+  // 2. Try to get branch from git
+  try {
+    const branch = execSync("git rev-parse --abbrev-ref HEAD", { 
+      encoding: "utf8",
+      stdio: ["pipe", "pipe", "pipe"]
+    }).trim();
+    
+    if (branch && branch !== "HEAD") {
+      cachedBranchName = branch;
+      return cachedBranchName;
+    }
+  } catch (error) {
+    // Git command failed, continue to fallback
+  }
+
+  // 3. Fallback to a default value
+  cachedBranchName = "unknown";
+  return cachedBranchName;
+}
 
 export const parseRows = (errorMessage: string, rows: HRow[]) => {
   const parser = new nearly.Parser(nearly.Grammar.fromCompiled(grammar));
@@ -66,11 +107,14 @@ export const parse = async (
 ): Promise<ParsedCatalogEntry> => {
   const { mainReqs, concentrations } = parseTokens(entry.sections);
 
+  const branch = getBranchName();
+
   const major: Major2 = {
     name: entry.majorName,
     metadata: {
       verified: false,
       lastEdited: new Date(Date.now()).toLocaleDateString("en-US"),
+      branch: branch,
     },
     totalCreditsRequired: entry.programRequiredHours,
     yearVersion: entry.yearVersion,
@@ -129,18 +173,49 @@ export const parseTokens = (sections: HSection[]) => {
           row.type !== HRowType.COMMENT && row.type !== HRowType.SUBSUBHEADER,
       );
 
-      if (
-        metaSection.entries.length >= 1 &&
-        metaSection.entries[0]?.type != HRowType.HEADER
-      ) {
-        const newHeader: TextRow<HRowType.HEADER> = {
-          type: HRowType.HEADER,
-          description: metaSection.description,
-          hour: 0,
-        };
-        metaSection.entries = [newHeader, ...metaSection.entries];
+      // TODO:
+      // if we scan the section and flag it as having an issue (ex. header is "Elective"),
+      // then we want to add a new flag to the top of the section
+      if (entriesHaveConcentrationError(metaSection.entries)) {
+        // method to check metaSection entries for issue)
+
+        //add proper name to every header of sections of the concentration
+        metaSection.entries = metaSection.entries.map(row => {
+          if (row.type === HRowType.HEADER) {
+            return {
+              ...row,
+              description: metaSection.description + ": " + row.description,
+            };
+          }
+          return row;
+        });
+
+        metaSection.entries = [
+          {
+            type: HRowType.POTENTIAL_CONCENTRATION_ERROR,
+            description: metaSection.description,
+            hour: 0,
+          },
+          ...metaSection.entries,
+        ];
+        // NOTE: this is not fully done because in addition to flagging it as a potential concentration error,
+        // we need to change the headers to another label that can be parsed, because if they are all headers,
+        // the different requirements of a single concentration will be separated as different sections
+        return metaSection.entries;
+      } else {
+        if (
+          metaSection.entries.length >= 1 &&
+          metaSection.entries[0]?.type != HRowType.HEADER
+        ) {
+          const newHeader: TextRow<HRowType.HEADER> = {
+            type: HRowType.HEADER,
+            description: metaSection.description,
+            hour: 0,
+          };
+          metaSection.entries = [newHeader, ...metaSection.entries];
+        }
+        return metaSection.entries;
       }
-      return metaSection.entries;
     })
     .map(rows => parseRows("[Concentration Entries]", rows))
     .flat();
@@ -149,4 +224,17 @@ export const parseTokens = (sections: HSection[]) => {
     mainReqs,
     concentrations,
   };
+};
+
+// TODO: this is a test to check if we can scan for "Elective" in the header as an error
+// in the future, we can acculumate all the potential errors that can tell us
+// the concentration was not parsed correctly.
+const entriesHaveConcentrationError = (rows: HRow[]) => {
+  return rows.some(row => {
+    return (
+      row.type === HRowType.HEADER &&
+      (row.description.toLowerCase().includes("elective") ||
+        row.description.toLowerCase().includes("required courses"))
+    );
+  });
 };
