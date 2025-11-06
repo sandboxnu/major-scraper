@@ -35,11 +35,11 @@ export function getBranchName(): string {
 
   // 2. Try to get branch from git
   try {
-    const branch = execSync("git rev-parse --abbrev-ref HEAD", { 
+    const branch = execSync("git rev-parse --abbrev-ref HEAD", {
       encoding: "utf8",
-      stdio: ["pipe", "pipe", "pipe"]
+      stdio: ["pipe", "pipe", "pipe"],
     }).trim();
-    
+
     if (branch && branch !== "HEAD") {
       cachedBranchName = branch;
       return cachedBranchName;

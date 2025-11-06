@@ -249,22 +249,41 @@ const tokenizeSections = async (
             5,
             `Link path incomplete for concentration: ${link}`,
           );
-          const college: string = pathParts[2];
-          const conc_name: string = pathParts[4];
-          const filePath = join(
-            saveDir,
-            CatalogEntryType.Concentration,
-            yearVersion.toString(),
-            college,
-            majorNameToFileName(conc_name),
-            `${FileName.RAW}.${saveStage}.html`,
-          );
+          let ugradidx = pathParts.indexOf("undergraduate");
+          const college: string = pathParts[ugradidx + 1] || "DENNIS  NOO";
+          let conc_idx = pathParts.indexOf("concentrations");
+          let conc_name: string = pathParts[conc_idx + 1] || "DENNIS  NOO";
+          if (pathParts.indexOf("business") !== -1) {
+            conc_name = pathParts[conc_idx + 1] || "DENNIS  NOO";
+            const dennisNooFilePath = join(
+              saveDir,
+              CatalogEntryType.Concentration,
+              yearVersion.toString().split("-")[0]!,
+              college,
+              majorNameToFileName(conc_name),
+              `${FileName.RAW}.${saveStage}.html`,
+            );
 
-          const text = await readFile(filePath, {
-            encoding: "utf-8",
-          });
+            const text = await readFile(dennisNooFilePath, {
+              encoding: "utf-8",
+            });
+            return load(text);
+          } else {
+            const filePath = join(
+              saveDir,
+              CatalogEntryType.Concentration,
+              yearVersion.toString(),
+              college,
+              majorNameToFileName(conc_name),
+              `${FileName.RAW}.${saveStage}.html`,
+            );
 
-          return load(text);
+            const text = await readFile(filePath, {
+              encoding: "utf-8",
+            });
+
+            return load(text);
+          }
         }),
       );
 
@@ -467,7 +486,9 @@ const constructRow = (
     case HRowType.X_OF_MANY:
       return constructXOfMany($, tds);
     case HRowType.POTENTIAL_CONCENTRATION_ERROR:
-      throw new Error("Encountered POTENTIAL_CONCENTRATION_ERROR row type, which should not be processed.");
+      throw new Error(
+        "Encountered POTENTIAL_CONCENTRATION_ERROR row type, which should not be processed.",
+      );
     default:
       return assertUnreachable(type);
   }
